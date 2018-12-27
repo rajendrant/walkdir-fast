@@ -51,9 +51,11 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
       while (struct dirent *entry = readdir(dir)) {
         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, ".."))
           continue;
+#ifndef USE_STD_FS_API
         if (inodes.find(entry->d_ino) != inodes.end())
           continue;
         inodes.insert(entry->d_ino);
+#endif
         if (ignoredNames.find(entry->d_name) != ignoredNames.end())
           continue;
         const char* dname = entry->d_name;

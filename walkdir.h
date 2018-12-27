@@ -4,8 +4,11 @@
 #include <napi.h>
 
 #ifdef _WIN32
-// https://github.com/tronkko/dirent
-#include "dirent.h"
+#define USE_STD_FS_API
+#endif
+
+#ifdef USE_STD_FS_API
+#include "win_dirent.h"
 #else
 #include <dirent.h>
 #endif
