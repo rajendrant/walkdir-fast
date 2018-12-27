@@ -1,4 +1,3 @@
-sudo: false
 language: node_js
 node_js:
 - node
@@ -7,19 +6,16 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - g++-4.8
-    - gcc-4.8-multilib
-    - g++-4.8-multilib
     - gcc-multilib
     - g++-multilib
 os:
 - osx
 - linux
+dist: xenial
 before_deploy:
 - ARCHIVE_NAME="${TRAVIS_TAG:-latest}-$TRAVIS_OS_NAME-`uname -m`.tar"
 - npm install
 - npm run prebuild
-- npm run test
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ARCH=ia32 npm run prebuild; fi
 - tar --create --verbose --file="$ARCHIVE_NAME" --directory "$TRAVIS_BUILD_DIR/prebuilds"
   .
