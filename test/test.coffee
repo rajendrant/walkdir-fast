@@ -5,7 +5,7 @@ walkdir = require '../'
 mm = require('micromatch')
 
 mkdirp = (dir) ->
-  return unless fs.existsSync dir
+  return if fs.existsSync dir
   curr = ''
   for d in dir.split(path.sep)
     curr += d + path.sep
