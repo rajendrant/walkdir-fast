@@ -43,7 +43,7 @@ class WalkDirFast extends EventEmitter
       ignore = @ignored_globs && mm.any file, @ignored_globs, {matchBase: true, dot: true}
       if ignore
         while index+1 < fnames.length
-          break unless fnames[index+1].startsWith file+'/'
+          break unless fnames[index+1].startsWith file+path.sep
           index++
       else if types[index]!=0x4
         @emit 'file', file
