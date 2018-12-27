@@ -23,5 +23,6 @@ describe 'test the files returned are the same with the javascript version', ->
     test testpath, ignored_globs: ['DEPS', 'OWNERS']
     test testpath, ignored_globs: ['DEPS', 'test']
     test testpath, ignored_globs: ['*.cc', '*.h']
+    test testpath, ignored_globs: ['BUILD.gn']
     test testpath, ignored_globs: ['**'+path.sep+'test'+path.sep+'base'+path.sep+'**']
     test testpath, ignored_globs: ['**'+path.sep+'test'+path.sep+'!(base)'+path.sep+'**']

@@ -12,7 +12,7 @@ parseOptions = (options) ->
   return options
 
 isNotGlobPattern = (str) ->
-  Array.from('*.+?![]()').every (char) => !str.includes(char)
+  Array.from('*+?![]()').every (char) => !str.includes(char)
 
 class WalkDirFast extends EventEmitter
   constructor: (dir, @options) ->

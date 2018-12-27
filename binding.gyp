@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "walkdirfast",
-      "sources": [ "walkdir.cc" ],
+      "sources": [ "src/walkdir.cc" ],
       "cflags!": [ "-fno-exceptions" ],
       "cflags_cc!": [ "-fno-exceptions" ],
       "include_dirs": [
