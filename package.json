@@ -1,0 +1,39 @@
+{
+  "name": "walkdir-fast",
+  "version": "0.0.1",
+  "description": "Walks a directory tree emitting filenames. Similar to walkdir but fast for large directories.",
+  "main": "index.coffee",
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuild": "prebuildify --napi",
+    "test": "mocha --require coffeescript/register test/test.coffee",
+    "benchmark": "coffee benchmark/benchmark.coffee"
+  },
+  "keywords": [
+    "find",
+    "walk",
+    "tree",
+    "files",
+    "fs"
+  ],
+  "gypfile": true,
+  "dependencies": {
+    "bindings": "~1.3.0",
+    "micromatch": "^3.1.10",
+    "node-addon-api": "^1.0.0",
+    "node-gyp-build": "^3.6.0"
+  },
+  "devDependencies": {
+    "prebuildify": "^2.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rajendrant/walkdir-fast.git"
+  },
+  "author": "Rajendran T",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rajendrant/walkdir-fast/issues"
+  },
+  "homepage": "https://github.com/rajendrant/walkdir-fast"
+}
