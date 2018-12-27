@@ -15,18 +15,16 @@ mkdirp = (dir) ->
 createFilesForTest = ->
   console.time 'createFilesForTest'
   files = 1
-  for line in fs.readFileSync('benchmark/data-large.txt', 'utf8').split('\n')
+  for line in fs.readFileSync(path.join('benchmark', 'data-large.txt'), 'utf8').split('\n')
     continue unless line
     continue unless line.startsWith 'chrome'
     line = 'benchmark/data/' + line
+    line = path.join ...line.split('/')
     mkdirp path.dirname(line)
     fs.writeFileSync line, ''
     files += 1
   console.timeEnd 'createFilesForTest'
   console.log "created #{files} files"
-
-arrayEquals = (a, b) ->
-  return a.length == b.length && a.every (v,i) -> v==b[i]
 
 walkdirExpected = (dir, options, filelist=[]) ->
   dir = dir + path.sep if dir.slice(-1)!=path.sep
@@ -53,11 +51,12 @@ createFilesForTest()
 
 describe 'test the files returned are the same with the javascript version', ->
   describe 'with various glob pattern options', ->
-    test 'benchmark/data/chrome/browser'
-    test 'benchmark/data/chrome/browser/'
-    test 'benchmark/data/chrome/', ignored_globs: ['DEPS']
-    test 'benchmark/data/chrome/', ignored_globs: ['DEPS', 'OWNERS']
-    test 'benchmark/data/chrome/', ignored_globs: ['DEPS', 'test']
-    test 'benchmark/data/chrome/', ignored_globs: ['*.cc', '*.h']
-    test 'benchmark/data/chrome/', ignored_globs: ['**/test/base/**']
-    test 'benchmark/data/chrome/', ignored_globs: ['**/test/!(base)/**']
+    testpath = path.join 'benchmark', 'data', 'chrome'
+    test testpath + path.sep + 'browser'
+    test testpath + path.sep + 'browser' + path.sep
+    test testpath, ignored_globs: ['DEPS']
+    test testpath, ignored_globs: ['DEPS', 'OWNERS']
+    test testpath, ignored_globs: ['DEPS', 'test']
+    test testpath, ignored_globs: ['*.cc', '*.h']
+    test testpath, ignored_globs: ['**'+path.sep+'test'+path.sep+'base'+path.sep+'**']
+    test testpath, ignored_globs: ['**'+path.sep+'test'+path.sep+'!(base)'+path.sep+'**']

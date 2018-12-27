@@ -81,7 +81,7 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
   }
 
   ret[0u] = fnamesArr;
-  ret[1] = typesArr;
+  ret[1u] = typesArr;
   return ret;
 }
 
