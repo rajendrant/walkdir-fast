@@ -3,7 +3,12 @@
 
 #include <napi.h>
 
+#ifdef _WIN32
+// https://github.com/tronkko/dirent
+#include "dirent.h"
+#else
 #include <dirent.h>
+#endif
 
 #include <string>
 #include <stack>

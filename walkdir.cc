@@ -59,7 +59,7 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
         const char* dname = entry->d_name;
         if (std::any_of(ignoredStartNames.begin(),
                         ignoredStartNames.end(),
-                        [dname](const auto &ignore){return !strncmp(dname, ignore.c_str(), ignore.size());})) {
+                        [dname](const std::string &ignore){return !strncmp(dname, ignore.c_str(), ignore.size());})) {
           continue;
         }
         std::string fname = name + PATH_SEPARATOR + entry->d_name;
