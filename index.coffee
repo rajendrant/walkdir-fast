@@ -29,7 +29,7 @@ class WalkDirFast extends EventEmitter
       else
         @ignored_globs.push ignore
     dir = dir.slice(0, -1) if dir.slice(-1) == path.sep
-    @obj =new binding.WalkDir dir, @options.follow_symlinks, ignored_names, ignored_start_names
+    @obj =new binding.WalkDir dir, @options.follow_symlinks, @options.sync, ignored_names, ignored_start_names
     if @options.sync
       @GetNextFileEntries()
     else
@@ -49,7 +49,10 @@ class WalkDirFast extends EventEmitter
         @emit 'file', file
         @allfiles.push file
       index++
-    @emit 'end', @allfiles
+    if @options.sync || fnames.length==0
+      @emit 'end', @allfiles
+    else
+      process.nextTick => @GetNextFileEntries()
 
 module.exports = walkdir = (dir, options={}) ->
   options = parseOptions(options)

@@ -37,6 +37,7 @@ class WalkDir : public Napi::ObjectWrap<WalkDir> {
 
 private:
   bool followSymlinks;
+  bool syncMode;
   std::set<std::string> ignoredNames;
   std::vector<std::string> ignoredStartNames;
 

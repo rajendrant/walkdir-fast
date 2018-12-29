@@ -28,14 +28,15 @@ std::vector<std::string> ToVector(const Napi::Array &arr) {
 } // namespace
 
 WalkDir::WalkDir(const Napi::CallbackInfo& info) : Napi::ObjectWrap<WalkDir>(info) {
-  if (info.Length() != 4 || !info[0].IsString() || !info[1].IsBoolean() ||
-      !info[2].IsArray() || !info[3].IsArray()) {
+  if (info.Length() != 5 || !info[0].IsString() || !info[1].IsBoolean() || !info[2].IsBoolean() ||
+      !info[3].IsArray() || !info[4].IsArray()) {
     Napi::TypeError::New(info.Env(), "Invalid arguments").ThrowAsJavaScriptException();
   }
   stack.push(info[0].As<Napi::String>());
   followSymlinks = info[1].As<Napi::Boolean>();
-  ignoredNames = ToSet(info[2].As<Napi::Array>());
-  ignoredStartNames = ToVector(info[3].As<Napi::Array>());
+  syncMode = info[2].As<Napi::Boolean>();
+  ignoredNames = ToSet(info[3].As<Napi::Array>());
+  ignoredStartNames = ToVector(info[4].As<Napi::Array>());
 }
 
 Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
@@ -44,7 +45,7 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
   Napi::Array typesArr = Napi::Array::New(info.Env(), 0);
   size_t index = 0;
 
-  while(!stack.empty()) {
+  while(!stack.empty() && (syncMode || fnamesArr.Length() < 10000)) {
     const auto name = stack.top();
     stack.pop();
     if (DIR *dir = opendir(name.c_str())) {

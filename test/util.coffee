@@ -24,12 +24,12 @@ walkdirExpected = (dir, options, filelist) ->
   return filelist
 
 module.exports =
-  createFilesForTest: ->
+  createFilesForTest: (startpath='') ->
     console.time 'createFilesForTest'
     files = 1
     for line in fs.readFileSync(path.join('benchmark', 'data-large.txt'), 'utf8').split('\n')
       continue unless line
-      continue unless line.startsWith 'chrome'
+      continue unless line.startsWith startpath
       line = 'benchmark/data/' + line
       line = path.join ...line.split('/')
       mkdirp path.dirname(line)

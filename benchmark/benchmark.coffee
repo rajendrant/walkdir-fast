@@ -1,13 +1,26 @@
+path = require 'path'
 walkdir = require '../'
 util = require '../test/util'
+assert = require 'assert'
 
 util.createFilesForTest()
-console.time 'walkdir'
-console.log walkdir.sync('benchmark/data/').length
-console.timeEnd 'walkdir'
 
-console.time 'walkdir'
+test = (dir, options={}) ->
+  console.time 'walkdir-fast'
+  actual = walkdir.sync dir, options
+  console.timeEnd 'walkdir-fast'
+  console.time 'nodejs-fs'
+  expected = util.walkdirExpected dir, options
+  console.timeEnd 'nodejs-fs'
+  assert expected, actual
+  console.log expected.length, actual.length
+
+console.time 'walkdir-fast'
 walkdir 'benchmark/data/', ignored_globs: ['LICENSE', 'define*']
 .on 'end', (files) ->
   console.timeEnd 'walkdir'
   console.log files.length
+
+testpath = path.join 'benchmark', 'data'
+test testpath
+test testpath, ignored_globs: ['LICENSE', 'define*']
