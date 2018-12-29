@@ -22,6 +22,7 @@ test = (dir, options={}) ->
 
 testAsync = (dir, options={}) ->
   it JSON.stringify(options), (done) ->
+    @timeout 10000
     actual = []
     time = performance.now()
     expected = util.walkdirExpected dir, options
