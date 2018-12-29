@@ -1,6 +1,6 @@
 {
   "name": "walkdir-fast",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Walks a directory tree emitting filenames. Similar to walkdir but fast for large directories.",
   "main": "index.coffee",
   "scripts": {
