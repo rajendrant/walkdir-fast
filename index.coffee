@@ -28,31 +28,28 @@ class WalkDirFast extends EventEmitter
         ignored_start_names.push ignore.slice(0,-1)
       else
         @ignored_globs.push ignore
-    dir = dir.slice(0, -1) if dir.slice(-1) == path.sep
+    dir += path.sep if dir.slice(-1) != path.sep
     @obj =new binding.WalkDir dir, @options.follow_symlinks, @options.sync, ignored_names, ignored_start_names
-    if @options.sync
-      @GetNextFileEntries()
-    else
+    if !@options.sync
       process.nextTick => @GetNextFileEntries()
 
   GetNextFileEntries: ->
-    [fnames, types] = @obj.GetNextFileEntries()
-    index = 0
-    while index < fnames.length
-      file = fnames[index]
+    fnames = @obj.GetNextFileEntries()
+    newdirs = []
+    for file in fnames
       ignore = @ignored_globs && mm.any file, @ignored_globs, {matchBase: true, dot: true}
-      if ignore
-        while index+1 < fnames.length
-          break unless fnames[index+1].startsWith file+path.sep
-          index++
-      else if types[index]!=0x4
+      if file.substr(-1) == path.sep  # directory
+        newdirs.push file unless ignore
+      else if !ignore # regular file
         @emit 'file', file
         @allfiles.push file
-      index++
-    if @options.sync || fnames.length==0
-      @emit 'end', @allfiles
-    else
-      process.nextTick => @GetNextFileEntries()
+    @obj.AddLoadDirs newdirs
+    if !@options.sync
+      if fnames.length==0
+        @emit 'end', @allfiles
+      else
+        process.nextTick => @GetNextFileEntries()
+    return fnames.length
 
 module.exports = walkdir = (dir, options={}) ->
   options = parseOptions(options)
@@ -62,4 +59,7 @@ walkdir.sync = (dir, options={}) ->
   options = parseOptions(options)
   options.sync = true
   obj = new WalkDirFast dir, options
+  while obj.GetNextFileEntries()!=0
+    ;
+  obj.emit 'end', obj.allfiles
   return obj.allfiles

@@ -40,12 +40,10 @@ WalkDir::WalkDir(const Napi::CallbackInfo& info) : Napi::ObjectWrap<WalkDir>(inf
 }
 
 Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
-  Napi::Array ret = Napi::Array::New(info.Env(), 2);
-  Napi::Array fnamesArr = Napi::Array::New(info.Env(), 0);
-  Napi::Array typesArr = Napi::Array::New(info.Env(), 0);
+  Napi::Array ret = Napi::Array::New(info.Env(), 0);
   size_t index = 0;
 
-  while(!stack.empty() && (syncMode || fnamesArr.Length() < 10000)) {
+  while(!stack.empty() && ret.Length() < 1) {
     const auto name = stack.top();
     stack.pop();
     if (DIR *dir = opendir(name.c_str())) {
@@ -65,27 +63,33 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
                         [dname](const std::string &ignore){return !strncmp(dname, ignore.c_str(), ignore.size());})) {
           continue;
         }
-        std::string fname = name + PATH_SEPARATOR + entry->d_name;
+        std::string fname = name + entry->d_name;
         if (entry->d_type == DT_DIR) {
-          stack.push(fname);
-          fnamesArr[index] = Napi::String::New(info.Env(), fname);
-          typesArr[index] = Napi::Number::New(info.Env(), entry->d_type);
+          ret[index] = Napi::String::New(info.Env(), fname + PATH_SEPARATOR);
           index++;
         } else if (followSymlinks && entry->d_type == DT_LNK) {
           stack.push(fname);
-        } else {
-          fnamesArr[index] = Napi::String::New(info.Env(), fname);
-          typesArr[index] = Napi::Number::New(info.Env(), entry->d_type);
+        } else if (entry->d_type == DT_REG) {
+          ret[index] = Napi::String::New(info.Env(), fname);
           index++;
         }
       }
       closedir(dir);
     }
   }
-
-  ret[0u] = fnamesArr;
-  ret[1u] = typesArr;
   return ret;
+}
+
+Napi::Value WalkDir::AddLoadDirs(const Napi::CallbackInfo& info) {
+  if (info.Length() != 1 || !info[0].IsArray()) {
+    Napi::TypeError::New(info.Env(), "Invalid arguments").ThrowAsJavaScriptException();
+    return Napi::Boolean();
+  }
+  const auto &dirs = info[0].As<Napi::Array>();
+  for(uint32_t i=0; i<dirs.Length(); i++) {
+    stack.push(dirs[i].ToString().Utf8Value());
+  }
+  return Napi::Boolean();
 }
 
 Napi::Object WalkDir::Init(Napi::Env env, Napi::Object exports) {
@@ -93,6 +97,7 @@ Napi::Object WalkDir::Init(Napi::Env env, Napi::Object exports) {
 
   Napi::Function func = DefineClass(env, "WalkDir", {
     InstanceMethod("GetNextFileEntries", &WalkDir::GetNextFileEntries),
+    InstanceMethod("AddLoadDirs", &WalkDir::AddLoadDirs),
   });
 
   exports.Set("WalkDir", func);

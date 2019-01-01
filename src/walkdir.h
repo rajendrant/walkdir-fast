@@ -34,6 +34,7 @@ class WalkDir : public Napi::ObjectWrap<WalkDir> {
   WalkDir(const Napi::CallbackInfo& info);
 
   Napi::Value GetNextFileEntries(const Napi::CallbackInfo& info);
+  Napi::Value AddLoadDirs(const Napi::CallbackInfo& info);
 
 private:
   bool followSymlinks;
