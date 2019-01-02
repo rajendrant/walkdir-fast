@@ -854,7 +854,6 @@ int git_repository_open_ext(
 		     (error = load_workdir(repo, config, &workdir)) < 0))
 			goto cleanup;
 	}
-  printf("here %d\n", __LINE__);
 
 cleanup:
 	git_buf_dispose(&gitdir);

@@ -18,6 +18,7 @@ test = (dir, options={}) ->
 testpath = path.join 'benchmark', 'data'
 test testpath
 test testpath, ignored_globs: ['LICENSE', 'define*']
+test path.join('benchmark', 'data', 'chrome', 'browser'), ignored_globs: ['LICENSE', 'define*'], skip_gitignored: true
 
 console.time 'walkdir-fast-async'
 walkdir 'benchmark/data/', ignored_globs: ['LICENSE', 'define*']

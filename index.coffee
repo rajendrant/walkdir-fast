@@ -9,6 +9,7 @@ parseOptions = (options) ->
   options.follow_symlinks ?= false
   options.ignored_globs ?= []
   options.sync ?= false
+  options.skip_gitignored ?= false
   return options
 
 isNotGlobPattern = (str) ->
@@ -29,7 +30,8 @@ class WalkDirFast extends EventEmitter
       else
         @ignored_globs.push ignore
     dir += path.sep if dir.slice(-1) != path.sep
-    @obj =new binding.WalkDir dir, @options.follow_symlinks, @options.sync, ignored_names, ignored_start_names
+    @obj =new binding.WalkDir dir, @options.follow_symlinks, @options.sync,
+      ignored_names, ignored_start_names, @options.skip_gitignored
     if !@options.sync
       process.nextTick => @GetNextFileEntries()
 
@@ -44,7 +46,7 @@ class WalkDirFast extends EventEmitter
         @emit 'file', file
         @allfiles.push file
     @obj.AddLoadDirs newdirs
-    isFinished = @obj.IsEmpty()
+    isFinished = @obj.CheckForFinished()
     if !@options.sync
       if isFinished
         @emit 'end', @allfiles

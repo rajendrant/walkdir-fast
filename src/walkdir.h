@@ -79,12 +79,15 @@ class WalkDir : public Napi::ObjectWrap<WalkDir> {
 
   Napi::Value GetNextFileEntries(const Napi::CallbackInfo& info);
   Napi::Value AddLoadDirs(const Napi::CallbackInfo& info);
-  Napi::Value IsEmpty(const Napi::CallbackInfo& info);
+  Napi::Value CheckForFinished(const Napi::CallbackInfo& info);
 
 private:
+  void TerminateThreads();
+
   std::string rootDir;
   bool followSymlinks;
   bool syncMode;
+  bool skipGitIgnored;
   std::set<std::string> ignoredNames;
   std::vector<std::string> ignoredStartNames;
 

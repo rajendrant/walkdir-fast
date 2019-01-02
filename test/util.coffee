@@ -1,6 +1,7 @@
 fs = require 'fs'
 path = require 'path'
 mm = require('micromatch')
+git = require 'git-utils'
 
 mkdirp = (dir) ->
   return if fs.existsSync dir
@@ -12,11 +13,15 @@ mkdirp = (dir) ->
 
 walkdirExpected = (dir, options, filelist) ->
   dir = dir + path.sep if dir.slice(-1)!=path.sep
+  repo = git.open dir if options.skip_gitignored
   for file in fs.readdirSync(dir)
     fullname = dir + file
     if options.ignored_globs?
       continue if mm.any file, options.ignored_globs, {matchBase: true, dot: true}
       continue if mm.any fullname, options.ignored_globs, {matchBase: true, dot: true}
+    if options.skip_gitignored
+      relativePath = path.relative(dir, fullname)
+      continue if repo.isIgnored relativePath
     if fs.statSync(fullname).isDirectory()
       filelist = walkdirExpected(fullname + path.sep, options, filelist);
     else
