@@ -32,6 +32,7 @@ class WalkDirFast extends EventEmitter
         @ignored_globs.push ignore
     dir += path.sep if dir.slice(-1) != path.sep
     maxThreads = Math.max Math.floor(os.cpus().length/2), 2
+    maxThreads = 8 if maxThreads > 16
     @obj =new binding.WalkDir dir, @options.follow_symlinks, @options.sync,
       ignored_names, ignored_start_names, @options.skip_gitignored, maxThreads
     if !@options.sync

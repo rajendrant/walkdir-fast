@@ -269,6 +269,7 @@
         'deps/libgit2/src/vector.h',
         'deps/libgit2/src/worktree.c',
         'deps/libgit2/src/worktree.h',
+
         'deps/libgit2/src/zstream.c',
         'deps/libgit2/src/zstream.h',
         'deps/libgit2/src/streams/openssl.c',
@@ -312,6 +313,7 @@
         'deps/libgit2/src/xdiff/xtypes.h',
         'deps/libgit2/src/xdiff/xutils.c',
         'deps/libgit2/src/xdiff/xutils.h',
+
         'deps/libgit2/src/hash/hash_generic.c',
         'deps/libgit2/src/hash/hash_generic.h',
       ],

@@ -106,9 +106,6 @@ WalkDir::~WalkDir() {
 }
 
 Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
-  Napi::Array ret = Napi::Array::New(info.Env(), 0);
-  size_t index = 0;
-
   while (thread_states_.size() < maxThreads) {
     thread_states_.emplace_back();
     thread_states_.back().t = std::thread(thread_worker_walkdir, std::ref(rootDir),
@@ -136,24 +133,29 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
     thread.count += chunk_size;
   }
 
+  thread_states_.sort(std::less<ThreadState>());
+
+  Napi::Array ret = Napi::Array::New(info.Env(), 0);
+  size_t index = 0;
   for(auto &thread : thread_states_) {
-    if (thread.output.empty()) continue;
-    VectorFileEntry result;
-    thread.output.pop(result);
-    for (const auto &entry : result) {
+    while (!thread.output.empty()) {
+      VectorFileEntry result;
+      thread.output.pop(result);
+      for (const auto &entry : result) {
 #ifndef USE_STD_FS_API
-      if (inodes.find(entry.ino) != inodes.end())
-        continue;
-      inodes.insert(entry.ino);
+        if (inodes.find(entry.ino) != inodes.end())
+          continue;
+        inodes.insert(entry.ino);
 #endif
-      if (entry.type == DT_DIR) {
-        ret[index] = Napi::String::New(info.Env(), entry.fname + PATH_SEPARATOR);
-        index++;
-      } else if (followSymlinks && entry.type == DT_LNK) {
-        dirs_to_load.push_back(entry.fname);
-      } else if (entry.type == DT_REG) {
-        ret[index] = Napi::String::New(info.Env(), entry.fname);
-        index++;
+        if (entry.type == DT_DIR) {
+          ret[index] = Napi::String::New(info.Env(), entry.fname + PATH_SEPARATOR);
+          index++;
+        } else if (followSymlinks && entry.type == DT_LNK) {
+          dirs_to_load.push_back(entry.fname);
+        } else if (entry.type == DT_REG) {
+          ret[index] = Napi::String::New(info.Env(), entry.fname);
+          index++;
+        }
       }
     }
   }

@@ -68,6 +68,10 @@ public:
   }
   ThreadState(const ThreadState&) = delete;            // disable copying
   ThreadState& operator=(const ThreadState&) = delete; // disable assignment
+
+  bool operator < (const ThreadState& a) const {
+    return (count < a.count);
+  }
 };
 
 class WalkDir : public Napi::ObjectWrap<WalkDir> {
