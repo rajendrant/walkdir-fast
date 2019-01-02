@@ -2,6 +2,7 @@ path = require 'path'
 EventEmitter = require('events').EventEmitter
 binding = require('node-gyp-build')(__dirname)
 mm = require('micromatch')
+os = require('os')
 
 # http://www.delorie.com/djgpp/doc/incs/dirent.h
 
@@ -30,8 +31,9 @@ class WalkDirFast extends EventEmitter
       else
         @ignored_globs.push ignore
     dir += path.sep if dir.slice(-1) != path.sep
+    maxThreads = Math.max Math.floor(os.cpus().length/2), 2
     @obj =new binding.WalkDir dir, @options.follow_symlinks, @options.sync,
-      ignored_names, ignored_start_names, @options.skip_gitignored
+      ignored_names, ignored_start_names, @options.skip_gitignored, maxThreads
     if !@options.sync
       process.nextTick => @GetNextFileEntries()
 

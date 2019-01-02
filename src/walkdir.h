@@ -16,6 +16,7 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <thread>
 #include <chrono>
@@ -36,8 +37,6 @@ extern int git_ignore_path_is_ignored(
        git_repository *repo,
        const char *path);
 }
-
-#define MAX_THREADS 1
 
 // Converted from the example at
 // https://github.com/nodejs/node-addon-examples/blob/master/6_object_wrap/node-addon-api/
@@ -90,10 +89,11 @@ private:
   bool skipGitIgnored;
   std::set<std::string> ignoredNames;
   std::vector<std::string> ignoredStartNames;
+  size_t maxThreads;
 
   std::set<ino_t> inodes;
   std::vector<std::string> dirs_to_load;
-  std::vector<ThreadState> thread_states_;
+  std::list<ThreadState> thread_states_;
 };
 
 #endif // WALKDIR_H

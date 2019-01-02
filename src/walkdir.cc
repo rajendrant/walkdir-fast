@@ -87,8 +87,8 @@ std::vector<std::string> ToVector(const Napi::Array &arr) {
 } // namespace
 
 WalkDir::WalkDir(const Napi::CallbackInfo& info) : Napi::ObjectWrap<WalkDir>(info) {
-  if (info.Length() != 6 || !info[0].IsString() || !info[1].IsBoolean() || !info[2].IsBoolean() ||
-      !info[3].IsArray() || !info[4].IsArray() || !info[5].IsBoolean()) {
+  if (info.Length() != 7 || !info[0].IsString() || !info[1].IsBoolean() || !info[2].IsBoolean() ||
+      !info[3].IsArray() || !info[4].IsArray() || !info[5].IsBoolean() || !info[6].IsNumber()) {
     Napi::TypeError::New(info.Env(), "Invalid arguments").ThrowAsJavaScriptException();
   }
   rootDir = info[0].As<Napi::String>();
@@ -98,6 +98,7 @@ WalkDir::WalkDir(const Napi::CallbackInfo& info) : Napi::ObjectWrap<WalkDir>(inf
   ignoredNames = ToSet(info[3].As<Napi::Array>());
   ignoredStartNames = ToVector(info[4].As<Napi::Array>());
   skipGitIgnored = info[5].As<Napi::Boolean>();
+  maxThreads = info[6].As<Napi::Number>().Uint32Value();
 }
 
 WalkDir::~WalkDir() {
@@ -108,8 +109,7 @@ Napi::Value WalkDir::GetNextFileEntries(const Napi::CallbackInfo& info) {
   Napi::Array ret = Napi::Array::New(info.Env(), 0);
   size_t index = 0;
 
-  while (thread_states_.size() < MAX_THREADS) {
-    std::thread t();
+  while (thread_states_.size() < maxThreads) {
     thread_states_.emplace_back();
     thread_states_.back().t = std::thread(thread_worker_walkdir, std::ref(rootDir),
                           std::ref(ignoredNames), std::ref(ignoredStartNames),
