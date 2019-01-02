@@ -1,4 +1,9 @@
 .npmignore
-benchmark/
-spec/
-build/
+/deps/
+/build/
+/spec/
+/benchmark/
+.travis.yml
+appveyor.yml
+.npmignore
+.gitmodules

@@ -44,12 +44,13 @@ class WalkDirFast extends EventEmitter
         @emit 'file', file
         @allfiles.push file
     @obj.AddLoadDirs newdirs
+    isFinished = @obj.IsEmpty()
     if !@options.sync
-      if fnames.length==0
+      if isFinished
         @emit 'end', @allfiles
       else
         process.nextTick => @GetNextFileEntries()
-    return fnames.length
+    return isFinished
 
 module.exports = walkdir = (dir, options={}) ->
   options = parseOptions(options)
@@ -59,7 +60,7 @@ walkdir.sync = (dir, options={}) ->
   options = parseOptions(options)
   options.sync = true
   obj = new WalkDirFast dir, options
-  while obj.GetNextFileEntries()!=0
+  while !obj.GetNextFileEntries()
     ;
   obj.emit 'end', obj.allfiles
   return obj.allfiles

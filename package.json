@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "coffeescript": "^2.3.2",
+    "git-utils": "^5.4.0",
     "mocha": "^5.2.0",
     "prebuildify": "^2.9.1"
   },
