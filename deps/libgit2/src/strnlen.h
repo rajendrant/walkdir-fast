@@ -14,7 +14,7 @@
 
 #ifdef NO_STRNLEN
 GIT_INLINE(size_t) p_strnlen(const char *s, size_t maxlen) {
-	const char *end = memchr(s, 0, maxlen);
+	const char *end = (const char*) memchr(s, 0, maxlen);
 	return end ? (size_t)(end - s) : maxlen;
 }
 #else
