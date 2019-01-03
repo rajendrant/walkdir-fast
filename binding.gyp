@@ -28,9 +28,6 @@
         # against compilation error.
         'SRC_UTIL_H_',
       ],
-      'dependencies': [
-        'http_parser'
-      ],
       'sources': [
         'deps/libgit2/src/global.c',
         'deps/libgit2/src/repository.c',
@@ -337,27 +334,6 @@
           'deps/libgit2/include',
         ],
       },
-    },
-    {
-      'target_name': 'http_parser',
-      'win_delay_load_hook': 'false',
-      'type': 'static_library',
-      'sources': [
-        'deps/libgit2/deps/http-parser/http_parser.c',
-        'deps/libgit2/deps/http-parser/http_parser.h',
-      ],
-      'direct_dependent_settings': {
-        'include_dirs': [
-          'deps/libgit2/deps/http-parser',
-        ],
-      },
-      'conditions': [
-        ['OS=="win"', {
-          'msvs_disabled_warnings': [
-            4244,  # conversion from 'ssize_t' to 'int32_t', possible loss of data
-          ],
-        }],
-      ],
     },
   ]
 }
