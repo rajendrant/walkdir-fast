@@ -18,6 +18,7 @@
 
 #include "git2/branch.h"
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_branch_reference(
 	git_reference **branch_reference_out,
 	git_repository *repo,
@@ -43,7 +44,9 @@ static int retrieve_branch_reference(
 	git_buf_dispose(&ref_name);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int not_a_local_branch(const char *reference_name)
 {
 	giterr_set(
@@ -51,7 +54,9 @@ static int not_a_local_branch(const char *reference_name)
 		"reference '%s' is not a local branch.", reference_name);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_branch(
 	git_reference **ref_out,
 	git_repository *repository,
@@ -112,7 +117,9 @@ cleanup:
 	git_buf_dispose(&log_message);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_create(
 	git_reference **ref_out,
 	git_repository *repository,
@@ -122,7 +129,9 @@ int git_branch_create(
 {
 	return create_branch(ref_out, repository, branch_name, commit, git_oid_tostr_s(git_commit_id(commit)), force);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_create_from_annotated(
 	git_reference **ref_out,
 	git_repository *repository,
@@ -133,7 +142,9 @@ int git_branch_create_from_annotated(
 	return create_branch(ref_out,
 		repository, branch_name, commit->commit, commit->description, force);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int branch_equals(git_repository *repo, const char *path, void *payload)
 {
 	git_reference *branch = (git_reference *) payload;
@@ -150,7 +161,9 @@ done:
 	git_reference_free(head);
 	return equal;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_is_checked_out(const git_reference *branch)
 {
 	assert(branch && git_reference_is_branch(branch));
@@ -158,7 +171,9 @@ int git_branch_is_checked_out(const git_reference *branch)
 	return git_repository_foreach_head(git_reference_owner(branch),
 		branch_equals, (void *) branch) == 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_delete(git_reference *branch)
 {
 	int is_head;
@@ -202,12 +217,14 @@ on_error:
 	git_buf_dispose(&config_section);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_reference_iterator *iter;
 	unsigned int flags;
 } branch_iter;
 
+#ifdef DISABLED_FUNCTION
 int git_branch_next(git_reference **out, git_branch_t *out_type, git_branch_iterator *_iter)
 {
 	branch_iter *iter = (branch_iter *) _iter;
@@ -234,7 +251,9 @@ int git_branch_next(git_reference **out, git_branch_t *out_type, git_branch_iter
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_iterator_new(
 	git_branch_iterator **out,
 	git_repository *repo,
@@ -256,7 +275,9 @@ int git_branch_iterator_new(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_branch_iterator_free(git_branch_iterator *_iter)
 {
 	branch_iter *iter = (branch_iter *) _iter;
@@ -267,7 +288,9 @@ void git_branch_iterator_free(git_branch_iterator *_iter)
 	git_reference_iterator_free(iter->iter);
 	git__free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_move(
 	git_reference **out,
 	git_reference *branch,
@@ -317,7 +340,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_lookup(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -328,7 +353,9 @@ int git_branch_lookup(
 
 	return retrieve_branch_reference(ref_out, repo, branch_name, branch_type == GIT_BRANCH_REMOTE);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_name(
 	const char **out,
 	const git_reference *ref)
@@ -351,7 +378,9 @@ int git_branch_name(
 	*out = branch_name;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_upstream_configuration(
 	git_buf *out,
 	const git_config *config,
@@ -369,7 +398,9 @@ static int retrieve_upstream_configuration(
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_upstream_name(
 	git_buf *out,
 	git_repository *repo,
@@ -434,7 +465,9 @@ cleanup:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_upstream_remote(git_buf *buf, git_repository *repo, const char *refname)
 {
 	int error;
@@ -459,7 +492,9 @@ int git_branch_upstream_remote(git_buf *buf, git_repository *repo, const char *r
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_remote_name(git_buf *buf, git_repository *repo, const char *refname)
 {
 	git_strarray remote_list = {0};
@@ -527,7 +562,9 @@ cleanup:
 	git_strarray_free(&remote_list);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_upstream(
 	git_reference **tracking_out,
 	const git_reference *branch)
@@ -547,7 +584,9 @@ int git_branch_upstream(
 	git_buf_dispose(&tracking_name);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int unset_upstream(git_config *config, const char *shortname)
 {
 	git_buf buf = GIT_BUF_INIT;
@@ -572,7 +611,9 @@ on_error:
 	git_buf_dispose(&buf);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_set_upstream(git_reference *branch, const char *upstream_name)
 {
 	git_buf key = GIT_BUF_INIT, value = GIT_BUF_INIT;
@@ -668,7 +709,9 @@ on_error:
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_branch_is_head(
 		const git_reference *branch)
 {
@@ -697,3 +740,4 @@ int git_branch_is_head(
 
 	return is_same;
 }
+#endif // DISABLED_FUNCTION

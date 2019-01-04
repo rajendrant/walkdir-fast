@@ -16,6 +16,7 @@
 #include "refs.h"
 #include "repository.h"
 
+#ifdef DISABLED_FUNCTION
 int git_fetchhead_ref_cmp(const void *a, const void *b)
 {
 	const git_fetchhead_ref *one = (const git_fetchhead_ref *)a;
@@ -35,7 +36,9 @@ int git_fetchhead_ref_cmp(const void *a, const void *b)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_fetchhead_ref_create(
 	git_fetchhead_ref **out,
 	git_oid *oid,
@@ -67,7 +70,9 @@ int git_fetchhead_ref_create(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int fetchhead_ref_write(
 	git_filebuf *file,
 	git_fetchhead_ref *fetchhead_ref)
@@ -105,7 +110,9 @@ static int fetchhead_ref_write(
 		name,
 		fetchhead_ref->remote_url);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_fetchhead_write(git_repository *repo, git_vector *fetchhead_refs)
 {
 	git_filebuf file = GIT_FILEBUF_INIT;
@@ -132,7 +139,9 @@ int git_fetchhead_write(git_repository *repo, git_vector *fetchhead_refs)
 
 	return git_filebuf_commit(&file);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int fetchhead_ref_parse(
 	git_oid *oid,
 	unsigned int *is_merge,
@@ -233,7 +242,9 @@ static int fetchhead_ref_parse(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_fetchhead_foreach(git_repository *repo,
 	git_repository_fetchhead_foreach_cb cb,
 	void *payload)
@@ -289,7 +300,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_fetchhead_ref_free(git_fetchhead_ref *fetchhead_ref)
 {
 	if (fetchhead_ref == NULL)
@@ -299,4 +312,5 @@ void git_fetchhead_ref_free(git_fetchhead_ref *fetchhead_ref)
 	git__free(fetchhead_ref->ref_name);
 	git__free(fetchhead_ref);
 }
+#endif // DISABLED_FUNCTION
 

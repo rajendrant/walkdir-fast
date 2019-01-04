@@ -19,6 +19,7 @@ struct patch_id_args {
 	int first_file;
 };
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(const char *) diff_delta__path(const git_diff_delta *delta)
 {
 	const char *str = delta->old_file.path;
@@ -31,26 +32,34 @@ GIT_INLINE(const char *) diff_delta__path(const git_diff_delta *delta)
 
 	return str;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_diff_delta__path(const git_diff_delta *delta)
 {
 	return diff_delta__path(delta);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_delta__cmp(const void *a, const void *b)
 {
 	const git_diff_delta *da = a, *db = b;
 	int val = strcmp(diff_delta__path(da), diff_delta__path(db));
 	return val ? val : ((int)da->status - (int)db->status);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_delta__casecmp(const void *a, const void *b)
 {
 	const git_diff_delta *da = a, *db = b;
 	int val = strcasecmp(diff_delta__path(da), diff_delta__path(db));
 	return val ? val : ((int)da->status - (int)db->status);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__entry_cmp(const void *a, const void *b)
 {
 	const git_index_entry *entry_a = a;
@@ -58,7 +67,9 @@ int git_diff__entry_cmp(const void *a, const void *b)
 
 	return strcmp(entry_a->path, entry_b->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__entry_icmp(const void *a, const void *b)
 {
 	const git_index_entry *entry_a = a;
@@ -66,7 +77,9 @@ int git_diff__entry_icmp(const void *a, const void *b)
 
 	return strcasecmp(entry_a->path, entry_b->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_free(git_diff *diff)
 {
 	if (!diff)
@@ -74,18 +87,24 @@ void git_diff_free(git_diff *diff)
 
 	GIT_REFCOUNT_DEC(diff, diff->free_fn);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_addref(git_diff *diff)
 {
 	GIT_REFCOUNT_INC(diff);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_diff_num_deltas(const git_diff *diff)
 {
 	assert(diff);
 	return diff->deltas.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_diff_num_deltas_of_type(const git_diff *diff, git_delta_t type)
 {
 	size_t i, count = 0;
@@ -99,18 +118,24 @@ size_t git_diff_num_deltas_of_type(const git_diff *diff, git_delta_t type)
 
 	return count;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_diff_delta *git_diff_get_delta(const git_diff *diff, size_t idx)
 {
 	assert(diff);
 	return git_vector_get(&diff->deltas, idx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_is_sorted_icase(const git_diff *diff)
 {
 	return (diff->opts.flags & GIT_DIFF_IGNORE_CASE) != 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_get_perfdata(git_diff_perfdata *out, const git_diff *diff)
 {
 	assert(out);
@@ -119,7 +144,9 @@ int git_diff_get_perfdata(git_diff_perfdata *out, const git_diff *diff)
 	out->oid_calculations = diff->perf.oid_calculations;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_foreach(
 	git_diff *diff,
 	git_diff_file_cb file_cb,
@@ -154,7 +181,9 @@ int git_diff_foreach(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_format_email__append_header_tobuf(
 	git_buf *out,
 	const git_oid *id,
@@ -211,7 +240,9 @@ int git_diff_format_email__append_header_tobuf(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_format_email__append_patches_tobuf(
 	git_buf *out,
 	git_diff *diff)
@@ -235,7 +266,9 @@ int git_diff_format_email__append_patches_tobuf(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_format_email(
 	git_buf *out,
 	git_diff *diff,
@@ -316,7 +349,9 @@ on_error:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_commit_as_email(
 	git_buf *out,
 	git_repository *repo,
@@ -349,14 +384,18 @@ int git_diff_commit_as_email(
 	git_diff_free(diff);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_init_options(git_diff_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_diff_options, GIT_DIFF_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_find_init_options(
 	git_diff_find_options *opts, unsigned int version)
 {
@@ -364,7 +403,9 @@ int git_diff_find_init_options(
 		opts, version, git_diff_find_options, GIT_DIFF_FIND_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_format_email_init_options(
 	git_diff_format_email_options *opts, unsigned int version)
 {
@@ -373,7 +414,9 @@ int git_diff_format_email_init_options(
 		GIT_DIFF_FORMAT_EMAIL_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int flush_hunk(git_oid *result, git_hash_ctx *ctx)
 {
 	git_oid hash;
@@ -392,7 +435,9 @@ static int flush_hunk(git_oid *result, git_hash_ctx *ctx)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void strip_spaces(git_buf *buf)
 {
 	char *src = buf->ptr, *dst = buf->ptr;
@@ -408,7 +453,9 @@ static void strip_spaces(git_buf *buf)
 
 	git_buf_truncate(buf, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int file_cb(
 	const git_diff_delta *delta,
 	float progress,
@@ -442,7 +489,9 @@ out:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int line_cb(
 	const git_diff_delta *delta,
 	const git_diff_hunk *hunk,
@@ -480,14 +529,18 @@ out:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_patchid_init_options(git_diff_patchid_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_diff_patchid_options, GIT_DIFF_PATCHID_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_patchid(git_oid *out, git_diff *diff, git_diff_patchid_options *opts)
 {
 	struct patch_id_args args;
@@ -513,3 +566,4 @@ out:
 	git_hash_ctx_cleanup(&args.ctx);
 	return error;
 }
+#endif // DISABLED_FUNCTION

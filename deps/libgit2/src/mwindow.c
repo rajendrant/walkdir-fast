@@ -31,6 +31,7 @@ static git_mwindow_ctl mem_ctl;
 /* Global list of mwindow files, to open packs once across repos */
 git_strmap *git__pack_cache = NULL;
 
+#ifdef DISABLED_FUNCTION
 static void git_mwindow_files_free(void)
 {
 	git_strmap *tmp = git__pack_cache;
@@ -38,7 +39,9 @@ static void git_mwindow_files_free(void)
 	git__pack_cache = NULL;
 	git_strmap_free(tmp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mwindow_global_init(void)
 {
 	assert(!git__pack_cache);
@@ -46,6 +49,7 @@ int git_mwindow_global_init(void)
 	git__on_shutdown(git_mwindow_files_free);
 	return git_strmap_alloc(&git__pack_cache);
 }
+#endif // DISABLED_FUNCTION
 
 int git_mwindow_get_pack(struct git_pack_file **out, const char *path)
 {
@@ -392,6 +396,7 @@ int git_mwindow_file_register(git_mwindow_file *mwf)
 	return ret;
 }
 
+#ifdef DISABLED_FUNCTION
 void git_mwindow_file_deregister(git_mwindow_file *mwf)
 {
 	git_mwindow_ctl *ctl = &mem_ctl;
@@ -410,6 +415,7 @@ void git_mwindow_file_deregister(git_mwindow_file *mwf)
 	}
 	git_mutex_unlock(&git__mwindow_mutex);
 }
+#endif // DISABLED_FUNCTION
 
 void git_mwindow_close(git_mwindow **window)
 {

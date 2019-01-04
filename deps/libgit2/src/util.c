@@ -22,6 +22,7 @@
 # include <Shlwapi.h>
 #endif
 
+#ifdef DISABLED_FUNCTION
 void git_strarray_free(git_strarray *array)
 {
 	size_t i;
@@ -36,7 +37,9 @@ void git_strarray_free(git_strarray *array)
 
 	memset(array, 0, sizeof(*array));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_strarray_copy(git_strarray *tgt, const git_strarray *src)
 {
 	size_t i;
@@ -67,6 +70,7 @@ int git_strarray_copy(git_strarray *tgt, const git_strarray *src)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git__strntol64(int64_t *result, const char *nptr, size_t nptr_len, const char **endptr, int base)
 {
@@ -211,13 +215,16 @@ int git__strcmp(const char *a, const char *b)
 	return (int)(*(const unsigned char *)a) - (int)(*(const unsigned char *)b);
 }
 
+#ifdef DISABLED_FUNCTION
 int git__strcasecmp(const char *a, const char *b)
 {
 	while (*a && *b && git__tolower(*a) == git__tolower(*b))
 		++a, ++b;
 	return ((unsigned char)git__tolower(*a) - (unsigned char)git__tolower(*b));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git__strcasesort_cmp(const char *a, const char *b)
 {
 	int cmp = 0;
@@ -239,6 +246,7 @@ int git__strcasesort_cmp(const char *a, const char *b)
 
 	return cmp;
 }
+#endif // DISABLED_FUNCTION
 
 int git__strncmp(const char *a, const char *b, size_t sz)
 {
@@ -262,6 +270,7 @@ int git__strncasecmp(const char *a, const char *b, size_t sz)
 	return al - bl;
 }
 
+#ifdef DISABLED_FUNCTION
 void git__strntolower(char *str, size_t len)
 {
 	size_t i;
@@ -270,11 +279,14 @@ void git__strntolower(char *str, size_t len)
 		str[i] = (char)git__tolower(str[i]);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git__strtolower(char *str)
 {
 	git__strntolower(str, strlen(str));
 }
+#endif // DISABLED_FUNCTION
 
 GIT_INLINE(int) prefixcmp(const char *str, size_t str_n, const char *prefix, bool icase)
 {
@@ -309,15 +321,19 @@ int git__prefixncmp(const char *str, size_t str_n, const char *prefix)
 	return prefixcmp(str, str_n, prefix, false);
 }
 
+#ifdef DISABLED_FUNCTION
 int git__prefixcmp_icase(const char *str, const char *prefix)
 {
 	return prefixcmp(str, SIZE_MAX, prefix, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git__prefixncmp_icase(const char *str, size_t str_n, const char *prefix)
 {
 	return prefixcmp(str, str_n, prefix, true);
 }
+#endif // DISABLED_FUNCTION
 
 int git__suffixcmp(const char *str, const char *suffix)
 {
@@ -354,6 +370,7 @@ char *git__strtok(char **end, const char *sep)
 }
 
 /* Similar to strtok, but does not collapse repeated tokens. */
+#ifdef DISABLED_FUNCTION
 char *git__strsep(char **end, const char *sep)
 {
 	char *start = *end, *ptr = *end;
@@ -370,6 +387,7 @@ char *git__strsep(char **end, const char *sep)
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
 size_t git__linenlen(const char *buffer, size_t buffer_len)
 {
@@ -418,6 +436,7 @@ const void * git__memmem(const void *haystack, size_t haystacklen,
 	return NULL;
 }
 
+#ifdef DISABLED_FUNCTION
 void git__hexdump(const char *buffer, size_t len)
 {
 	static const size_t LINE_WIDTH = 16;
@@ -462,6 +481,7 @@ void git__hexdump(const char *buffer, size_t len)
 
 	printf("\n");
 }
+#endif // DISABLED_FUNCTION
 
 #ifdef GIT_LEGACY_HASH
 uint32_t git__hash(const void *key, int len, unsigned int seed)
@@ -507,6 +527,7 @@ uint32_t git__hash(const void *key, int len, unsigned int seed)
 
 	This code is on the public domain.
 */
+#ifdef DISABLED_FUNCTION
 uint32_t git__hash(const void *key, int len, uint32_t seed)
 {
 
@@ -559,6 +580,7 @@ uint32_t git__hash(const void *key, int len, uint32_t seed)
 
 	return h1;
 }
+#endif // DISABLED_FUNCTION
 #endif
 
 /**
@@ -621,6 +643,7 @@ int git__bsearch(
 	return (cmp == 0) ? 0 : GIT_ENOTFOUND;
 }
 
+#ifdef DISABLED_FUNCTION
 int git__bsearch_r(
 	void **array,
 	size_t array_len,
@@ -651,6 +674,7 @@ int git__bsearch_r(
 
 	return (cmp == 0) ? 0 : GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * A strcmp wrapper
@@ -724,6 +748,7 @@ static int GIT_STDLIB_CALL git__qsort_r_glue_cmp(
 }
 #endif
 
+#ifdef DISABLED_FUNCTION
 void git__qsort_r(
 	void *els, size_t nel, size_t elsize, git__sort_r_cmp cmp, void *payload)
 {
@@ -739,7 +764,9 @@ void git__qsort_r(
 	git__insertsort_r(els, nel, elsize, NULL, cmp, payload);
 #endif
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git__insertsort_r(
 	void *els, size_t nel, size_t elsize, void *swapel,
 	git__sort_r_cmp cmp, void *payload)
@@ -762,6 +789,7 @@ void git__insertsort_r(
 	if (freeswap)
 		git__free(swapel);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * git__utf8_iterate is taken from the utf8proc project,
@@ -864,11 +892,14 @@ int git__utf8_iterate(const uint8_t *str, int str_len, int32_t *dst)
 	return length;
 }
 
+#ifdef DISABLED_FUNCTION
 double git_time_monotonic(void)
 {
 	return git__timer();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git__utf8_valid_buf_length(const uint8_t *str, size_t str_len)
 {
 	size_t offset = 0;
@@ -884,6 +915,7 @@ size_t git__utf8_valid_buf_length(const uint8_t *str, size_t str_len)
 
 	return offset;
 }
+#endif // DISABLED_FUNCTION
 
 #ifdef GIT_WIN32
 int git__getenv(git_buf *out, const char *name)

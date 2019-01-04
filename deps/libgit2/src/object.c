@@ -265,17 +265,21 @@ const git_oid *git_object_id(const git_object *obj)
 	return &obj->cached.oid;
 }
 
+#ifdef DISABLED_FUNCTION
 git_object_t git_object_type(const git_object *obj)
 {
 	assert(obj);
 	return obj->cached.type;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_object_owner(const git_object *obj)
 {
 	assert(obj);
 	return obj->repo;
 }
+#endif // DISABLED_FUNCTION
 
 const char *git_object_type2string(git_object_t type)
 {
@@ -285,6 +289,7 @@ const char *git_object_type2string(git_object_t type)
 	return git_objects_table[type].str;
 }
 
+#ifdef DISABLED_FUNCTION
 git_object_t git_object_string2type(const char *str)
 {
 	if (!str)
@@ -292,6 +297,7 @@ git_object_t git_object_string2type(const char *str)
 
 	return git_object_stringn2type(str, strlen(str));
 }
+#endif // DISABLED_FUNCTION
 
 git_object_t git_object_stringn2type(const char *str, size_t len)
 {
@@ -324,6 +330,7 @@ size_t git_object__size(git_object_t type)
 	return git_objects_table[type].size;
 }
 
+#ifdef DISABLED_FUNCTION
 static int dereference_object(git_object **dereferenced, git_object *obj)
 {
 	git_object_t type = git_object_type(obj);
@@ -343,7 +350,9 @@ static int dereference_object(git_object **dereferenced, git_object *obj)
 		return GIT_EINVALIDSPEC;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int peel_error(int error, const git_oid *oid, git_object_t type)
 {
 	const char *type_name;
@@ -359,7 +368,9 @@ static int peel_error(int error, const git_oid *oid, git_object_t type)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_type_combination(git_object_t type, git_object_t target)
 {
 	if (type == target)
@@ -385,7 +396,9 @@ static int check_type_combination(git_object_t type, git_object_t target)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_object_peel(
 	git_object **peeled,
 	const git_object *object,
@@ -441,14 +454,18 @@ int git_object_peel(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_object_dup(git_object **dest, git_object *source)
 {
 	git_cached_obj_incref(source);
 	*dest = source;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_object_lookup_bypath(
 		git_object **out,
 		const git_object *treeish,
@@ -483,7 +500,9 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_object_short_id(git_buf *out, const git_object *obj)
 {
 	git_repository *repo;
@@ -525,7 +544,9 @@ int git_object_short_id(git_buf *out, const git_object *obj)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_object__is_valid(
 	git_repository *repo, const git_oid *id, git_object_t expected_type)
 {
@@ -549,4 +570,5 @@ bool git_object__is_valid(
 
 	return true;
 }
+#endif // DISABLED_FUNCTION
 

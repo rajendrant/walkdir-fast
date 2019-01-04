@@ -33,6 +33,7 @@ struct memory_packer_db {
 	git_array_t(struct memobject *) commits;
 };
 
+#ifdef DISABLED_FUNCTION
 static int impl__write(git_odb_backend *_backend, const git_oid *oid, const void *data, size_t len, git_object_t type)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)_backend;
@@ -68,14 +69,18 @@ static int impl__write(git_odb_backend *_backend, const git_oid *oid, const void
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int impl__exists(git_odb_backend *backend, const git_oid *oid)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)backend;
 
 	return git_oidmap_exists(db->objects, oid);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int impl__read(void **buffer_p, size_t *len_p, git_object_t *type_p, git_odb_backend *backend, const git_oid *oid)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)backend;
@@ -96,7 +101,9 @@ static int impl__read(void **buffer_p, size_t *len_p, git_object_t *type_p, git_
 	memcpy(*buffer_p, obj->data, obj->len);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int impl__read_header(size_t *len_p, git_object_t *type_p, git_odb_backend *backend, const git_oid *oid)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)backend;
@@ -113,7 +120,9 @@ static int impl__read_header(size_t *len_p, git_object_t *type_p, git_odb_backen
 	*type_p = obj->type;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mempack_dump(git_buf *pack, git_repository *repo, git_odb_backend *_backend)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)_backend;
@@ -138,7 +147,9 @@ cleanup:
 	git_packbuilder_free(packbuilder);
 	return err;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_mempack_reset(git_odb_backend *_backend)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)_backend;
@@ -152,7 +163,9 @@ void git_mempack_reset(git_odb_backend *_backend)
 
 	git_oidmap_clear(db->objects);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void impl__free(git_odb_backend *_backend)
 {
 	struct memory_packer_db *db = (struct memory_packer_db *)_backend;
@@ -161,7 +174,9 @@ static void impl__free(git_odb_backend *_backend)
 	git_oidmap_free(db->objects);
 	git__free(db);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mempack_new(git_odb_backend **out)
 {
 	struct memory_packer_db *db;
@@ -183,3 +198,4 @@ int git_mempack_new(git_odb_backend **out)
 	*out = (git_odb_backend *)db;
 	return 0;
 }
+#endif // DISABLED_FUNCTION

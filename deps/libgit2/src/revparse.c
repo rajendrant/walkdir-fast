@@ -15,6 +15,7 @@
 
 #include "git2.h"
 
+#ifdef DISABLED_FUNCTION
 static int maybe_sha_or_abbrev(git_object** out, git_repository *repo, const char *spec, size_t speclen)
 {
 	git_oid oid;
@@ -24,7 +25,9 @@ static int maybe_sha_or_abbrev(git_object** out, git_repository *repo, const cha
 
 	return git_object_lookup_prefix(out, repo, &oid, speclen, GIT_OBJECT_ANY);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int maybe_sha(git_object** out, git_repository *repo, const char *spec)
 {
 	size_t speclen = strlen(spec);
@@ -34,14 +37,18 @@ static int maybe_sha(git_object** out, git_repository *repo, const char *spec)
 
 	return maybe_sha_or_abbrev(out, repo, spec, speclen);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int maybe_abbrev(git_object** out, git_repository *repo, const char *spec)
 {
 	size_t speclen = strlen(spec);
 
 	return maybe_sha_or_abbrev(out, repo, spec, speclen);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int build_regex(regex_t *regex, const char *pattern)
 {
 	int error;
@@ -61,7 +68,9 @@ static int build_regex(regex_t *regex, const char *pattern)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int maybe_describe(git_object**out, git_repository *repo, const char *spec)
 {
 	const char *substr;
@@ -84,7 +93,9 @@ static int maybe_describe(git_object**out, git_repository *repo, const char *spe
 
 	return maybe_abbrev(out, repo, substr+2);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revparse_lookup_object(
 	git_object **object_out,
 	git_reference **reference_out,
@@ -122,7 +133,9 @@ static int revparse_lookup_object(
 	giterr_set(GITERR_REFERENCE, "revspec '%s' not found", spec);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int try_parse_numeric(int *n, const char *curly_braces_content)
 {
 	int32_t content;
@@ -138,7 +151,9 @@ static int try_parse_numeric(int *n, const char *curly_braces_content)
 	*n = (int)content;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_previously_checked_out_branch_or_revision(git_object **out, git_reference **base_ref, git_repository *repo, const char *identifier, size_t position)
 {
 	git_reference *ref = NULL;
@@ -203,7 +218,9 @@ cleanup:
 	git_reflog_free(reflog);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_oid_from_reflog(git_oid *oid, git_reference *ref, size_t identifier)
 {
 	git_reflog *reflog;
@@ -253,7 +270,9 @@ notfound:
 	git_reflog_free(reflog);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_revobject_from_reflog(git_object **out, git_reference **base_ref, git_repository *repo, const char *identifier, size_t position)
 {
 	git_reference *ref;
@@ -282,7 +301,9 @@ cleanup:
 	git_reference_free(ref);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_remote_tracking_reference(git_reference **base_ref, const char *identifier, git_repository *repo)
 {
 	git_reference *tracking, *ref;
@@ -310,7 +331,9 @@ cleanup:
 	git_reference_free(ref);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_at_syntax(git_object **out, git_reference **ref, const char *spec, size_t identifier_len, git_repository* repo, const char *curly_braces_content)
 {
 	bool is_numeric;
@@ -354,7 +377,9 @@ cleanup:
 	git_buf_dispose(&identifier);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_object_t parse_obj_type(const char *str)
 {
 	if (!strcmp(str, "commit"))
@@ -371,7 +396,9 @@ static git_object_t parse_obj_type(const char *str)
 
 	return GIT_OBJECT_BAD;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int dereference_to_non_tag(git_object **out, git_object *obj)
 {
 	if (git_object_type(obj) == GIT_OBJECT_TAG)
@@ -379,7 +406,9 @@ static int dereference_to_non_tag(git_object **out, git_object *obj)
 
 	return git_object_dup(out, obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_caret_parent_syntax(git_object **out, git_object *obj, int n)
 {
 	git_object *temp_commit = NULL;
@@ -399,7 +428,9 @@ static int handle_caret_parent_syntax(git_object **out, git_object *obj, int n)
 	git_object_free(temp_commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_linear_syntax(git_object **out, git_object *obj, int n)
 {
 	git_object *temp_commit = NULL;
@@ -414,7 +445,9 @@ static int handle_linear_syntax(git_object **out, git_object *obj, int n)
 	git_object_free(temp_commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_colon_syntax(
 	git_object **out,
 	git_object *obj,
@@ -447,7 +480,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int walk_and_search(git_object **out, git_revwalk *walk, regex_t *regex)
 {
 	int error;
@@ -473,7 +508,9 @@ static int walk_and_search(git_object **out, git_revwalk *walk, regex_t *regex)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_grep_syntax(git_object **out, git_repository *repo, const git_oid *spec_oid, const char *pattern)
 {
 	regex_t preg;
@@ -502,7 +539,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_caret_curly_syntax(git_object **out, git_object *obj, const char *curly_braces_content)
 {
 	git_object_t expected_type;
@@ -520,7 +559,9 @@ static int handle_caret_curly_syntax(git_object **out, git_object *obj, const ch
 
 	return git_object_peel(out, obj, expected_type);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int extract_curly_braces_content(git_buf *buf, const char *spec, size_t *pos)
 {
 	git_buf_clear(buf);
@@ -545,7 +586,9 @@ static int extract_curly_braces_content(git_buf *buf, const char *spec, size_t *
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int extract_path(git_buf *buf, const char *spec, size_t *pos)
 {
 	git_buf_clear(buf);
@@ -561,7 +604,9 @@ static int extract_path(git_buf *buf, const char *spec, size_t *pos)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int extract_how_many(int *n, const char *spec, size_t *pos)
 {
 	const char *end_ptr;
@@ -592,7 +637,9 @@ static int extract_how_many(int *n, const char *spec, size_t *pos)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int object_from_reference(git_object **object, git_reference *reference)
 {
 	git_reference *resolved = NULL;
@@ -606,7 +653,9 @@ static int object_from_reference(git_object **object, git_reference *reference)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_base_rev_loaded(git_object **object, git_reference **reference, const char *spec, size_t identifier_len, git_repository *repo, bool allow_empty_identifier)
 {
 	int error;
@@ -629,7 +678,9 @@ static int ensure_base_rev_loaded(git_object **object, git_reference **reference
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_base_rev_is_not_known_yet(git_object *object)
 {
 	if (object == NULL)
@@ -637,7 +688,9 @@ static int ensure_base_rev_is_not_known_yet(git_object *object)
 
 	return GIT_EINVALIDSPEC;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool any_left_hand_identifier(git_object *object, git_reference *reference, size_t identifier_len)
 {
 	if (object != NULL)
@@ -651,7 +704,9 @@ static bool any_left_hand_identifier(git_object *object, git_reference *referenc
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_left_hand_identifier_is_not_known_yet(git_object *object, git_reference *reference)
 {
 	if (!ensure_base_rev_is_not_known_yet(object) && reference == NULL)
@@ -659,7 +714,9 @@ static int ensure_left_hand_identifier_is_not_known_yet(git_object *object, git_
 
 	return GIT_EINVALIDSPEC;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int revparse__ext(
 	git_object **object_out,
 	git_reference **reference_out,
@@ -824,7 +881,9 @@ cleanup:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revparse_ext(
 	git_object **object_out,
 	git_reference **reference_out,
@@ -850,7 +909,9 @@ cleanup:
 	git_reference_free(ref);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revparse_single(git_object **out, git_repository *repo, const char *spec)
 {
 	int error;
@@ -873,7 +934,9 @@ cleanup:
 	git_reference_free(ref);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revparse(
 	git_revspec *revspec,
 	git_repository *repo,
@@ -929,3 +992,4 @@ int git_revparse(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

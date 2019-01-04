@@ -28,6 +28,7 @@
 
 #define GIT_MERGE_FILE_SIDE_EXISTS(X)	((X)->mode != 0)
 
+#ifdef DISABLED_FUNCTION
 int git_merge_file__input_from_index(
 	git_merge_file_input *input_out,
 	git_odb_object **odb_object_out,
@@ -49,7 +50,9 @@ int git_merge_file__input_from_index(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void merge_file_normalize_opts(
 	git_merge_file_options *out,
 	const git_merge_file_options *given_opts)
@@ -61,7 +64,9 @@ static void merge_file_normalize_opts(
 		memcpy(out, &default_opts, sizeof(git_merge_file_options));
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_file__xdiff(
 	git_merge_file_result *out,
 	const git_merge_file_input *ancestor,
@@ -159,7 +164,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool merge_file__is_binary(const git_merge_file_input *file)
 {
 	size_t len = file ? file->size : 0;
@@ -171,7 +178,9 @@ static bool merge_file__is_binary(const git_merge_file_input *file)
 
 	return len ? (memchr(file->ptr, 0, len) != NULL) : false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_file__binary(
 	git_merge_file_result *out,
 	const git_merge_file_input *ours,
@@ -201,7 +210,9 @@ static int merge_file__binary(
 done:
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_file__from_inputs(
 	git_merge_file_result *out,
 	const git_merge_file_input *ancestor,
@@ -216,7 +227,9 @@ static int merge_file__from_inputs(
 
 	return merge_file__xdiff(out, ancestor, ours, theirs, given_opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_merge_file_input *git_merge_file__normalize_inputs(
 	git_merge_file_input *out,
 	const git_merge_file_input *given)
@@ -231,7 +244,9 @@ static git_merge_file_input *git_merge_file__normalize_inputs(
 
 	return out;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_file(
 	git_merge_file_result *out,
 	const git_merge_file_input *ancestor,
@@ -253,7 +268,9 @@ int git_merge_file(
 
 	return merge_file__from_inputs(out, ancestor, ours, theirs, options);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_file_from_index(
 	git_merge_file_result *out,
 	git_repository *repo,
@@ -300,7 +317,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_merge_file_result_free(git_merge_file_result *result)
 {
 	if (result == NULL)
@@ -309,3 +328,4 @@ void git_merge_file_result_free(git_merge_file_result *result)
 	git__free((char *)result->path);
 	git__free((char *)result->ptr);
 }
+#endif // DISABLED_FUNCTION

@@ -10,6 +10,12 @@ const char* PATH_SEPARATOR = "\\";
 const char* PATH_SEPARATOR = "/";
 #endif
 
+#ifdef USE_STD_FS_API
+#define readdir My_readdir
+#define opendir My_opendir
+#define closedir My_closedir
+#endif
+
 VectorFileEntry walkdir_internal(const std::vector<std::string> &dirs,
                                  const std::set<std::string> &ignoredNames,
                                  const std::vector<std::string> &ignoredStartNames,
@@ -17,8 +23,8 @@ VectorFileEntry walkdir_internal(const std::vector<std::string> &dirs,
                                  const std::string &rootDir) {
   VectorFileEntry res;
   for(const auto &dirname : dirs) {
-    if (DIR *dir = opendir(dirname.c_str())) {
-      while (struct dirent *entry = readdir(dir)) {
+    if (auto *dir = opendir(dirname.c_str())) {
+      while (auto *entry = readdir(dir)) {
         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, ".."))
           continue;
         if (ignoredNames.find(entry->d_name) != ignoredNames.end())

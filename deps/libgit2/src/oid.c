@@ -47,10 +47,12 @@ int git_oid_fromstrn(git_oid *out, const char *str, size_t length)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_oid_fromstrp(git_oid *out, const char *str)
 {
 	return git_oid_fromstrn(out, str, strlen(str));
 }
+#endif // DISABLED_FUNCTION
 
 int git_oid_fromstr(git_oid *out, const char *str)
 {
@@ -108,6 +110,7 @@ char *git_oid_tostr_s(const git_oid *oid)
 	return str;
 }
 
+#ifdef DISABLED_FUNCTION
 char *git_oid_allocfmt(const git_oid *oid)
 {
 	char *str = git__malloc(GIT_OID_HEXSZ + 1);
@@ -116,6 +119,7 @@ char *git_oid_allocfmt(const git_oid *oid)
 	git_oid_nfmt(str, GIT_OID_HEXSZ + 1, oid);
 	return str;
 }
+#endif // DISABLED_FUNCTION
 
 char *git_oid_tostr(char *out, size_t n, const git_oid *oid)
 {
@@ -157,6 +161,7 @@ int git_oid__parse(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 void git_oid__writebuf(git_buf *buf, const char *header, const git_oid *oid)
 {
 	char hex_oid[GIT_OID_HEXSZ];
@@ -166,6 +171,7 @@ void git_oid__writebuf(git_buf *buf, const char *header, const git_oid *oid)
 	git_buf_put(buf, hex_oid, GIT_OID_HEXSZ);
 	git_buf_putc(buf, '\n');
 }
+#endif // DISABLED_FUNCTION
 
 void git_oid_fromraw(git_oid *out, const unsigned char *raw)
 {
@@ -210,6 +216,7 @@ int git_oid_ncmp(const git_oid *oid_a, const git_oid *oid_b, size_t len)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_oid_strcmp(const git_oid *oid_a, const char *str)
 {
 	const unsigned char *a;
@@ -231,11 +238,14 @@ int git_oid_strcmp(const git_oid *oid_a, const char *str)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_oid_streq(const git_oid *oid_a, const char *str)
 {
 	return git_oid_strcmp(oid_a, str) == 0 ? 0 : -1;
 }
+#endif // DISABLED_FUNCTION
 
 int git_oid_iszero(const git_oid *oid_a)
 {
@@ -260,6 +270,7 @@ struct git_oid_shorten {
 	int min_length, full;
 };
 
+#ifdef DISABLED_FUNCTION
 static int resize_trie(git_oid_shorten *self, size_t new_size)
 {
 	self->nodes = git__reallocarray(self->nodes, new_size, sizeof(trie_node));
@@ -272,7 +283,9 @@ static int resize_trie(git_oid_shorten *self, size_t new_size)
 	self->size = new_size;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static trie_node *push_leaf(git_oid_shorten *os, node_index idx, int push_at, const char *oid)
 {
 	trie_node *node, *leaf;
@@ -298,7 +311,9 @@ static trie_node *push_leaf(git_oid_shorten *os, node_index idx, int push_at, co
 
 	return node;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_oid_shorten *git_oid_shorten_new(size_t min_length)
 {
 	git_oid_shorten *os;
@@ -319,7 +334,9 @@ git_oid_shorten *git_oid_shorten_new(size_t min_length)
 
 	return os;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_oid_shorten_free(git_oid_shorten *os)
 {
 	if (os == NULL)
@@ -328,6 +345,7 @@ void git_oid_shorten_free(git_oid_shorten *os)
 	git__free(os->nodes);
 	git__free(os);
 }
+#endif // DISABLED_FUNCTION
 
 
 /*
@@ -374,6 +392,7 @@ void git_oid_shorten_free(git_oid_shorten *os)
  *
  *	This is a pretty good balance between performance and memory usage.
  */
+#ifdef DISABLED_FUNCTION
 int git_oid_shorten_add(git_oid_shorten *os, const char *text_oid)
 {
 	int i;
@@ -439,4 +458,5 @@ int git_oid_shorten_add(git_oid_shorten *os, const char *text_oid)
 
 	return os->min_length;
 }
+#endif // DISABLED_FUNCTION
 

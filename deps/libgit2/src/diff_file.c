@@ -17,6 +17,7 @@
 
 #define DIFF_MAX_FILESIZE 0x20000000
 
+#ifdef DISABLED_FUNCTION
 static bool diff_file_content_binary_by_size(git_diff_file_content *fc)
 {
 	/* if we have diff opts, check max_size vs file size */
@@ -27,7 +28,9 @@ static bool diff_file_content_binary_by_size(git_diff_file_content *fc)
 
 	return ((fc->file->flags & GIT_DIFF_FLAG_BINARY) != 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void diff_file_content_binary_by_content(git_diff_file_content *fc)
 {
 	if ((fc->file->flags & DIFF_FLAGS_KNOWN_BINARY) != 0)
@@ -40,7 +43,9 @@ static void diff_file_content_binary_by_content(git_diff_file_content *fc)
 	default: break;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_init_common(
 	git_diff_file_content *fc, const git_diff_options *opts)
 {
@@ -88,7 +93,9 @@ static int diff_file_content_init_common(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_file_content__init_from_diff(
 	git_diff_file_content *fc,
 	git_diff *diff,
@@ -130,7 +137,9 @@ int git_diff_file_content__init_from_diff(
 
 	return diff_file_content_init_common(fc, &diff->opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_file_content__init_from_src(
 	git_diff_file_content *fc,
 	git_repository *repo,
@@ -171,7 +180,9 @@ int git_diff_file_content__init_from_src(
 
 	return diff_file_content_init_common(fc, opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_commit_to_str(
 	git_diff_file_content *fc, bool check_status)
 {
@@ -224,7 +235,9 @@ static int diff_file_content_commit_to_str(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_load_blob(
 	git_diff_file_content *fc,
 	git_diff_options *opts)
@@ -266,7 +279,9 @@ static int diff_file_content_load_blob(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_load_workdir_symlink_fake(
 	git_diff_file_content *fc, git_buf *path)
 {
@@ -283,7 +298,9 @@ static int diff_file_content_load_workdir_symlink_fake(
 	git_buf_dispose(&target);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_load_workdir_symlink(
 	git_diff_file_content *fc, git_buf *path)
 {
@@ -316,7 +333,9 @@ static int diff_file_content_load_workdir_symlink(
 	fc->map.len = read_len;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_load_workdir_file(
 	git_diff_file_content *fc,
 	git_buf *path,
@@ -376,7 +395,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_file_content_load_workdir(
 	git_diff_file_content *fc,
 	git_diff_options *diff_opts)
@@ -409,7 +430,9 @@ static int diff_file_content_load_workdir(
 	git_buf_dispose(&path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_file_content__load(
 	git_diff_file_content *fc,
 	git_diff_options *diff_opts)
@@ -436,7 +459,9 @@ int git_diff_file_content__load(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_file_content__unload(git_diff_file_content *fc)
 {
 	if ((fc->flags & GIT_DIFF_FLAG__LOADED) == 0)
@@ -463,10 +488,13 @@ void git_diff_file_content__unload(git_diff_file_content *fc)
 
 	fc->flags &= ~GIT_DIFF_FLAG__LOADED;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_file_content__clear(git_diff_file_content *fc)
 {
 	git_diff_file_content__unload(fc);
 
 	/* for now, nothing else to do */
 }
+#endif // DISABLED_FUNCTION

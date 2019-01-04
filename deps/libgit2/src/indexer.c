@@ -77,10 +77,12 @@ struct delta_info {
 	git_off_t delta_off;
 };
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_indexer_hash(const git_indexer *idx)
 {
 	return &idx->hash;
 }
+#endif // DISABLED_FUNCTION
 
 static int parse_header(struct git_pack_header *hdr, struct git_pack_file *pack)
 {
@@ -115,12 +117,14 @@ static int objects_cmp(const void *a, const void *b)
 	return git_oid__cmp(&entrya->oid, &entryb->oid);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_indexer_init_options(git_indexer_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_indexer_options, GIT_INDEXER_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_indexer_new(
 		git_indexer **out,
@@ -193,10 +197,12 @@ cleanup:
 	return -1;
 }
 
+#ifdef DISABLED_FUNCTION
 void git_indexer__set_fsync(git_indexer *idx, int do_fsync)
 {
 	idx->do_fsync = !!do_fsync;
 }
+#endif // DISABLED_FUNCTION
 
 /* Try to store the delta so we can try to resolve it later */
 static int store_delta(git_indexer *idx)

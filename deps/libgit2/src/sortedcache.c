@@ -7,6 +7,7 @@
 
 #include "sortedcache.h"
 
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_new(
 	git_sortedcache **out,
 	size_t item_path_offset,
@@ -53,17 +54,23 @@ fail:
 	git__free(sc);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_sortedcache_incref(git_sortedcache *sc)
 {
 	GIT_REFCOUNT_INC(sc);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_sortedcache_path(git_sortedcache *sc)
 {
 	return sc->path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void sortedcache_clear(git_sortedcache *sc)
 {
 	git_strmap_clear(sc->map);
@@ -81,7 +88,9 @@ static void sortedcache_clear(git_sortedcache *sc)
 
 	git_pool_clear(&sc->pool);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void sortedcache_free(git_sortedcache *sc)
 {
 	/* acquire write lock to make sure everyone else is done */
@@ -97,14 +106,18 @@ static void sortedcache_free(git_sortedcache *sc)
 	git_rwlock_free(&sc->lock);
 	git__free(sc);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_sortedcache_free(git_sortedcache *sc)
 {
 	if (!sc)
 		return;
 	GIT_REFCOUNT_DEC(sc, sortedcache_free);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int sortedcache_copy_item(void *payload, void *tgt_item, void *src_item)
 {
 	git_sortedcache *sc = payload;
@@ -112,8 +125,10 @@ static int sortedcache_copy_item(void *payload, void *tgt_item, void *src_item)
 	memcpy(tgt_item, src_item, sc->item_path_offset);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* copy a sorted cache */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_copy(
 	git_sortedcache **out,
 	git_sortedcache *src,
@@ -160,8 +175,10 @@ int git_sortedcache_copy(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* lock sortedcache while making modifications */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_wlock(git_sortedcache *sc)
 {
 	GIT_UNUSED(sc); /* prevent warning when compiled w/o threads */
@@ -172,15 +189,19 @@ int git_sortedcache_wlock(git_sortedcache *sc)
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* unlock sorted cache when done with modifications */
+#ifdef DISABLED_FUNCTION
 void git_sortedcache_wunlock(git_sortedcache *sc)
 {
 	git_vector_sort(&sc->items);
 	git_rwlock_wrunlock(&sc->lock);
 }
+#endif // DISABLED_FUNCTION
 
 /* lock sortedcache for read */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_rlock(git_sortedcache *sc)
 {
 	GIT_UNUSED(sc); /* prevent warning when compiled w/o threads */
@@ -191,17 +212,21 @@ int git_sortedcache_rlock(git_sortedcache *sc)
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* unlock sorted cache when done reading */
+#ifdef DISABLED_FUNCTION
 void git_sortedcache_runlock(git_sortedcache *sc)
 {
 	GIT_UNUSED(sc); /* prevent warning when compiled w/o threads */
 	git_rwlock_rdunlock(&sc->lock);
 }
+#endif // DISABLED_FUNCTION
 
 /* if the file has changed, lock cache and load file contents into buf;
  * returns <0 on error, >0 if file has not changed
  */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_lockandload(git_sortedcache *sc, git_buf *buf)
 {
 	int error, fd;
@@ -246,14 +271,18 @@ unlock:
 	git_sortedcache_wunlock(sc);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_sortedcache_updated(git_sortedcache *sc)
 {
 	/* update filestamp to latest value */
 	git_futils_filestamp_check(&sc->stamp, sc->path);
 }
+#endif // DISABLED_FUNCTION
 
 /* release all items in sorted cache */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_clear(git_sortedcache *sc, bool wlock)
 {
 	if (wlock && git_sortedcache_wlock(sc) < 0)
@@ -266,8 +295,10 @@ int git_sortedcache_clear(git_sortedcache *sc, bool wlock)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* find and/or insert item, returning pointer to item data */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_upsert(void **out, git_sortedcache *sc, const char *key)
 {
 	size_t pos;
@@ -316,8 +347,10 @@ done:
 		*out = !error ? item : NULL;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* lookup item by key */
+#ifdef DISABLED_FUNCTION
 void *git_sortedcache_lookup(const git_sortedcache *sc, const char *key)
 {
 	size_t pos = git_strmap_lookup_index(sc->map, key);
@@ -325,14 +358,18 @@ void *git_sortedcache_lookup(const git_sortedcache *sc, const char *key)
 		return git_strmap_value_at(sc->map, pos);
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
 /* find out how many items are in the cache */
+#ifdef DISABLED_FUNCTION
 size_t git_sortedcache_entrycount(const git_sortedcache *sc)
 {
 	return git_vector_length(&sc->items);
 }
+#endif // DISABLED_FUNCTION
 
 /* lookup item by index */
+#ifdef DISABLED_FUNCTION
 void *git_sortedcache_entry(git_sortedcache *sc, size_t pos)
 {
 	/* make sure the items are sorted so this gets the correct item */
@@ -341,6 +378,7 @@ void *git_sortedcache_entry(git_sortedcache *sc, size_t pos)
 
 	return git_vector_get(&sc->items, pos);
 }
+#endif // DISABLED_FUNCTION
 
 /* helper struct so bsearch callback can know offset + key value for cmp */
 struct sortedcache_magic_key {
@@ -348,14 +386,17 @@ struct sortedcache_magic_key {
 	const char *key;
 };
 
+#ifdef DISABLED_FUNCTION
 static int sortedcache_magic_cmp(const void *key, const void *value)
 {
 	const struct sortedcache_magic_key *magic = key;
 	const char *value_key = ((const char *)value) + magic->offset;
 	return strcmp(magic->key, value_key);
 }
+#endif // DISABLED_FUNCTION
 
 /* lookup index of item by key */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_lookup_index(
 	size_t *out, git_sortedcache *sc, const char *key)
 {
@@ -366,8 +407,10 @@ int git_sortedcache_lookup_index(
 
 	return git_vector_bsearch2(out, &sc->items, sortedcache_magic_cmp, &magic);
 }
+#endif // DISABLED_FUNCTION
 
 /* remove entry from cache */
+#ifdef DISABLED_FUNCTION
 int git_sortedcache_remove(git_sortedcache *sc, size_t pos)
 {
 	char *item;
@@ -392,4 +435,5 @@ int git_sortedcache_remove(git_sortedcache *sc, size_t pos)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 

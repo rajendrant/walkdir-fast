@@ -18,101 +18,137 @@
 /**
  * Commit
  */
+#ifdef DISABLED_FUNCTION
 int git_commit_lookup(git_commit **out, git_repository *repo, const git_oid *id)
 {
 	return git_object_lookup((git_object **)out, repo, id, GIT_OBJECT_COMMIT);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_lookup_prefix(git_commit **out, git_repository *repo, const git_oid *id, size_t len)
 {
 	return git_object_lookup_prefix((git_object **)out, repo, id, len, GIT_OBJECT_COMMIT);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_commit_free(git_commit *obj)
 {
 	git_object_free((git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_commit_id(const git_commit *obj)
 {
 	return git_object_id((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_commit_owner(const git_commit *obj)
 {
 	return git_object_owner((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_dup(git_commit **out, git_commit *obj)
 {
 	return git_object_dup((git_object **)out, (git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Tree
  */
+#ifdef DISABLED_FUNCTION
 int git_tree_lookup(git_tree **out, git_repository *repo, const git_oid *id)
 {
 	return git_object_lookup((git_object **)out, repo, id, GIT_OBJECT_TREE);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_lookup_prefix(git_tree **out, git_repository *repo, const git_oid *id, size_t len)
 {
 	return git_object_lookup_prefix((git_object **)out, repo, id, len, GIT_OBJECT_TREE);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_tree_free(git_tree *obj)
 {
 	git_object_free((git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_tree_id(const git_tree *obj)
 {
 	return git_object_id((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_tree_owner(const git_tree *obj)
 {
 	return git_object_owner((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_dup(git_tree **out, git_tree *obj)
 {
 	return git_object_dup((git_object **)out, (git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Tag
  */
+#ifdef DISABLED_FUNCTION
 int git_tag_lookup(git_tag **out, git_repository *repo, const git_oid *id)
 {
 	return git_object_lookup((git_object **)out, repo, id, GIT_OBJECT_TAG);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_lookup_prefix(git_tag **out, git_repository *repo, const git_oid *id, size_t len)
 {
 	return git_object_lookup_prefix((git_object **)out, repo, id, len, GIT_OBJECT_TAG);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_tag_free(git_tag *obj)
 {
 	git_object_free((git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_tag_id(const git_tag *obj)
 {
 	return git_object_id((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_tag_owner(const git_tag *obj)
 {
 	return git_object_owner((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_dup(git_tag **out, git_tag *obj)
 {
 	return git_object_dup((git_object **)out, (git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Blob
@@ -122,10 +158,12 @@ int git_blob_lookup(git_blob **out, git_repository *repo, const git_oid *id)
 	return git_object_lookup((git_object **)out, repo, id, GIT_OBJECT_BLOB);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_blob_lookup_prefix(git_blob **out, git_repository *repo, const git_oid *id, size_t len)
 {
 	return git_object_lookup_prefix((git_object **)out, repo, id, len, GIT_OBJECT_BLOB);
 }
+#endif // DISABLED_FUNCTION
 
 void git_blob_free(git_blob *obj)
 {
@@ -137,12 +175,16 @@ const git_oid *git_blob_id(const git_blob *obj)
 	return git_object_id((const git_object *)obj);
 }
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_blob_owner(const git_blob *obj)
 {
 	return git_object_owner((const git_object *)obj);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_dup(git_blob **out, git_blob *obj)
 {
 	return git_object_dup((git_object **)out, (git_object *)obj);
 }
+#endif // DISABLED_FUNCTION

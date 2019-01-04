@@ -13,6 +13,7 @@
 
 #include "repository.h"
 
+#ifdef DISABLED_FUNCTION
 static bool is_worktree_dir(const char *dir)
 {
 	git_buf buf = GIT_BUF_INIT;
@@ -28,7 +29,9 @@ static bool is_worktree_dir(const char *dir)
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_list(git_strarray *wts, git_repository *repo)
 {
 	git_vector worktrees = GIT_VECTOR_INIT;
@@ -68,6 +71,7 @@ exit:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 char *git_worktree__read_link(const char *base, const char *file)
 {
@@ -101,6 +105,7 @@ err:
 	return NULL;
 }
 
+#ifdef DISABLED_FUNCTION
 static int write_wtfile(const char *base, const char *file, const git_buf *buf)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -119,7 +124,9 @@ out:
 
 	return err;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int open_worktree_dir(git_worktree **out, const char *parent, const char *dir, const char *name)
 {
 	git_buf gitdir = GIT_BUF_INIT;
@@ -160,7 +167,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_lookup(git_worktree **out, git_repository *repo, const char *name)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -185,7 +194,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_open_from_repository(git_worktree **out, git_repository *repo)
 {
 	git_buf parent = GIT_BUF_INIT;
@@ -217,7 +228,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_worktree_free(git_worktree *wt)
 {
 	if (!wt)
@@ -231,7 +244,9 @@ void git_worktree_free(git_worktree *wt)
 	git__free(wt->name);
 	git__free(wt);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_validate(const git_worktree *wt)
 {
 	assert(wt);
@@ -259,7 +274,9 @@ int git_worktree_validate(const git_worktree *wt)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_add_init_options(git_worktree_add_options *opts,
 	unsigned int version)
 {
@@ -267,7 +284,9 @@ int git_worktree_add_init_options(git_worktree_add_options *opts,
 		git_worktree_add_options, GIT_WORKTREE_ADD_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_add(git_worktree **out, git_repository *repo,
 	const char *name, const char *worktree,
 	const git_worktree_add_options *opts)
@@ -391,7 +410,9 @@ out:
 
 	return err;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_lock(git_worktree *wt, const char *reason)
 {
 	git_buf buf = GIT_BUF_INIT, path = GIT_BUF_INIT;
@@ -418,7 +439,9 @@ out:
 
 	return err;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_unlock(git_worktree *wt)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -442,7 +465,9 @@ int git_worktree_unlock(git_worktree *wt)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_is_locked(git_buf *reason, const git_worktree *wt)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -463,19 +488,25 @@ out:
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_worktree_name(const git_worktree *wt)
 {
 	assert(wt);
 	return wt->name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_worktree_path(const git_worktree *wt)
 {
 	assert(wt);
 	return wt->worktree_path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_prune_init_options(
 	git_worktree_prune_options *opts,
 	unsigned int version)
@@ -484,7 +515,9 @@ int git_worktree_prune_init_options(
 		git_worktree_prune_options, GIT_WORKTREE_PRUNE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_is_prunable(git_worktree *wt,
 	git_worktree_prune_options *opts)
 {
@@ -518,7 +551,9 @@ int git_worktree_is_prunable(git_worktree *wt,
 
 	return 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_worktree_prune(git_worktree *wt,
 	git_worktree_prune_options *opts)
 {
@@ -576,3 +611,4 @@ out:
 
 	return err;
 }
+#endif // DISABLED_FUNCTION

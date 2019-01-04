@@ -50,12 +50,14 @@ typedef struct {
 	const char *attrs[GIT_FLEX_ARRAY];
 } git_filter_def;
 
+#ifdef DISABLED_FUNCTION
 static int filter_def_priority_cmp(const void *a, const void *b)
 {
 	int pa = ((const git_filter_def *)a)->priority;
 	int pb = ((const git_filter_def *)b)->priority;
 	return (pa < pb) ? -1 : (pa > pb) ? 1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
 struct git_filter_registry {
 	git_rwlock lock;
@@ -64,9 +66,12 @@ struct git_filter_registry {
 
 static struct git_filter_registry filter_registry;
 
+#ifdef DISABLED_FUNCTION
 static void git_filter_global_shutdown(void);
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 static int filter_def_scan_attrs(
 	git_buf *attrs, size_t *nattr, size_t *nmatch, const char *attr_str)
 {
@@ -100,7 +105,9 @@ static int filter_def_scan_attrs(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filter_def_set_attrs(git_filter_def *fdef)
 {
 	char *scan = fdef->attrdata;
@@ -132,21 +139,27 @@ static void filter_def_set_attrs(git_filter_def *fdef)
 		scan += strlen(scan) + 1;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filter_def_name_key_check(const void *key, const void *fdef)
 {
 	const char *name =
 		fdef ? ((const git_filter_def *)fdef)->filter_name : NULL;
 	return name ? git__strcmp(key, name) : -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filter_def_filter_key_check(const void *key, const void *fdef)
 {
 	const void *filter = fdef ? ((const git_filter_def *)fdef)->filter : NULL;
 	return (key == filter) ? 0 : -1;
 }
+#endif // DISABLED_FUNCTION
 
 /* Note: callers must lock the registry before calling this function */
+#ifdef DISABLED_FUNCTION
 static int filter_registry_insert(
 	const char *name, git_filter *filter, int priority)
 {
@@ -185,7 +198,9 @@ static int filter_registry_insert(
 	git_vector_sort(&filter_registry.filters);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_global_init(void)
 {
 	git_filter *crlf = NULL, *ident = NULL;
@@ -216,6 +231,7 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static void git_filter_global_shutdown(void)
 {
@@ -243,13 +259,16 @@ static void git_filter_global_shutdown(void)
 }
 
 /* Note: callers must lock the registry before calling this function */
+#ifdef DISABLED_FUNCTION
 static int filter_registry_find(size_t *pos, const char *name)
 {
 	return git_vector_search2(
 		pos, &filter_registry.filters, filter_def_name_key_check, name);
 }
+#endif // DISABLED_FUNCTION
 
 /* Note: callers must lock the registry before calling this function */
+#ifdef DISABLED_FUNCTION
 static git_filter_def *filter_registry_lookup(size_t *pos, const char *name)
 {
 	git_filter_def *fdef = NULL;
@@ -259,8 +278,10 @@ static git_filter_def *filter_registry_lookup(size_t *pos, const char *name)
 
 	return fdef;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_filter_register(
 	const char *name, git_filter *filter, int priority)
 {
@@ -286,7 +307,9 @@ done:
 	git_rwlock_wrunlock(&filter_registry.lock);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_unregister(const char *name)
 {
 	size_t pos;
@@ -327,7 +350,9 @@ done:
 	git_rwlock_wrunlock(&filter_registry.lock);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filter_initialize(git_filter_def *fdef)
 {
 	int error = 0;
@@ -340,7 +365,9 @@ static int filter_initialize(git_filter_def *fdef)
 	fdef->initialized = true;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_filter *git_filter_lookup(const char *name)
 {
 	size_t pos;
@@ -362,42 +389,58 @@ done:
 	git_rwlock_rdunlock(&filter_registry.lock);
 	return filter;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_filter_free(git_filter *filter)
 {
 	git__free(filter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_filter_source_repo(const git_filter_source *src)
 {
 	return src->repo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_filter_source_path(const git_filter_source *src)
 {
 	return src->path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 uint16_t git_filter_source_filemode(const git_filter_source *src)
 {
 	return src->filemode;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_filter_source_id(const git_filter_source *src)
 {
 	return git_oid_iszero(&src->oid) ? NULL : &src->oid;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_filter_mode_t git_filter_source_mode(const git_filter_source *src)
 {
 	return src->mode;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 uint32_t git_filter_source_flags(const git_filter_source *src)
 {
 	return src->flags;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filter_list_new(
 	git_filter_list **out, const git_filter_source *src)
 {
@@ -420,7 +463,9 @@ static int filter_list_new(
 	*out = fl;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filter_list_check_attributes(
 	const char ***out,
 	git_repository *repo,
@@ -468,7 +513,9 @@ static int filter_list_check_attributes(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_new(
 	git_filter_list **out,
 	git_repository *repo,
@@ -482,7 +529,9 @@ int git_filter_list_new(
 	src.flags = flags;
 	return filter_list_new(out, &src);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list__load_ext(
 	git_filter_list **filters,
 	git_repository *repo,
@@ -570,7 +619,9 @@ int git_filter_list__load_ext(
 	*filters = fl;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_load(
 	git_filter_list **filters,
 	git_repository *repo,
@@ -586,7 +637,9 @@ int git_filter_list_load(
 	return git_filter_list__load_ext(
 		filters, repo, blob, path, mode, &filter_opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_filter_list_free(git_filter_list *fl)
 {
 	uint32_t i;
@@ -603,7 +656,9 @@ void git_filter_list_free(git_filter_list *fl)
 	git_array_clear(fl->filters);
 	git__free(fl);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_contains(
 	git_filter_list *fl,
 	const char *name)
@@ -622,7 +677,9 @@ int git_filter_list_contains(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_push(
 	git_filter_list *fl, git_filter *filter, void *payload)
 {
@@ -660,11 +717,14 @@ int git_filter_list_push(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_filter_list_length(const git_filter_list *fl)
 {
 	return fl ? git_array_size(fl->filters) : 0;
 }
+#endif // DISABLED_FUNCTION
 
 struct buf_stream {
 	git_writestream parent;
@@ -672,6 +732,7 @@ struct buf_stream {
 	bool complete;
 };
 
+#ifdef DISABLED_FUNCTION
 static int buf_stream_write(
 	git_writestream *s, const char *buffer, size_t len)
 {
@@ -682,7 +743,9 @@ static int buf_stream_write(
 
 	return git_buf_put(buf_stream->target, buffer, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int buf_stream_close(git_writestream *s)
 {
 	struct buf_stream *buf_stream = (struct buf_stream *)s;
@@ -693,12 +756,16 @@ static int buf_stream_close(git_writestream *s)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void buf_stream_free(git_writestream *s)
 {
 	GIT_UNUSED(s);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void buf_stream_init(struct buf_stream *writer, git_buf *target)
 {
 	memset(writer, 0, sizeof(struct buf_stream));
@@ -710,7 +777,9 @@ static void buf_stream_init(struct buf_stream *writer, git_buf *target)
 
 	git_buf_clear(target);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_apply_to_data(
 	git_buf *tgt, git_filter_list *filters, git_buf *src)
 {
@@ -734,7 +803,9 @@ int git_filter_list_apply_to_data(
 	assert(writer.complete);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_apply_to_file(
 	git_buf *out,
 	git_filter_list *filters,
@@ -753,7 +824,9 @@ int git_filter_list_apply_to_file(
 	assert(writer.complete);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int buf_from_blob(git_buf *out, git_blob *blob)
 {
 	git_off_t rawsize = git_blob_rawsize(blob);
@@ -766,7 +839,9 @@ static int buf_from_blob(git_buf *out, git_blob *blob)
 	git_buf_attach_notowned(out, git_blob_rawcontent(blob), (size_t)rawsize);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_apply_to_blob(
 	git_buf *out,
 	git_filter_list *filters,
@@ -784,6 +859,7 @@ int git_filter_list_apply_to_blob(
 	assert(writer.complete);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct proxy_stream {
 	git_writestream parent;
@@ -796,6 +872,7 @@ struct proxy_stream {
 	git_writestream *target;
 };
 
+#ifdef DISABLED_FUNCTION
 static int proxy_stream_write(
 	git_writestream *s, const char *buffer, size_t len)
 {
@@ -804,7 +881,9 @@ static int proxy_stream_write(
 
 	return git_buf_put(&proxy_stream->input, buffer, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int proxy_stream_close(git_writestream *s)
 {
 	struct proxy_stream *proxy_stream = (struct proxy_stream *)s;
@@ -841,7 +920,9 @@ static int proxy_stream_close(git_writestream *s)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void proxy_stream_free(git_writestream *s)
 {
 	struct proxy_stream *proxy_stream = (struct proxy_stream *)s;
@@ -851,7 +932,9 @@ static void proxy_stream_free(git_writestream *s)
 	git_buf_dispose(&proxy_stream->temp_buf);
 	git__free(proxy_stream);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int proxy_stream_init(
 	git_writestream **out,
 	git_filter *filter,
@@ -878,7 +961,9 @@ static int proxy_stream_init(
 	*out = (git_writestream *)proxy_stream;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int stream_list_init(
 	git_writestream **out,
 	git_vector *streams,
@@ -932,7 +1017,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void stream_list_free(git_vector *streams)
 {
 	git_writestream *stream;
@@ -942,7 +1029,9 @@ void stream_list_free(git_vector *streams)
 		stream->free(stream);
 	git_vector_free(streams);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_stream_file(
 	git_filter_list *filters,
 	git_repository *repo,
@@ -986,7 +1075,9 @@ done:
 	git_buf_dispose(&abspath);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_stream_data(
 	git_filter_list *filters,
 	git_buf *data,
@@ -1013,7 +1104,9 @@ out:
 	stream_list_free(&filter_streams);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_list_stream_blob(
 	git_filter_list *filters,
 	git_blob *blob,
@@ -1029,9 +1122,12 @@ int git_filter_list_stream_blob(
 
 	return git_filter_list_stream_data(filters, &in, target);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filter_init(git_filter *filter, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(filter, version, git_filter, GIT_FILTER_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

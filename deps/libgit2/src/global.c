@@ -78,6 +78,7 @@ static int init_common(void)
 	return ret;
 }
 
+#ifdef DISABLED_FUNCTION
 static void shutdown_common(void)
 {
 	int pos;
@@ -97,6 +98,7 @@ static void shutdown_common(void)
 	git__free(git__user_agent);
 	git__free(git__ssl_ciphers);
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Handle the global state with TLS
@@ -292,6 +294,7 @@ int git_libgit2_init(void)
 	return ret;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_libgit2_shutdown(void)
 {
 	void *ptr = NULL;
@@ -323,6 +326,7 @@ out:
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
 git_global_st *git__global_state(void)
 {

@@ -29,10 +29,12 @@ static int signature_error(const char *msg)
 	return -1;
 }
 
+#ifdef DISABLED_FUNCTION
 static bool contains_angle_brackets(const char *input)
 {
 	return strchr(input, '<') != NULL || strchr(input, '>') != NULL;
 }
+#endif // DISABLED_FUNCTION
 
 static bool is_crud(unsigned char c)
 {
@@ -61,6 +63,7 @@ static char *extract_trimmed(const char *ptr, size_t len)
 	return git__substrdup(ptr, len);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_signature_new(git_signature **sig_out, const char *name, const char *email, git_time_t time, int offset)
 {
 	git_signature *p = NULL;
@@ -95,7 +98,9 @@ int git_signature_new(git_signature **sig_out, const char *name, const char *ema
 	*sig_out = p;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_signature_dup(git_signature **dest, const git_signature *source)
 {
 	git_signature *signature;
@@ -120,7 +125,9 @@ int git_signature_dup(git_signature **dest, const git_signature *source)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_signature__pdup(git_signature **dest, const git_signature *source, git_pool *pool)
 {
 	git_signature *signature;
@@ -145,7 +152,9 @@ int git_signature__pdup(git_signature **dest, const git_signature *source, git_p
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_signature_now(git_signature **sig_out, const char *name, const char *email)
 {
 	time_t now;
@@ -177,7 +186,9 @@ int git_signature_now(git_signature **sig_out, const char *name, const char *ema
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_signature_default(git_signature **out, git_repository *repo)
 {
 	int error;
@@ -194,6 +205,7 @@ int git_signature_default(git_signature **out, git_repository *repo)
 	git_config_free(cfg);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_signature__parse(git_signature *sig, const char **buffer_out,
 		const char *buffer_end, const char *header, char ender)
@@ -273,6 +285,7 @@ int git_signature__parse(git_signature *sig, const char **buffer_out,
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_signature_from_buffer(git_signature **out, const char *buf)
 {
 	git_signature *sig;
@@ -296,7 +309,9 @@ int git_signature_from_buffer(git_signature **out, const char *buf)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_signature__writebuf(git_buf *buf, const char *header, const git_signature *sig)
 {
 	int offset, hours, mins;
@@ -317,7 +332,9 @@ void git_signature__writebuf(git_buf *buf, const char *header, const git_signatu
 			header ? header : "", sig->name, sig->email,
 			(unsigned)sig->when.time, sign, hours, mins);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_signature__equal(const git_signature *one, const git_signature *two)
 {
 	assert(one && two);
@@ -329,4 +346,5 @@ bool git_signature__equal(const git_signature *one, const git_signature *two)
 		one->when.offset == two->when.offset &&
 		one->when.sign == two->when.sign;
 }
+#endif // DISABLED_FUNCTION
 

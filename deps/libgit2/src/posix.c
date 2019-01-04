@@ -120,11 +120,14 @@ int p_open(const char *path, volatile int flags, ...)
 	return open(path, flags | O_BINARY | O_CLOEXEC, mode);
 }
 
+#ifdef DISABLED_FUNCTION
 int p_creat(const char *path, mode_t mode)
 {
 	return open(path, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY | O_CLOEXEC, mode);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int p_getcwd(char *buffer_out, size_t size)
 {
 	char *cwd_buffer;
@@ -141,6 +144,7 @@ int p_getcwd(char *buffer_out, size_t size)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int p_rename(const char *from, const char *to)
 {

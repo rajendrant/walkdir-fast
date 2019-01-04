@@ -49,6 +49,7 @@ void git_tree_cache_invalidate_path(git_tree_cache *tree, const char *path)
 	}
 }
 
+#ifdef DISABLED_FUNCTION
 const git_tree_cache *git_tree_cache_get(const git_tree_cache *tree, const char *path)
 {
 	const char *ptr = path, *end;
@@ -70,6 +71,7 @@ const git_tree_cache *git_tree_cache_get(const git_tree_cache *tree, const char 
 		ptr = end + 1;
 	}
 }
+#endif // DISABLED_FUNCTION
 
 static int read_tree_internal(git_tree_cache **out,
 			      const char **buffer_in, const char *buffer_end,
@@ -157,6 +159,7 @@ int git_tree_cache_read(git_tree_cache **tree, const char *buffer, size_t buffer
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static int read_tree_recursive(git_tree_cache *cache, const git_tree *tree, git_pool *pool)
 {
 	git_repository *repo;
@@ -214,7 +217,9 @@ static int read_tree_recursive(git_tree_cache *cache, const git_tree *tree, git_
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_cache_read_tree(git_tree_cache **out, const git_tree *tree, git_pool *pool)
 {
 	int error;
@@ -229,6 +234,7 @@ int git_tree_cache_read_tree(git_tree_cache **out, const git_tree *tree, git_poo
 	*out = cache;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_tree_cache_new(git_tree_cache **out, const char *name, git_pool *pool)
 {
@@ -249,6 +255,7 @@ int git_tree_cache_new(git_tree_cache **out, const char *name, git_pool *pool)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static void write_tree(git_buf *out, git_tree_cache *tree)
 {
 	size_t i;
@@ -261,10 +268,13 @@ static void write_tree(git_buf *out, git_tree_cache *tree)
 	for (i = 0; i < tree->children_count; i++)
 		write_tree(out, tree->children[i]);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_cache_write(git_buf *out, git_tree_cache *tree)
 {
 	write_tree(out, tree);
 
 	return git_buf_oom(out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION

@@ -231,6 +231,7 @@ static bool parse_optimized_patterns(
 	git_pool *pool,
 	const char *pattern);
 
+#ifdef DISABLED_FUNCTION
 int git_attr_file__parse_buffer(
 	git_repository *repo, git_attr_file *attrs, const char *data)
 {
@@ -287,7 +288,9 @@ int git_attr_file__parse_buffer(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 uint32_t git_attr_file__name_hash(const char *name)
 {
 	uint32_t h = 5381;
@@ -297,7 +300,9 @@ uint32_t git_attr_file__name_hash(const char *name)
 		h = ((h << 5) + h) + c;
 	return h;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_attr_file__lookup_one(
 	git_attr_file *file,
 	git_attr_path *path,
@@ -325,7 +330,9 @@ int git_attr_file__lookup_one(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_attr_file__load_standalone(git_attr_file **out, const char *path)
 {
 	int error;
@@ -358,6 +365,7 @@ int git_attr_file__load_standalone(git_attr_file **out, const char *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 bool git_attr_fnmatch__match(
 	git_attr_fnmatch *match,
@@ -439,6 +447,7 @@ bool git_attr_fnmatch__match(
 	return (p_fnmatch(match->pattern, filename, flags) != FNM_NOMATCH);
 }
 
+#ifdef DISABLED_FUNCTION
 bool git_attr_rule__match(
 	git_attr_rule *rule,
 	git_attr_path *path)
@@ -450,7 +459,9 @@ bool git_attr_rule__match(
 
 	return matched;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_attr_assignment *git_attr_rule__lookup_assignment(
 	git_attr_rule *rule, const char *name)
 {
@@ -464,6 +475,7 @@ git_attr_assignment *git_attr_rule__lookup_assignment(
 
 	return git_vector_get(&rule->assigns, pos);
 }
+#endif // DISABLED_FUNCTION
 
 int git_attr_path__init(
 	git_attr_path *info, const char *path, const char *base, git_dir_flag dir_flag)
@@ -862,6 +874,7 @@ void git_attr_rule__free(git_attr_rule *rule)
 	git__free(rule);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_attr_session__init(git_attr_session *session, git_repository *repo)
 {
 	assert(repo);
@@ -870,7 +883,9 @@ int git_attr_session__init(git_attr_session *session, git_repository *repo)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_attr_session__free(git_attr_session *session)
 {
 	if (!session)
@@ -881,3 +896,4 @@ void git_attr_session__free(git_attr_session *session)
 
 	memset(session, 0, sizeof(git_attr_session));
 }
+#endif // DISABLED_FUNCTION

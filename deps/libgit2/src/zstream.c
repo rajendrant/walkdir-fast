@@ -53,6 +53,7 @@ void git_zstream_free(git_zstream *zstream)
 		deflateEnd(&zstream->z);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_zstream_reset(git_zstream *zstream)
 {
 	if (zstream->type == GIT_ZSTREAM_INFLATE)
@@ -63,6 +64,7 @@ void git_zstream_reset(git_zstream *zstream)
 	zstream->in_len = 0;
 	zstream->zerr = Z_STREAM_END;
 }
+#endif // DISABLED_FUNCTION
 
 int git_zstream_set_input(git_zstream *zstream, const void *in, size_t in_len)
 {

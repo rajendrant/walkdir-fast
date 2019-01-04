@@ -22,6 +22,7 @@ typedef struct {
 	git_tree *tree;
 } tree_reader;
 
+#ifdef DISABLED_FUNCTION
 static int tree_reader_read(
 	git_buf *out,
 	git_oid *out_id,
@@ -50,7 +51,9 @@ done:
 	git_tree_entry_free(tree_entry);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reader_for_tree(git_reader **out, git_tree *tree)
 {
 	tree_reader *reader;
@@ -66,6 +69,7 @@ int git_reader_for_tree(git_reader **out, git_tree *tree)
 	*out = (git_reader *)reader;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* workdir reader */
 
@@ -75,6 +79,7 @@ typedef struct {
 	git_index *index;
 } workdir_reader;
 
+#ifdef DISABLED_FUNCTION
 static int workdir_reader_read(
 	git_buf *out,
 	git_oid *out_id,
@@ -143,7 +148,9 @@ done:
 	git_buf_dispose(&path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reader_for_workdir(
 	git_reader **out,
 	git_repository *repo,
@@ -169,6 +176,7 @@ int git_reader_for_workdir(
 	*out = (git_reader *)reader;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* index reader */
 
@@ -178,6 +186,7 @@ typedef struct {
 	git_index *index;
 } index_reader;
 
+#ifdef DISABLED_FUNCTION
 static int index_reader_read(
 	git_buf *out,
 	git_oid *out_id,
@@ -208,7 +217,9 @@ done:
 	git_blob_free(blob);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reader_for_index(
 	git_reader **out,
 	git_repository *repo,
@@ -235,9 +246,11 @@ int git_reader_for_index(
 	*out = (git_reader *)reader;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* generic */
 
+#ifdef DISABLED_FUNCTION
 int git_reader_read(
 	git_buf *out,
 	git_oid *out_id,
@@ -249,7 +262,9 @@ int git_reader_read(
 
 	return reader->read(out, out_id, out_filemode, reader, filename);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_reader_free(git_reader *reader)
 {
 	if (!reader)
@@ -257,3 +272,4 @@ void git_reader_free(git_reader *reader)
 
 	git__free(reader);
 }
+#endif // DISABLED_FUNCTION

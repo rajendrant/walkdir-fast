@@ -21,6 +21,7 @@
 #define MM_BLOB_CONFIG "mailmap.blob"
 #define MM_BLOB_DEFAULT "HEAD:" MM_FILE
 
+#ifdef DISABLED_FUNCTION
 static void mailmap_entry_free(git_mailmap_entry *entry)
 {
 	if (!entry)
@@ -32,11 +33,13 @@ static void mailmap_entry_free(git_mailmap_entry *entry)
 	git__free(entry->replace_email);
 	git__free(entry);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * First we sort by replace_email, then replace_name (if present).
  * Entries with names are greater than entries without.
  */
+#ifdef DISABLED_FUNCTION
 static int mailmap_entry_cmp(const void *a_raw, const void *b_raw)
 {
 	const git_mailmap_entry *a = (const git_mailmap_entry *)a_raw;
@@ -55,22 +58,28 @@ static int mailmap_entry_cmp(const void *a_raw, const void *b_raw)
 
 	return git__strcmp(a->replace_name, b->replace_name);
 }
+#endif // DISABLED_FUNCTION
 
 /* Replace the old entry with the new on duplicate. */
+#ifdef DISABLED_FUNCTION
 static int mailmap_entry_replace(void **old_raw, void *new_raw)
 {
 	mailmap_entry_free((git_mailmap_entry *)*old_raw);
 	*old_raw = new_raw;
 	return GIT_EEXISTS;
 }
+#endif // DISABLED_FUNCTION
 
 /* Check if we're at the end of line, w/ comments */
+#ifdef DISABLED_FUNCTION
 static bool is_eol(git_parse_ctx *ctx)
 {
 	char c;
 	return git_parse_peek(&c, ctx, GIT_PARSE_PEEK_SKIP_WHITESPACE) < 0 || c == '#';
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int advance_until(
 	const char **start, size_t *len, git_parse_ctx *ctx, char needle)
 {
@@ -85,6 +94,7 @@ static int advance_until(
 	git_parse_advance_chars(ctx, 1); /* advance past needle */
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Parse a single entry from a mailmap file.
@@ -92,6 +102,7 @@ static int advance_until(
  * The output git_bufs will be non-owning, and should be copied before being
  * persisted.
  */
+#ifdef DISABLED_FUNCTION
 static int parse_mailmap_entry(
 	git_buf *real_name, git_buf *real_email,
 	git_buf *replace_name, git_buf *replace_email,
@@ -144,7 +155,9 @@ static int parse_mailmap_entry(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mailmap_new(git_mailmap **out)
 {
 	int error;
@@ -159,7 +172,9 @@ int git_mailmap_new(git_mailmap **out)
 	*out = mm;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_mailmap_free(git_mailmap *mm)
 {
 	size_t idx;
@@ -173,7 +188,9 @@ void git_mailmap_free(git_mailmap *mm)
 	git_vector_free(&mm->entries);
 	git__free(mm);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mailmap_add_entry_unterminated(
 	git_mailmap *mm,
 	const char *real_name, size_t real_name_size,
@@ -210,7 +227,9 @@ static int mailmap_add_entry_unterminated(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mailmap_add_entry(
 	git_mailmap *mm, const char *real_name, const char *real_email,
 	const char *replace_name, const char *replace_email)
@@ -222,7 +241,9 @@ int git_mailmap_add_entry(
 		replace_name, replace_name ? strlen(replace_name) : 0,
 		replace_email, strlen(replace_email));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mailmap_add_buffer(git_mailmap *mm, const char *buf, size_t len)
 {
 	int error = 0;
@@ -267,7 +288,9 @@ cleanup:
 	git_buf_dispose(&replace_email);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mailmap_from_buffer(git_mailmap **out, const char *data, size_t len)
 {
 	int error = git_mailmap_new(out);
@@ -281,7 +304,9 @@ int git_mailmap_from_buffer(git_mailmap **out, const char *data, size_t len)
 	}
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mailmap_add_blob(
 	git_mailmap *mm, git_repository *repo, const char *rev)
 {
@@ -314,7 +339,9 @@ cleanup:
 	git_object_free(object);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mailmap_add_file_ondisk(
 	git_mailmap *mm, const char *path, git_repository *repo)
 {
@@ -340,8 +367,10 @@ cleanup:
 	git_buf_dispose(&content);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* NOTE: Only expose with an error return, currently never errors */
+#ifdef DISABLED_FUNCTION
 static void mailmap_add_from_repository(git_mailmap *mm, git_repository *repo)
 {
 	git_config *config = NULL;
@@ -386,7 +415,9 @@ static void mailmap_add_from_repository(git_mailmap *mm, git_repository *repo)
 	git_buf_dispose(&path_buf);
 	git_config_free(config);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mailmap_from_repository(git_mailmap **out, git_repository *repo)
 {
 	int error = git_mailmap_new(out);
@@ -395,7 +426,9 @@ int git_mailmap_from_repository(git_mailmap **out, git_repository *repo)
 	mailmap_add_from_repository(*out, repo);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_mailmap_entry *git_mailmap_entry_lookup(
 	const git_mailmap *mm, const char *name, const char *email)
 {
@@ -440,7 +473,9 @@ const git_mailmap_entry *git_mailmap_entry_lookup(
 		return NULL; /* no fallback */
 	return git_vector_get(&mm->entries, fallback);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mailmap_resolve(
 	const char **real_name, const char **real_email,
 	const git_mailmap *mailmap,
@@ -460,7 +495,9 @@ int git_mailmap_resolve(
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_mailmap_resolve_signature(
 	git_signature **out, const git_mailmap *mailmap, const git_signature *sig)
 {
@@ -483,3 +520,4 @@ int git_mailmap_resolve_signature(
 	(*out)->when.sign = sig->when.sign;
 	return 0;
 }
+#endif // DISABLED_FUNCTION

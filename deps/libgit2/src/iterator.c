@@ -26,6 +26,7 @@
 #define iterator__descend_symlinks(I)  iterator__flag(I,DESCEND_SYMLINKS)
 
 
+#ifdef DISABLED_FUNCTION
 static void iterator_set_ignore_case(git_iterator *iter, bool ignore_case)
 {
 	if (ignore_case)
@@ -40,7 +41,9 @@ static void iterator_set_ignore_case(git_iterator *iter, bool ignore_case)
 
 	git_vector_set_cmp(&iter->pathlist, (git_vector_cmp)iter->strcomp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_range_init(
 	git_iterator *iter, const char *start, const char *end)
 {
@@ -63,7 +66,9 @@ static int iterator_range_init(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void iterator_range_free(git_iterator *iter)
 {
 	if (iter->start) {
@@ -78,14 +83,18 @@ static void iterator_range_free(git_iterator *iter)
 		iter->end_len = 0;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_reset_range(
 	git_iterator *iter, const char *start, const char *end)
 {
 	iterator_range_free(iter);
 	return iterator_range_init(iter, start, end);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_pathlist_init(git_iterator *iter, git_strarray *pathlist)
 {
 	size_t i;
@@ -103,7 +112,9 @@ static int iterator_pathlist_init(git_iterator *iter, git_strarray *pathlist)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_init_common(
 	git_iterator *iter,
 	git_repository *repo,
@@ -161,7 +172,9 @@ static int iterator_init_common(
 	iterator_set_ignore_case(iter, ignore_case);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void iterator_clear(git_iterator *iter)
 {
 	iter->started = false;
@@ -170,7 +183,9 @@ static void iterator_clear(git_iterator *iter)
 	iter->pathlist_walk_idx = 0;
 	iter->flags &= ~GIT_ITERATOR_FIRST_ACCESS;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) iterator_has_started(
 	git_iterator *iter, const char *path, bool is_submodule)
 {
@@ -207,7 +222,9 @@ GIT_INLINE(bool) iterator_has_started(
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) iterator_has_ended(git_iterator *iter, const char *path)
 {
 	if (iter->end == NULL)
@@ -218,10 +235,12 @@ GIT_INLINE(bool) iterator_has_ended(git_iterator *iter, const char *path)
 	iter->ended = (iter->prefixcomp(path, iter->end) > 0);
 	return iter->ended;
 }
+#endif // DISABLED_FUNCTION
 
 /* walker for the index and tree iterator that allows it to walk the sorted
  * pathlist entries alongside sorted iterator entries.
  */
+#ifdef DISABLED_FUNCTION
 static bool iterator_pathlist_next_is(git_iterator *iter, const char *path)
 {
 	char *p;
@@ -286,6 +305,7 @@ static bool iterator_pathlist_next_is(git_iterator *iter, const char *path)
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
 typedef enum {
 	ITERATOR_PATHLIST_NONE = 0,
@@ -295,6 +315,7 @@ typedef enum {
 	ITERATOR_PATHLIST_FULL = 4,
 } iterator_pathlist_search_t;
 
+#ifdef DISABLED_FUNCTION
 static iterator_pathlist_search_t iterator_pathlist_search(
 	git_iterator *iter, const char *path, size_t path_len)
 {
@@ -347,9 +368,11 @@ static iterator_pathlist_search_t iterator_pathlist_search(
 
 	return ITERATOR_PATHLIST_NONE;
 }
+#endif // DISABLED_FUNCTION
 
 /* Empty iterator */
 
+#ifdef DISABLED_FUNCTION
 static int empty_iterator_noop(const git_index_entry **e, git_iterator *i)
 {
 	GIT_UNUSED(i);
@@ -359,7 +382,9 @@ static int empty_iterator_noop(const git_index_entry **e, git_iterator *i)
 
 	return GIT_ITEROVER;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int empty_iterator_advance_over(
 	const git_index_entry **e,
 	git_iterator_status_t *s,
@@ -368,23 +393,29 @@ static int empty_iterator_advance_over(
 	*s = GIT_ITERATOR_STATUS_EMPTY;
 	return empty_iterator_noop(e, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int empty_iterator_reset(git_iterator *i)
 {
 	GIT_UNUSED(i);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void empty_iterator_free(git_iterator *i)
 {
 	GIT_UNUSED(i);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_iterator base;
 	git_iterator_callbacks cb;
 } empty_iterator;
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_for_nothing(
 	git_iterator **out,
 	git_iterator_options *options)
@@ -412,6 +443,7 @@ int git_iterator_for_nothing(
 	*out = &iter->base;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* Tree iterator */
 
@@ -456,19 +488,24 @@ typedef struct {
 	git_pool entry_pool;
 } tree_iterator;
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(tree_iterator_frame *) tree_iterator_parent_frame(
 	tree_iterator *iter)
 {
 	return iter->frames.size > 1 ?
 		&iter->frames.ptr[iter->frames.size-2] : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(tree_iterator_frame *) tree_iterator_current_frame(
 	tree_iterator *iter)
 {
 	return iter->frames.size ? &iter->frames.ptr[iter->frames.size-1] : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) tree_entry_cmp(
 	const git_tree_entry *a, const git_tree_entry *b, bool icase)
 {
@@ -477,7 +514,9 @@ GIT_INLINE(int) tree_entry_cmp(
 		b->filename, b->filename_len, b->attr == GIT_FILEMODE_TREE,
 		icase ? git__strncasecmp : git__strncmp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) tree_iterator_entry_cmp_icase(
 	const void *ptr_a, const void *ptr_b)
 {
@@ -486,7 +525,9 @@ GIT_INLINE(int) tree_iterator_entry_cmp_icase(
 
 	return tree_entry_cmp(a->tree_entry, b->tree_entry, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_entry_sort_icase(const void *ptr_a, const void *ptr_b)
 {
 	const tree_iterator_entry *a = (const tree_iterator_entry *)ptr_a;
@@ -506,7 +547,9 @@ static int tree_iterator_entry_sort_icase(const void *ptr_a, const void *ptr_b)
 
 	return c;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_compute_path(
 	git_buf *out,
 	tree_iterator_entry *entry)
@@ -526,7 +569,9 @@ static int tree_iterator_compute_path(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_frame_init(
 	tree_iterator *iter,
 	git_tree *tree,
@@ -584,13 +629,17 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(tree_iterator_entry *) tree_iterator_current_entry(
 	tree_iterator_frame *frame)
 {
 	return frame->current;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) tree_iterator_frame_push_neighbors(
 	tree_iterator *iter,
 	tree_iterator_frame *parent_frame,
@@ -648,7 +697,9 @@ GIT_INLINE(int) tree_iterator_frame_push_neighbors(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) tree_iterator_frame_push(
 	tree_iterator *iter, tree_iterator_entry *entry)
 {
@@ -676,7 +727,9 @@ done:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void tree_iterator_frame_pop(tree_iterator *iter)
 {
 	tree_iterator_frame *frame;
@@ -705,7 +758,9 @@ static void tree_iterator_frame_pop(tree_iterator *iter)
 
 	git_buf_dispose(&frame->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_current(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -722,7 +777,9 @@ static int tree_iterator_current(
 	*out = &iter->entry;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void tree_iterator_set_current(
 	tree_iterator *iter,
 	tree_iterator_frame *frame,
@@ -738,7 +795,9 @@ static void tree_iterator_set_current(
 	iter->entry.path = iter->entry_path.ptr;
 	git_oid_cpy(&iter->entry.id, tree_entry->oid);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_advance(const git_index_entry **out, git_iterator *i)
 {
 	tree_iterator *iter = (tree_iterator *)i;
@@ -832,7 +891,9 @@ static int tree_iterator_advance(const git_index_entry **out, git_iterator *i)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_advance_into(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -869,7 +930,9 @@ static int tree_iterator_advance_into(
 	 */
 	return tree_iterator_advance(out, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_advance_over(
 	const git_index_entry **out,
 	git_iterator_status_t *status,
@@ -878,7 +941,9 @@ static int tree_iterator_advance_over(
 	*status = GIT_ITERATOR_STATUS_NORMAL;
 	return git_iterator_advance(out, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void tree_iterator_clear(tree_iterator *iter)
 {
 	while (iter->frames.size)
@@ -891,7 +956,9 @@ static void tree_iterator_clear(tree_iterator *iter)
 
 	iterator_clear(&iter->base);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_init(tree_iterator *iter)
 {
 	int error;
@@ -905,7 +972,9 @@ static int tree_iterator_init(tree_iterator *iter)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_iterator_reset(git_iterator *i)
 {
 	tree_iterator *iter = (tree_iterator *)i;
@@ -913,7 +982,9 @@ static int tree_iterator_reset(git_iterator *i)
 	tree_iterator_clear(iter);
 	return tree_iterator_init(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void tree_iterator_free(git_iterator *i)
 {
 	tree_iterator *iter = (tree_iterator *)i;
@@ -923,7 +994,9 @@ static void tree_iterator_free(git_iterator *i)
 	git_tree_free(iter->root);
 	git_buf_dispose(&iter->entry_path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_for_tree(
 	git_iterator **out,
 	git_tree *tree,
@@ -965,7 +1038,9 @@ on_error:
 	git_iterator_free(&iter->base);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_current_tree_entry(
 	const git_tree_entry **tree_entry, git_iterator *i)
 {
@@ -983,7 +1058,9 @@ int git_iterator_current_tree_entry(
 	*tree_entry = entry->tree_entry;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_current_parent_tree(
 	const git_tree **parent_tree, git_iterator *i, size_t depth)
 {
@@ -1000,6 +1077,7 @@ int git_iterator_current_parent_tree(
 	*parent_tree = frame->tree;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* Filesystem iterator */
 
@@ -1044,26 +1122,33 @@ typedef struct {
 } filesystem_iterator;
 
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(filesystem_iterator_frame *) filesystem_iterator_parent_frame(
 	filesystem_iterator *iter)
 {
 	return iter->frames.size > 1 ?
 		&iter->frames.ptr[iter->frames.size-2] : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(filesystem_iterator_frame *) filesystem_iterator_current_frame(
 	filesystem_iterator *iter)
 {
 	return iter->frames.size ? &iter->frames.ptr[iter->frames.size-1] : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(filesystem_iterator_entry *) filesystem_iterator_current_entry(
 	filesystem_iterator_frame *frame)
 {
 	return frame->next_idx == 0 ?
 		NULL : frame->entries.contents[frame->next_idx-1];
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_entry_cmp(const void *_a, const void *_b)
 {
 	const filesystem_iterator_entry *a = (const filesystem_iterator_entry *)_a;
@@ -1071,7 +1156,9 @@ static int filesystem_iterator_entry_cmp(const void *_a, const void *_b)
 
 	return git__strcmp(a->path, b->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_entry_cmp_icase(const void *_a, const void *_b)
 {
 	const filesystem_iterator_entry *a = (const filesystem_iterator_entry *)_a;
@@ -1079,6 +1166,7 @@ static int filesystem_iterator_entry_cmp_icase(const void *_a, const void *_b)
 
 	return git__strcasecmp(a->path, b->path);
 }
+#endif // DISABLED_FUNCTION
 
 #define FILESYSTEM_MAX_DEPTH 100
 
@@ -1088,6 +1176,7 @@ static int filesystem_iterator_entry_cmp_icase(const void *_a, const void *_b)
  * We consider it a submodule if the path is listed as a submodule in
  * either the tree or the index.
  */
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_is_submodule(
 	bool *out, filesystem_iterator *iter, const char *path, size_t path_len)
 {
@@ -1129,7 +1218,9 @@ static int filesystem_iterator_is_submodule(
 	*out = is_submodule;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filesystem_iterator_frame_push_ignores(
 	filesystem_iterator *iter,
 	filesystem_iterator_entry *frame_entry,
@@ -1163,14 +1254,18 @@ static void filesystem_iterator_frame_push_ignores(
 		git_ignore__push_dir(&iter->ignores, relative_path);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filesystem_iterator_frame_pop_ignores(
 	filesystem_iterator *iter)
 {
 	if (iterator__honor_ignores(&iter->base))
 		git_ignore__pop_dir(&iter->ignores);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) filesystem_iterator_examine_path(
 	bool *is_dir_out,
 	iterator_pathlist_search_t *match_out,
@@ -1234,7 +1329,9 @@ GIT_INLINE(bool) filesystem_iterator_examine_path(
 	*match_out = match;
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) filesystem_iterator_is_dot_git(
 	filesystem_iterator *iter, const char *path, size_t path_len)
 {
@@ -1257,7 +1354,9 @@ GIT_INLINE(bool) filesystem_iterator_is_dot_git(
 
 	return (len == 4 || path[len - 5] == '/');
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_entry_hash(
 	filesystem_iterator *iter,
 	filesystem_iterator_entry *entry)
@@ -1280,7 +1379,9 @@ static int filesystem_iterator_entry_hash(
 	git_buf_dispose(&fullpath);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_entry_init(
 	filesystem_iterator_entry **out,
 	filesystem_iterator *iter,
@@ -1325,7 +1426,9 @@ static int filesystem_iterator_entry_init(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_frame_push(
 	filesystem_iterator *iter,
 	filesystem_iterator_entry *frame_entry)
@@ -1467,7 +1570,9 @@ done:
 	git_path_diriter_free(&diriter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(void) filesystem_iterator_frame_pop(filesystem_iterator *iter)
 {
 	filesystem_iterator_frame *frame;
@@ -1480,7 +1585,9 @@ GIT_INLINE(void) filesystem_iterator_frame_pop(filesystem_iterator *iter)
 	git_pool_clear(&frame->entry_pool);
 	git_vector_free(&frame->entries);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filesystem_iterator_set_current(
 	filesystem_iterator *iter,
 	filesystem_iterator_entry *entry)
@@ -1510,7 +1617,9 @@ static void filesystem_iterator_set_current(
 
 	iter->current_is_ignored = GIT_IGNORE_UNCHECKED;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_current(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -1527,7 +1636,9 @@ static int filesystem_iterator_current(
 	*out = &iter->entry;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_is_dir(
 	bool *is_dir,
 	const filesystem_iterator *iter,
@@ -1557,7 +1668,9 @@ done:
 	git_buf_dispose(&fullpath);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_advance(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -1616,7 +1729,9 @@ static int filesystem_iterator_advance(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_advance_into(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -1654,7 +1769,9 @@ static int filesystem_iterator_advance_into(
 	 */
 	return filesystem_iterator_advance(out, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_current_workdir_path(git_buf **out, git_iterator *i)
 {
 	filesystem_iterator *iter = (filesystem_iterator *)i;
@@ -1675,7 +1792,9 @@ int git_iterator_current_workdir_path(git_buf **out, git_iterator *i)
 	*out = &iter->current_path;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(git_dir_flag) entry_dir_flag(git_index_entry *entry)
 {
 #if defined(GIT_WIN32) && !defined(__MINGW32__)
@@ -1687,7 +1806,9 @@ GIT_INLINE(git_dir_flag) entry_dir_flag(git_index_entry *entry)
 	return GIT_DIR_FLAG_UNKNOWN;
 #endif
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filesystem_iterator_update_ignored(filesystem_iterator *iter)
 {
 	filesystem_iterator_frame *frame;
@@ -1705,7 +1826,9 @@ static void filesystem_iterator_update_ignored(filesystem_iterator *iter)
 		iter->current_is_ignored = frame->is_ignored;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) filesystem_iterator_current_is_ignored(
 	filesystem_iterator *iter)
 {
@@ -1714,7 +1837,9 @@ GIT_INLINE(bool) filesystem_iterator_current_is_ignored(
 
 	return (iter->current_is_ignored == GIT_IGNORE_TRUE);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_iterator_current_is_ignored(git_iterator *i)
 {
 	if (i->type != GIT_ITERATOR_TYPE_WORKDIR)
@@ -1722,7 +1847,9 @@ bool git_iterator_current_is_ignored(git_iterator *i)
 
 	return filesystem_iterator_current_is_ignored((filesystem_iterator *)i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_iterator_current_tree_is_ignored(git_iterator *i)
 {
 	filesystem_iterator *iter = (filesystem_iterator *)i;
@@ -1734,7 +1861,9 @@ bool git_iterator_current_tree_is_ignored(git_iterator *i)
 	frame = filesystem_iterator_current_frame(iter);
 	return (frame->is_ignored == GIT_IGNORE_TRUE);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_advance_over(
 	const git_index_entry **out,
 	git_iterator_status_t *status,
@@ -1826,7 +1955,9 @@ static int filesystem_iterator_advance_over(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filesystem_iterator_clear(filesystem_iterator *iter)
 {
 	while (iter->frames.size)
@@ -1839,7 +1970,9 @@ static void filesystem_iterator_clear(filesystem_iterator *iter)
 
 	iterator_clear(&iter->base);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_init(filesystem_iterator *iter)
 {
 	int error;
@@ -1856,7 +1989,9 @@ static int filesystem_iterator_init(filesystem_iterator *iter)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filesystem_iterator_reset(git_iterator *i)
 {
 	filesystem_iterator *iter = (filesystem_iterator *)i;
@@ -1864,7 +1999,9 @@ static int filesystem_iterator_reset(git_iterator *i)
 	filesystem_iterator_clear(iter);
 	return filesystem_iterator_init(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void filesystem_iterator_free(git_iterator *i)
 {
 	filesystem_iterator *iter = (filesystem_iterator *)i;
@@ -1875,7 +2012,9 @@ static void filesystem_iterator_free(git_iterator *i)
 		git_index_snapshot_release(&iter->index_snapshot, iter->index);
 	filesystem_iterator_clear(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_for_filesystem(
 	git_iterator **out,
 	git_repository *repo,
@@ -1952,7 +2091,9 @@ on_error:
 	git_iterator_free(&iter->base);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_for_filesystem(
 	git_iterator **out,
 	const char *root,
@@ -1961,7 +2102,9 @@ int git_iterator_for_filesystem(
 	return iterator_for_filesystem(out,
 		NULL, root, NULL, NULL, GIT_ITERATOR_TYPE_FS, options);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_for_workdir_ext(
 	git_iterator **out,
 	git_repository *repo,
@@ -1989,6 +2132,7 @@ int git_iterator_for_workdir_ext(
 	return iterator_for_filesystem(out,
 		repo, repo_workdir, index, tree, GIT_ITERATOR_TYPE_WORKDIR, &options);
 }
+#endif // DISABLED_FUNCTION
 
 
 /* Index iterator */
@@ -2007,6 +2151,7 @@ typedef struct {
 	const git_index_entry *entry;
 } index_iterator;
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_current(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -2023,7 +2168,9 @@ static int index_iterator_current(
 	*out = iter->entry;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool index_iterator_create_pseudotree(
 	const git_index_entry **out,
 	index_iterator *iter,
@@ -2050,7 +2197,9 @@ static bool index_iterator_create_pseudotree(
 	*out = &iter->tree_entry;
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_skip_pseudotree(index_iterator *iter)
 {
 	assert(iterator__has_been_accessed(&iter->base));
@@ -2072,7 +2221,9 @@ static int index_iterator_skip_pseudotree(index_iterator *iter)
 	iter->skip_tree = false;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_advance(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -2145,7 +2296,9 @@ static int index_iterator_advance(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_advance_into(
 	const git_index_entry **out, git_iterator *i)
 {
@@ -2161,7 +2314,9 @@ static int index_iterator_advance_into(
 	iter->skip_tree = false;
 	return index_iterator_advance(out, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_advance_over(
 	const git_index_entry **out,
 	git_iterator_status_t *status,
@@ -2180,12 +2335,16 @@ static int index_iterator_advance_over(
 	*status = GIT_ITERATOR_STATUS_NORMAL;
 	return index_iterator_advance(out, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void index_iterator_clear(index_iterator *iter)
 {
 	iterator_clear(&iter->base);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_init(index_iterator *iter)
 {
 	iter->base.flags &= ~GIT_ITERATOR_FIRST_ACCESS;
@@ -2193,7 +2352,9 @@ static int index_iterator_init(index_iterator *iter)
 	iter->skip_tree = false;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_iterator_reset(git_iterator *i)
 {
 	index_iterator *iter = (index_iterator *)i;
@@ -2201,7 +2362,9 @@ static int index_iterator_reset(git_iterator *i)
 	index_iterator_clear(iter);
 	return index_iterator_init(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void index_iterator_free(git_iterator *i)
 {
 	index_iterator *iter = (index_iterator *)i;
@@ -2209,7 +2372,9 @@ static void index_iterator_free(git_iterator *i)
 	git_index_snapshot_release(&iter->entries, iter->base.index);
 	git_buf_dispose(&iter->tree_buf);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_for_index(
 	git_iterator **out,
 	git_repository *repo,
@@ -2255,10 +2420,12 @@ on_error:
 	git_iterator_free(&iter->base);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 
 /* Iterator API */
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_reset_range(
 	git_iterator *i, const char *start, const char *end)
 {
@@ -2267,13 +2434,17 @@ int git_iterator_reset_range(
 
 	return i->cb->reset(i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_iterator_set_ignore_case(git_iterator *i, bool ignore_case)
 {
 	assert(!iterator__has_been_accessed(i));
 	iterator_set_ignore_case(i, ignore_case);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_iterator_free(git_iterator *iter)
 {
 	if (iter == NULL)
@@ -2289,7 +2460,9 @@ void git_iterator_free(git_iterator *iter)
 
 	git__free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_foreach(
 	git_iterator *iterator,
 	git_iterator_foreach_cb cb,
@@ -2318,7 +2491,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_iterator_walk(
 	git_iterator **iterators,
 	size_t cnt,
@@ -2405,3 +2580,4 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

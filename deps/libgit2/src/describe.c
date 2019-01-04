@@ -34,6 +34,7 @@ struct commit_name {
 	git_oid peeled;
 };
 
+#ifdef DISABLED_FUNCTION
 static void *oidmap_value_bykey(git_oidmap *map, const git_oid *key)
 {
 	size_t pos = git_oidmap_lookup_index(map, key);
@@ -43,14 +44,18 @@ static void *oidmap_value_bykey(git_oidmap *map, const git_oid *key)
 
 	return git_oidmap_value_at(map, pos);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static struct commit_name *find_commit_name(
 	git_oidmap *names,
 	const git_oid *peeled)
 {
 	return (struct commit_name *)(oidmap_value_bykey(names, peeled));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int replace_name(
 	git_tag **tag,
 	git_repository *repo,
@@ -92,7 +97,9 @@ static int replace_name(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int add_to_known_names(
 	git_repository *repo,
 	git_oidmap *names,
@@ -137,7 +144,9 @@ static int add_to_known_names(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_peeled_tag_or_object_oid(
 	git_oid *peeled_out,
 	git_oid *ref_target_out,
@@ -167,6 +176,7 @@ cleanup:
 	git_object_free(peeled);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct git_describe_result {
 	int dirty;
@@ -186,6 +196,7 @@ struct get_name_data
 	git_describe_result *result;
 };
 
+#ifdef DISABLED_FUNCTION
 static int commit_name_dup(struct commit_name **out, struct commit_name *in)
 {
 	struct commit_name *name;
@@ -206,7 +217,9 @@ static int commit_name_dup(struct commit_name **out, struct commit_name *in)
 	*out = name;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int get_name(const char *refname, void *payload)
 {
 	struct get_name_data *data;
@@ -253,6 +266,7 @@ static int get_name(const char *refname, void *payload)
 		&peeled, prio, &sha1);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 struct possible_tag {
 	struct commit_name *name;
@@ -261,6 +275,7 @@ struct possible_tag {
 	unsigned flag_within;
 };
 
+#ifdef DISABLED_FUNCTION
 static int possible_tag_dup(struct possible_tag **out, struct possible_tag *in)
 {
 	struct possible_tag *tag;
@@ -281,7 +296,9 @@ static int possible_tag_dup(struct possible_tag **out, struct possible_tag *in)
 	*out = tag;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int compare_pt(const void *a_, const void *b_)
 {
 	struct possible_tag *a = (struct possible_tag *)a_;
@@ -292,9 +309,11 @@ static int compare_pt(const void *a_, const void *b_)
 		return a->found_order - b->found_order;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define SEEN (1u << 0)
 
+#ifdef DISABLED_FUNCTION
 static unsigned long finish_depth_computation(
 	git_pqueue *list,
 	git_revwalk *walk,
@@ -330,7 +349,9 @@ static unsigned long finish_depth_computation(
 	}
 	return seen_commits;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int display_name(git_buf *buf, git_repository *repo, struct commit_name *n)
 {
 	if (n->prio == 2 && !n->tag) {
@@ -361,7 +382,9 @@ static int display_name(git_buf *buf, git_repository *repo, struct commit_name *
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_unique_abbrev_size(
 	int *out,
 	git_repository *repo,
@@ -395,7 +418,9 @@ static int find_unique_abbrev_size(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int show_suffix(
 	git_buf *buf,
 	int depth,
@@ -418,9 +443,11 @@ static int show_suffix(
 
 	return git_buf_oom(buf) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define MAX_CANDIDATES_TAGS FLAG_BITS - 1
 
+#ifdef DISABLED_FUNCTION
 static int describe_not_found(const git_oid *oid, const char *message_format) {
 	char oid_str[GIT_OID_HEXSZ + 1];
 	git_oid_tostr(oid_str, sizeof(oid_str), oid);
@@ -428,7 +455,9 @@ static int describe_not_found(const git_oid *oid, const char *message_format) {
 	giterr_set(GITERR_DESCRIBE, message_format, oid_str);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int describe(
 	struct get_name_data *data,
 	git_commit *commit)
@@ -637,6 +666,7 @@ cleanup:
 	git_revwalk_free(walk);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int normalize_options(
 	git_describe_options *dst,
@@ -653,6 +683,7 @@ static int normalize_options(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_describe_commit(
 	git_describe_result **result,
 	git_object *committish,
@@ -722,7 +753,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_describe_workdir(
 	git_describe_result **out,
 	git_repository *repo,
@@ -763,7 +796,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int normalize_format_options(
 	git_describe_format_options *dst,
 	const git_describe_format_options *src)
@@ -776,7 +811,9 @@ static int normalize_format_options(
 	memcpy(dst, src, sizeof(git_describe_format_options));
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_describe_format(git_buf *out, const git_describe_result *result, const git_describe_format_options *given)
 {
 	int error;
@@ -856,7 +893,9 @@ int git_describe_format(git_buf *out, const git_describe_result *result, const g
 
 	return git_buf_oom(out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_describe_result_free(git_describe_result *result)
 {
 	if (result == NULL)
@@ -877,17 +916,22 @@ void git_describe_result_free(git_describe_result *result)
 
 	git__free(result);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_describe_init_options(git_describe_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_describe_options, GIT_DESCRIBE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_describe_init_format_options(git_describe_format_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_describe_format_options, GIT_DESCRIBE_FORMAT_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

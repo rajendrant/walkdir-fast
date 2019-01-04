@@ -13,6 +13,7 @@
 #include "diff_driver.h"
 #include "patch_generate.h"
 
+#ifdef DISABLED_FUNCTION
 static int git_xdiff_scan_int(const char **str, int *value)
 {
 	const char *scan = *str;
@@ -26,7 +27,9 @@ static int git_xdiff_scan_int(const char **str, int *value)
 	*value = v;
 	return (digits > 0) ? 0 : -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_xdiff_parse_hunk(git_diff_hunk *hunk, const char *header)
 {
 	/* expect something of the form "@@ -%d[,%d] +%d[,%d] @@" */
@@ -55,6 +58,7 @@ fail:
 	giterr_set(GITERR_INVALID, "malformed hunk header from xdiff");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_xdiff_output *xo;
@@ -64,6 +68,7 @@ typedef struct {
 	mmfile_t xd_old_data, xd_new_data;
 } git_xdiff_info;
 
+#ifdef DISABLED_FUNCTION
 static int diff_update_lines(
 	git_xdiff_info *info,
 	git_diff_line *line,
@@ -108,7 +113,9 @@ static int diff_update_lines(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_xdiff_cb(void *priv, mmbuffer_t *bufs, int len)
 {
 	git_xdiff_info *info = priv;
@@ -193,7 +200,9 @@ static int git_xdiff_cb(void *priv, mmbuffer_t *bufs, int len)
 
 	return output->error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_xdiff(git_patch_generated_output *output, git_patch_generated *patch)
 {
 	git_xdiff_output *xo = (git_xdiff_output *)output;
@@ -235,7 +244,9 @@ static int git_xdiff(git_patch_generated_output *output, git_patch_generated *pa
 
 	return xo->output.error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_xdiff_init(git_xdiff_output *xo, const git_diff_options *opts)
 {
 	uint32_t flags = opts ? opts->flags : 0;
@@ -261,3 +272,4 @@ void git_xdiff_init(git_xdiff_output *xo, const git_diff_options *opts)
 
 	xo->callback.outf = git_xdiff_cb;
 }
+#endif // DISABLED_FUNCTION

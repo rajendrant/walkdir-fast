@@ -49,6 +49,7 @@ int git_futils_mktmp(git_buf *path_out, const char *filename, mode_t mode)
 	return fd;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_futils_creat_withpath(const char *path, const mode_t dirmode, const mode_t mode)
 {
 	int fd;
@@ -64,6 +65,7 @@ int git_futils_creat_withpath(const char *path, const mode_t dirmode, const mode
 
 	return fd;
 }
+#endif // DISABLED_FUNCTION
 
 int git_futils_creat_locked(const char *path, const mode_t mode)
 {
@@ -102,6 +104,7 @@ int git_futils_open_ro(const char *path)
 	return fd;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_futils_truncate(const char *path, int mode)
 {
 	int fd = p_open(path, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, mode);
@@ -111,6 +114,7 @@ int git_futils_truncate(const char *path, int mode)
 	close(fd);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 git_off_t git_futils_filesize(git_file fd)
 {
@@ -124,6 +128,7 @@ git_off_t git_futils_filesize(git_file fd)
 	return sb.st_size;
 }
 
+#ifdef DISABLED_FUNCTION
 mode_t git_futils_canonical_mode(mode_t raw_mode)
 {
 	if (S_ISREG(raw_mode))
@@ -137,6 +142,7 @@ mode_t git_futils_canonical_mode(mode_t raw_mode)
 	else
 		return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_futils_readbuffer_fd(git_buf *buf, git_file fd, size_t len)
 {
@@ -244,6 +250,7 @@ int git_futils_readbuffer(git_buf *buf, const char *path)
 	return git_futils_readbuffer_updated(buf, path, NULL, NULL);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_futils_writebuffer(
 	const git_buf *buf,	const char *path, int flags, mode_t mode)
 {
@@ -287,7 +294,9 @@ int git_futils_writebuffer(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_futils_mv_withpath(const char *from, const char *to, const mode_t dirmode)
 {
 	if (git_futils_mkpath2file(to, dirmode) < 0)
@@ -300,6 +309,7 @@ int git_futils_mv_withpath(const char *from, const char *to, const mode_t dirmod
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_futils_mmap_ro(git_map *out, git_file fd, git_off_t begin, size_t len)
 {
@@ -531,10 +541,12 @@ done:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_futils_mkdir_r(const char *path, const mode_t mode)
 {
 	return git_futils_mkdir(path, mode, GIT_MKDIR_PATH);
 }
+#endif // DISABLED_FUNCTION
 
 int git_futils_mkdir_relative(
 	const char *relative_path,
@@ -674,6 +686,7 @@ typedef struct {
 
 #define FUTILS_MAX_DEPTH 100
 
+#ifdef DISABLED_FUNCTION
 static int futils__error_cannot_rmdir(const char *path, const char *filemsg)
 {
 	if (filemsg)
@@ -684,7 +697,9 @@ static int futils__error_cannot_rmdir(const char *path, const char *filemsg)
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int futils__rm_first_parent(git_buf *path, const char *ceiling)
 {
 	int error = GIT_ENOTFOUND;
@@ -709,7 +724,9 @@ static int futils__rm_first_parent(git_buf *path, const char *ceiling)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int futils__rmdir_recurs_foreach(void *opaque, git_buf *path)
 {
 	int error = 0;
@@ -767,7 +784,9 @@ static int futils__rmdir_recurs_foreach(void *opaque, git_buf *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int futils__rmdir_empty_parent(void *opaque, const char *path)
 {
 	futils__rmdir_data *data = opaque;
@@ -793,7 +812,9 @@ static int futils__rmdir_empty_parent(void *opaque, const char *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_futils_rmdir_r(
 	const char *path, const char *base, uint32_t flags)
 {
@@ -826,7 +847,9 @@ int git_futils_rmdir_r(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_futils_fake_symlink(const char *old, const char *new)
 {
 	int retcode = GIT_ERROR;
@@ -837,7 +860,9 @@ int git_futils_fake_symlink(const char *old, const char *new)
 	}
 	return retcode;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int cp_by_fd(int ifd, int ofd, bool close_fd_when_done)
 {
 	int error = 0;
@@ -865,7 +890,9 @@ static int cp_by_fd(int ifd, int ofd, bool close_fd_when_done)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_futils_cp(const char *from, const char *to, mode_t filemode)
 {
 	int ifd, ofd;
@@ -880,6 +907,7 @@ int git_futils_cp(const char *from, const char *to, mode_t filemode)
 
 	return cp_by_fd(ifd, ofd, true);
 }
+#endif // DISABLED_FUNCTION
 
 int git_futils_touch(const char *path, time_t *when)
 {
@@ -894,6 +922,7 @@ int git_futils_touch(const char *path, time_t *when)
 	return (ret < 0) ? git_path_set_error(errno, path, "touch") : 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static int cp_link(const char *from, const char *to, size_t link_size)
 {
 	int error = 0;
@@ -923,6 +952,7 @@ static int cp_link(const char *from, const char *to, size_t link_size)
 	git__free(link_data);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	const char *to_root;
@@ -935,6 +965,7 @@ typedef struct {
 
 #define GIT_CPDIR__MKDIR_DONE_FOR_TO_ROOT (1u << 10)
 
+#ifdef DISABLED_FUNCTION
 static int _cp_r_mkdir(cp_r_info *info, git_buf *from)
 {
 	int error = 0;
@@ -956,7 +987,9 @@ static int _cp_r_mkdir(cp_r_info *info, git_buf *from)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int _cp_r_callback(void *ref, git_buf *from)
 {
 	int error = 0;
@@ -1044,7 +1077,9 @@ static int _cp_r_callback(void *ref, git_buf *from)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_futils_cp_r(
 	const char *from,
 	const char *to,
@@ -1086,6 +1121,7 @@ int git_futils_cp_r(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_futils_filestamp_check(
 	git_futils_filestamp *stamp, const char *path)

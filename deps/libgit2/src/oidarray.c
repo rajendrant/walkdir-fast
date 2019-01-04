@@ -10,17 +10,22 @@
 #include "git2/oidarray.h"
 #include "array.h"
 
+#ifdef DISABLED_FUNCTION
 void git_oidarray_free(git_oidarray *arr)
 {
 	git__free(arr->ids);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_oidarray__from_array(git_oidarray *arr, git_array_oid_t *array)
 {
 	arr->count = array->size;
 	arr->ids = array->ptr;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_oidarray__reverse(git_oidarray *arr)
 {
 	size_t i;
@@ -32,3 +37,4 @@ void git_oidarray__reverse(git_oidarray *arr)
 		git_oid_cpy(&arr->ids[(arr->count-1)-i], &tmp);
 	}
 }
+#endif // DISABLED_FUNCTION

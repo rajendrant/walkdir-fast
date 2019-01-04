@@ -19,6 +19,7 @@
 
 #define ERROR_MSG "Cannot perform reset"
 
+#ifdef DISABLED_FUNCTION
 int git_reset_default(
 	git_repository *repo,
 	const git_object *target,
@@ -98,7 +99,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reset(
 	git_repository *repo,
 	const git_object *target,
@@ -180,7 +183,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reset(
 	git_repository *repo,
 	const git_object *target,
@@ -189,7 +194,9 @@ int git_reset(
 {
 	return reset(repo, target, git_oid_tostr_s(git_object_id(target)), reset_type, checkout_opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reset_from_annotated(
 	git_repository *repo,
 	const git_annotated_commit *commit,
@@ -198,3 +205,4 @@ int git_reset_from_annotated(
 {
 	return reset(repo, (git_object *) commit->commit, commit->description, reset_type, checkout_opts);
 }
+#endif // DISABLED_FUNCTION

@@ -21,6 +21,7 @@
 
 #define GIT_CHERRYPICK_FILE_MODE		0666
 
+#ifdef DISABLED_FUNCTION
 static int write_cherrypick_head(
 	git_repository *repo,
 	const char *commit_oidstr)
@@ -41,6 +42,7 @@ static int write_cherrypick_head(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int write_merge_msg(
 	git_repository *repo,
@@ -66,6 +68,7 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 static int cherrypick_normalize_opts(
 	git_repository *repo,
 	git_cherrypick_options *opts,
@@ -96,14 +99,18 @@ static int cherrypick_normalize_opts(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int cherrypick_state_cleanup(git_repository *repo)
 {
 	const char *state_files[] = { GIT_CHERRYPICK_HEAD_FILE, GIT_MERGE_MSG_FILE };
 
 	return git_repository__cleanup_files(repo, state_files, ARRAY_SIZE(state_files));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int cherrypick_seterr(git_commit *commit, const char *fmt)
 {
 	char commit_oidstr[GIT_OID_HEXSZ + 1];
@@ -113,7 +120,9 @@ static int cherrypick_seterr(git_commit *commit, const char *fmt)
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_cherrypick_commit(
 	git_index **out,
 	git_repository *repo,
@@ -161,7 +170,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_cherrypick(
 	git_repository *repo,
 	git_commit *commit,
@@ -220,7 +231,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_cherrypick_init_options(
 	git_cherrypick_options *opts, unsigned int version)
 {
@@ -228,3 +241,4 @@ int git_cherrypick_init_options(
 		opts, version, git_cherrypick_options, GIT_CHERRYPICK_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

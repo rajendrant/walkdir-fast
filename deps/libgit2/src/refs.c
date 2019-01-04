@@ -35,6 +35,7 @@ enum {
 	GIT_PACKREF_WAS_LOOSE = 2
 };
 
+#ifdef DISABLED_FUNCTION
 static git_reference *alloc_ref(const char *name)
 {
 	git_reference *ref = NULL;
@@ -47,7 +48,9 @@ static git_reference *alloc_ref(const char *name)
 
 	return ref;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_reference *git_reference__alloc_symbolic(
 	const char *name, const char *target)
 {
@@ -68,7 +71,9 @@ git_reference *git_reference__alloc_symbolic(
 
 	return ref;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_reference *git_reference__alloc(
 	const char *name,
 	const git_oid *oid,
@@ -90,7 +95,9 @@ git_reference *git_reference__alloc(
 
 	return ref;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_reference *git_reference__set_name(
 	git_reference *ref, const char *name)
 {
@@ -105,7 +112,9 @@ git_reference *git_reference__set_name(
 
 	return rewrite;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_dup(git_reference **dest, git_reference *source)
 {
 	if (source->type == GIT_REF_SYMBOLIC)
@@ -120,7 +129,9 @@ int git_reference_dup(git_reference **dest, git_reference *source)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_reference_free(git_reference *reference)
 {
 	if (reference == NULL)
@@ -134,7 +145,9 @@ void git_reference_free(git_reference *reference)
 
 	git__free(reference);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_delete(git_reference *ref)
 {
 	const git_oid *old_id = NULL;
@@ -147,7 +160,9 @@ int git_reference_delete(git_reference *ref)
 
 	return git_refdb_delete(ref->db, ref->name, old_id, old_target);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_remove(git_repository *repo, const char *name)
 {
 	git_refdb *db;
@@ -158,13 +173,17 @@ int git_reference_remove(git_repository *repo, const char *name)
 
 	return git_refdb_delete(db, name, NULL, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_lookup(git_reference **ref_out,
 	git_repository *repo, const char *name)
 {
 	return git_reference_lookup_resolved(ref_out, repo, name, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_name_to_id(
 	git_oid *out, git_repository *repo, const char *name)
 {
@@ -178,7 +197,9 @@ int git_reference_name_to_id(
 	git_reference_free(ref);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reference_normalize_for_repo(
 	git_refname_t out,
 	git_repository *repo,
@@ -197,7 +218,9 @@ static int reference_normalize_for_repo(
 
 	return git_reference_normalize_name(out, GIT_REFNAME_MAX, name, flags);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_lookup_resolved(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -252,7 +275,9 @@ int git_reference_lookup_resolved(
 	*ref_out = ref;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__read_head(
 	git_reference **out,
 	git_repository *repo,
@@ -286,7 +311,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_dwim(git_reference **out, git_repository *repo, const char *refname)
 {
 	int error = 0, i;
@@ -350,28 +377,36 @@ cleanup:
 	git_buf_dispose(&refnamebuf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Getters
  */
+#ifdef DISABLED_FUNCTION
 git_ref_t git_reference_type(const git_reference *ref)
 {
 	assert(ref);
 	return ref->type;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_reference_name(const git_reference *ref)
 {
 	assert(ref);
 	return ref->name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_reference_owner(const git_reference *ref)
 {
 	assert(ref);
 	return ref->db->repo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_reference_target(const git_reference *ref)
 {
 	assert(ref);
@@ -381,7 +416,9 @@ const git_oid *git_reference_target(const git_reference *ref)
 
 	return &ref->target.oid;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_reference_target_peel(const git_reference *ref)
 {
 	assert(ref);
@@ -391,7 +428,9 @@ const git_oid *git_reference_target_peel(const git_reference *ref)
 
 	return &ref->peel;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_reference_symbolic_target(const git_reference *ref)
 {
 	assert(ref);
@@ -401,7 +440,9 @@ const char *git_reference_symbolic_target(const git_reference *ref)
 
 	return ref->target.symbolic;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reference__create(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -469,7 +510,9 @@ static int reference__create(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int configured_ident(git_signature **out, const git_repository *repo)
 {
 	if (repo->ident_name && repo->ident_email)
@@ -478,7 +521,9 @@ int configured_ident(git_signature **out, const git_repository *repo)
 	/* if not configured let us fall-through to the next method  */
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__log_signature(git_signature **out, git_repository *repo)
 {
 	int error;
@@ -492,7 +537,9 @@ int git_reference__log_signature(git_signature **out, git_repository *repo)
 	*out = who;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_create_matching(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -517,7 +564,9 @@ int git_reference_create_matching(
 	git_signature_free(who);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_create(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -528,7 +577,9 @@ int git_reference_create(
 {
         return git_reference_create_matching(ref_out, repo, name, id, force, NULL, log_message);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_symbolic_create_matching(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -552,7 +603,9 @@ int git_reference_symbolic_create_matching(
 	git_signature_free(who);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_symbolic_create(
 	git_reference **ref_out,
 	git_repository *repo,
@@ -563,7 +616,9 @@ int git_reference_symbolic_create(
 {
 	return git_reference_symbolic_create_matching(ref_out, repo, name, target, force, NULL, log_message);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_is_an_updatable_direct_reference(git_reference *ref)
 {
 	if (ref->type == GIT_REF_OID)
@@ -572,7 +627,9 @@ static int ensure_is_an_updatable_direct_reference(git_reference *ref)
 	giterr_set(GITERR_REFERENCE, "cannot set OID on symbolic reference");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_set_target(
 	git_reference **out,
 	git_reference *ref,
@@ -591,7 +648,9 @@ int git_reference_set_target(
 
 	return git_reference_create_matching(out, repo, ref->name, id, 1, &ref->target.oid, log_message);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_is_an_updatable_symbolic_reference(git_reference *ref)
 {
 	if (ref->type == GIT_REF_SYMBOLIC)
@@ -600,7 +659,9 @@ static int ensure_is_an_updatable_symbolic_reference(git_reference *ref)
 	giterr_set(GITERR_REFERENCE, "cannot set symbolic target on a direct reference");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_symbolic_set_target(
 	git_reference **out,
 	git_reference *ref,
@@ -617,12 +678,14 @@ int git_reference_symbolic_set_target(
 	return git_reference_symbolic_create_matching(
 		out, ref->db->repo, ref->name, target, 1, ref->target.symbolic, log_message);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
     const char *old_name;
     git_refname_t new_name;
 } rename_cb_data;
 
+#ifdef DISABLED_FUNCTION
 static int update_wt_heads(git_repository *repo, const char *path, void *payload)
 {
 	rename_cb_data *data = (rename_cb_data *) payload;
@@ -658,7 +721,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reference__rename(git_reference **out, git_reference *ref, const char *new_name, int force,
 				 const git_signature *signature, const char *message)
 {
@@ -697,8 +762,10 @@ static int reference__rename(git_reference **out, git_reference *ref, const char
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_reference_rename(
 	git_reference **out,
 	git_reference *ref,
@@ -717,7 +784,9 @@ int git_reference_rename(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_resolve(git_reference **ref_out, const git_reference *ref)
 {
 	switch (git_reference_type(ref)) {
@@ -732,7 +801,9 @@ int git_reference_resolve(git_reference **ref_out, const git_reference *ref)
 		return -1;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_foreach(
 	git_repository *repo,
 	git_reference_foreach_cb callback,
@@ -758,7 +829,9 @@ int git_reference_foreach(
 	git_reference_iterator_free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_foreach_name(
 	git_repository *repo,
 	git_reference_foreach_name_cb callback,
@@ -784,7 +857,9 @@ int git_reference_foreach_name(
 	git_reference_iterator_free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_foreach_glob(
 	git_repository *repo,
 	const char *glob,
@@ -811,7 +886,9 @@ int git_reference_foreach_glob(
 	git_reference_iterator_free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_iterator_new(git_reference_iterator **out, git_repository *repo)
 {
 	git_refdb *refdb;
@@ -821,7 +898,9 @@ int git_reference_iterator_new(git_reference_iterator **out, git_repository *rep
 
 	return git_refdb_iterator(out, refdb, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_iterator_glob_new(
 	git_reference_iterator **out, git_repository *repo, const char *glob)
 {
@@ -832,17 +911,23 @@ int git_reference_iterator_glob_new(
 
 	return git_refdb_iterator(out, refdb, glob);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_next(git_reference **out, git_reference_iterator *iter)
 {
 	return git_refdb_iterator_next(out, iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_next_name(const char **out, git_reference_iterator *iter)
 {
 	return git_refdb_iterator_next_name(out, iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_reference_iterator_free(git_reference_iterator *iter)
 {
 	if (iter == NULL)
@@ -850,14 +935,18 @@ void git_reference_iterator_free(git_reference_iterator *iter)
 
 	git_refdb_iterator_free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int cb__reflist_add(const char *ref, void *data)
 {
 	char *name = git__strdup(ref);
 	GITERR_CHECK_ALLOC(name);
 	return git_vector_insert((git_vector *)data, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_list(
 	git_strarray *array,
 	git_repository *repo)
@@ -882,7 +971,9 @@ int git_reference_list(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int is_valid_ref_char(char ch)
 {
 	if ((unsigned) ch <= ' ')
@@ -901,7 +992,9 @@ static int is_valid_ref_char(char ch)
 		return 1;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_segment_validity(const char *name)
 {
 	const char *current = name;
@@ -937,7 +1030,9 @@ static int ensure_segment_validity(const char *name)
 
 	return segment_len;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool is_all_caps_and_underscore(const char *name, size_t len)
 {
 	size_t i;
@@ -957,8 +1052,10 @@ static bool is_all_caps_and_underscore(const char *name, size_t len)
 
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
 /* Inspired from https://github.com/git/git/blob/f06d47e7e0d9db709ee204ed13a8a7486149f494/refs.c#L36-100 */
+#ifdef DISABLED_FUNCTION
 int git_reference__normalize_name(
 	git_buf *buf,
 	const char *name,
@@ -1084,7 +1181,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_normalize_name(
 	char *buffer_out,
 	size_t buffer_size,
@@ -1113,9 +1212,11 @@ cleanup:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 #define GIT_REF_TYPEMASK (GIT_REF_OID | GIT_REF_SYMBOLIC)
 
+#ifdef DISABLED_FUNCTION
 int git_reference_cmp(
 	const git_reference *ref1,
 	const git_reference *ref2)
@@ -1135,11 +1236,13 @@ int git_reference_cmp(
 
 	return git_oid__cmp(&ref1->target.oid, &ref2->target.oid);
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Get the end of a chain of references. If the final one is not
  * found, we return the reference just before that.
  */
+#ifdef DISABLED_FUNCTION
 static int get_terminal(git_reference **out, git_repository *repo, const char *ref_name, int nesting)
 {
 	git_reference *ref;
@@ -1169,12 +1272,14 @@ static int get_terminal(git_reference **out, git_repository *repo, const char *r
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Starting with the reference given by `ref_name`, follows symbolic
  * references until a direct reference is found and updated the OID
  * on that direct reference to `oid`.
  */
+#ifdef DISABLED_FUNCTION
 int git_reference__update_terminal(
 	git_repository *repo,
 	const char *ref_name,
@@ -1214,7 +1319,9 @@ int git_reference__update_terminal(
 	git_signature_free(who);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *commit_type(const git_commit *commit)
 {
 	unsigned int count = git_commit_parentcount(commit);
@@ -1226,7 +1333,9 @@ static const char *commit_type(const git_commit *commit)
 	else
 		return "";
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__update_for_commit(
 	git_repository *repo,
 	git_reference *ref,
@@ -1266,7 +1375,9 @@ done:
 	git_commit_free(commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_has_log(git_repository *repo, const char *refname)
 {
 	int error;
@@ -1279,7 +1390,9 @@ int git_reference_has_log(git_repository *repo, const char *refname)
 
 	return git_refdb_has_log(refdb, refname);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_ensure_log(git_repository *repo, const char *refname)
 {
 	int error;
@@ -1292,50 +1405,67 @@ int git_reference_ensure_log(git_repository *repo, const char *refname)
 
 	return git_refdb_ensure_log(refdb, refname);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__is_branch(const char *ref_name)
 {
 	return git__prefixcmp(ref_name, GIT_REFS_HEADS_DIR) == 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_is_branch(const git_reference *ref)
 {
 	assert(ref);
 	return git_reference__is_branch(ref->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__is_remote(const char *ref_name)
 {
 	return git__prefixcmp(ref_name, GIT_REFS_REMOTES_DIR) == 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_is_remote(const git_reference *ref)
 {
 	assert(ref);
 	return git_reference__is_remote(ref->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__is_tag(const char *ref_name)
 {
 	return git__prefixcmp(ref_name, GIT_REFS_TAGS_DIR) == 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_is_tag(const git_reference *ref)
 {
 	assert(ref);
 	return git_reference__is_tag(ref->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__is_note(const char *ref_name)
 {
 	return git__prefixcmp(ref_name, GIT_REFS_NOTES_DIR) == 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_is_note(const git_reference *ref)
 {
 	assert(ref);
 	return git_reference__is_note(ref->name);
 }
+#endif // DISABLED_FUNCTION
 
 static int peel_error(int error, const git_reference *ref, const char* msg)
 {
@@ -1345,6 +1475,7 @@ static int peel_error(int error, const git_reference *ref, const char* msg)
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_reference_peel(
 	git_object **peeled,
 	const git_reference *ref,
@@ -1396,7 +1527,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__is_valid_name(const char *refname, unsigned int flags)
 {
 	if (git_reference__normalize_name(NULL, refname, flags) < 0) {
@@ -1406,12 +1539,16 @@ int git_reference__is_valid_name(const char *refname, unsigned int flags)
 
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference_is_valid_name(const char *refname)
 {
 	return git_reference__is_valid_name(refname, GIT_REF_FORMAT_ALLOW_ONELEVEL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_reference__shorthand(const char *name)
 {
 	if (!git__prefixcmp(name, GIT_REFS_HEADS_DIR))
@@ -1426,12 +1563,16 @@ const char *git_reference__shorthand(const char *name)
 	/* No shorthands are avaiable, so just return the name */
 	return name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_reference_shorthand(const git_reference *ref)
 {
 	return git_reference__shorthand(ref->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reference__is_unborn_head(bool *unborn, const git_reference *ref, git_repository *repo)
 {
 	int error;
@@ -1455,3 +1596,4 @@ int git_reference__is_unborn_head(bool *unborn, const git_reference *ref, git_re
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION

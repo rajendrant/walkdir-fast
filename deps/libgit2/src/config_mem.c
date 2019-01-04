@@ -28,6 +28,7 @@ static int config_error_readonly(void)
 	return -1;
 }
 
+#ifdef DISABLED_FUNCTION
 static int read_variable_cb(
 	git_config_parser *reader,
 	const char *current_section,
@@ -74,7 +75,9 @@ static int read_variable_cb(
 
 	return result;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_open(git_config_backend *backend, git_config_level_t level, const git_repository *repo)
 {
 	config_memory_backend *memory_backend = (config_memory_backend *) backend;
@@ -93,13 +96,17 @@ static int config_memory_open(git_config_backend *backend, git_config_level_t le
 
 	return git_config_parse(&reader, NULL, read_variable_cb, NULL, NULL, &parse_data);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_get(git_config_backend *backend, const char *key, git_config_entry **out)
 {
 	config_memory_backend *memory_backend = (config_memory_backend *) backend;
 	return git_config_entries_get(out, memory_backend->entries, key);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_iterator(
 	git_config_iterator **iter,
 	git_config_backend *backend)
@@ -119,7 +126,9 @@ out:
 	git_config_entries_free(entries);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_set(git_config_backend *backend, const char *name, const char *value)
 {
 	GIT_UNUSED(backend);
@@ -127,7 +136,9 @@ static int config_memory_set(git_config_backend *backend, const char *name, cons
 	GIT_UNUSED(value);
 	return config_error_readonly();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_set_multivar(
 	git_config_backend *backend, const char *name, const char *regexp, const char *value)
 {
@@ -137,14 +148,18 @@ static int config_memory_set_multivar(
 	GIT_UNUSED(value);
 	return config_error_readonly();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_delete(git_config_backend *backend, const char *name)
 {
 	GIT_UNUSED(backend);
 	GIT_UNUSED(name);
 	return config_error_readonly();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_delete_multivar(git_config_backend *backend, const char *name, const char *regexp)
 {
 	GIT_UNUSED(backend);
@@ -152,20 +167,26 @@ static int config_memory_delete_multivar(git_config_backend *backend, const char
 	GIT_UNUSED(regexp);
 	return config_error_readonly();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_lock(git_config_backend *backend)
 {
 	GIT_UNUSED(backend);
 	return config_error_readonly();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_unlock(git_config_backend *backend, int success)
 {
 	GIT_UNUSED(backend);
 	GIT_UNUSED(success);
 	return config_error_readonly();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int config_memory_snapshot(git_config_backend **out, git_config_backend *backend)
 {
 	GIT_UNUSED(out);
@@ -173,7 +194,9 @@ static int config_memory_snapshot(git_config_backend **out, git_config_backend *
 	giterr_set(GITERR_CONFIG, "this backend does not support snapshots");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void config_memory_free(git_config_backend *_backend)
 {
 	config_memory_backend *backend = (config_memory_backend *)_backend;
@@ -185,7 +208,9 @@ static void config_memory_free(git_config_backend *_backend)
 	git_buf_dispose(&backend->cfg);
 	git__free(backend);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_backend_from_string(git_config_backend **out, const char *cfg, size_t len)
 {
 	config_memory_backend *backend;
@@ -222,3 +247,4 @@ int git_config_backend_from_string(git_config_backend **out, const char *cfg, si
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION

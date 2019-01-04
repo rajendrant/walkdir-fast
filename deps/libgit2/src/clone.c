@@ -25,7 +25,9 @@
 #include "repository.h"
 #include "odb.h"
 
+#ifdef DISABLED_FUNCTION
 static int clone_local_into(git_repository *repo, git_remote *remote, const git_fetch_options *fetch_opts, const git_checkout_options *co_opts, const char *branch, int link);
+#endif // DISABLED_FUNCTION
 
 static int create_branch(
 	git_reference **branch,
@@ -59,6 +61,7 @@ static int create_branch(
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 static int setup_tracking_config(
 	git_repository *repo,
 	const char *branch_name,
@@ -91,7 +94,9 @@ cleanup:
 	git_buf_dispose(&merge_key);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_tracking_branch(
 	git_reference **branch,
 	git_repository *repo,
@@ -110,7 +115,9 @@ static int create_tracking_branch(
 		GIT_REMOTE_ORIGIN,
 		git_reference_name(*branch));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_head_to_new_branch(
 	git_repository *repo,
 	const git_oid *target,
@@ -138,7 +145,9 @@ static int update_head_to_new_branch(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_head_to_remote(
 		git_repository *repo,
 		git_remote *remote,
@@ -200,7 +209,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_head_to_branch(
 		git_repository *repo,
 		const char *remote_name,
@@ -228,14 +239,18 @@ cleanup:
 	git_buf_dispose(&remote_branch_name);
 	return retcode;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int default_repository_create(git_repository **out, const char *path, int bare, void *payload)
 {
 	GIT_UNUSED(payload);
 
 	return git_repository_init(out, path, bare);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int default_remote_create(
 		git_remote **out,
 		git_repository *repo,
@@ -247,11 +262,13 @@ static int default_remote_create(
 
 	return git_remote_create(out, repo, name, url);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * submodules?
  */
 
+#ifdef DISABLED_FUNCTION
 static int create_and_configure_origin(
 		git_remote **out,
 		git_repository *repo,
@@ -287,7 +304,9 @@ on_error:
 	git_remote_free(origin);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool should_checkout(
 	git_repository *repo,
 	bool is_bare,
@@ -304,7 +323,9 @@ static bool should_checkout(
 
 	return !git_repository_head_unborn(repo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_branch(git_repository *repo, git_remote *remote, const git_checkout_options *co_opts, const char *branch, const char *reflog_message)
 {
 	int error;
@@ -321,7 +342,9 @@ static int checkout_branch(git_repository *repo, git_remote *remote, const git_c
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int clone_into(git_repository *repo, git_remote *_remote, const git_fetch_options *opts, const git_checkout_options *co_opts, const char *branch)
 {
 	int error;
@@ -355,7 +378,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_clone__should_clone_local(const char *url_or_path, git_clone_local_t local)
 {
 	git_buf fromurl = GIT_BUF_INIT;
@@ -381,7 +406,9 @@ done:
 	git_buf_dispose(&fromurl);
 	return is_local;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_clone(
 	git_repository **out,
 	const char *url,
@@ -454,14 +481,18 @@ int git_clone(
 	*out = repo;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_clone_init_options(git_clone_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_clone_options, GIT_CLONE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool can_link(const char *src, const char *dst, int link)
 {
 #ifdef GIT_WIN32
@@ -485,6 +516,7 @@ static bool can_link(const char *src, const char *dst, int link)
 	return st_src.st_dev == st_dst.st_dev;
 #endif
 }
+#endif // DISABLED_FUNCTION
 
 static int clone_local_into(git_repository *repo, git_remote *remote, const git_fetch_options *fetch_opts, const git_checkout_options *co_opts, const char *branch, int link)
 {

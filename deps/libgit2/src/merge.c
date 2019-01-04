@@ -70,6 +70,7 @@ struct merge_diff_df_data {
 
 /* Merge base computation */
 
+#ifdef DISABLED_FUNCTION
 int merge_bases_many(git_commit_list **out, git_revwalk **walk_out, git_repository *repo, size_t length, const git_oid input_array[])
 {
 	git_revwalk *walk = NULL;
@@ -122,7 +123,9 @@ on_error:
 	git_revwalk_free(walk);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_base_many(git_oid *out, git_repository *repo, size_t length, const git_oid input_array[])
 {
 	git_revwalk *walk;
@@ -141,7 +144,9 @@ int git_merge_base_many(git_oid *out, git_repository *repo, size_t length, const
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_bases_many(git_oidarray *out, git_repository *repo, size_t length, const git_oid input_array[])
 {
 	git_revwalk *walk;
@@ -176,7 +181,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_base_octopus(git_oid *out, git_repository *repo, size_t length, const git_oid input_array[])
 {
 	git_oid result;
@@ -201,7 +208,9 @@ int git_merge_base_octopus(git_oid *out, git_repository *repo, size_t length, co
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_bases(git_commit_list **out, git_revwalk **walk_out, git_repository *repo, const git_oid *one, const git_oid *two)
 {
 	git_revwalk *walk;
@@ -246,7 +255,9 @@ on_error:
 	return -1;
 
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_base(git_oid *out, git_repository *repo, const git_oid *one, const git_oid *two)
 {
 	int error;
@@ -262,7 +273,9 @@ int git_merge_base(git_oid *out, git_repository *repo, const git_oid *one, const
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_bases(git_oidarray *out, git_repository *repo, const git_oid *one, const git_oid *two)
 {
 	int error;
@@ -296,6 +309,7 @@ on_error:
 	git_revwalk_free(walk);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 static int interesting(git_pqueue *list)
 {
@@ -310,6 +324,7 @@ static int interesting(git_pqueue *list)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static void clear_commit_marks_1(git_commit_list **plist,
 		git_commit_list_node *commit, unsigned int mark)
 {
@@ -329,7 +344,9 @@ static void clear_commit_marks_1(git_commit_list **plist,
 		commit = commit->out_degree ? commit->parents[0] : NULL;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void clear_commit_marks_many(git_vector *commits, unsigned int mark)
 {
 	git_commit_list *list = NULL;
@@ -343,7 +360,9 @@ static void clear_commit_marks_many(git_vector *commits, unsigned int mark)
 	while (list)
 		clear_commit_marks_1(&list, git_commit_list_pop(&list), mark);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void clear_commit_marks(git_commit_list_node *commit, unsigned int mark)
 {
 	git_commit_list *list = NULL;
@@ -351,7 +370,9 @@ static void clear_commit_marks(git_commit_list_node *commit, unsigned int mark)
 	while (list)
 		clear_commit_marks_1(&list, git_commit_list_pop(&list), mark);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int paint_down_to_common(
 	git_commit_list **out, git_revwalk *walk, git_commit_list_node *one, git_vector *twos)
 {
@@ -416,7 +437,9 @@ static int paint_down_to_common(
 	*out = result;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remove_redundant(git_revwalk *walk, git_vector *commits)
 {
 	git_vector work = GIT_VECTOR_INIT;
@@ -483,7 +506,9 @@ done:
 	git_vector_free(&work);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge__bases_many(git_commit_list **out, git_revwalk *walk, git_commit_list_node *one, git_vector *twos)
 {
 	int error;
@@ -550,7 +575,9 @@ int git_merge__bases_many(git_commit_list **out, git_revwalk *walk, git_commit_l
 	*out = result;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_mergehead_foreach(
 	git_repository *repo,
 	git_repository_mergehead_foreach_cb cb,
@@ -604,7 +631,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) index_entry_cmp(const git_index_entry *a, const git_index_entry *b)
 {
 	int value = 0;
@@ -618,9 +647,11 @@ GIT_INLINE(int) index_entry_cmp(const git_index_entry *a, const git_index_entry 
 
 	return value;
 }
+#endif // DISABLED_FUNCTION
 
 /* Conflict resolution */
 
+#ifdef DISABLED_FUNCTION
 static int merge_conflict_resolve_trivial(
 	int *resolved,
 	git_merge_diff_list *diff_list,
@@ -704,7 +735,9 @@ static int merge_conflict_resolve_trivial(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_conflict_resolve_one_removed(
 	int *resolved,
 	git_merge_diff_list *diff_list,
@@ -743,7 +776,9 @@ static int merge_conflict_resolve_one_removed(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_conflict_resolve_one_renamed(
 	int *resolved,
 	git_merge_diff_list *diff_list,
@@ -802,7 +837,9 @@ static int merge_conflict_resolve_one_renamed(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool merge_conflict_can_resolve_contents(
 	const git_merge_diff *conflict)
 {
@@ -839,7 +876,9 @@ static bool merge_conflict_can_resolve_contents(
 
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_conflict_invoke_driver(
 	git_index_entry **out,
 	const char *name,
@@ -880,7 +919,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_conflict_resolve_contents(
 	int *resolved,
 	git_merge_diff_list *diff_list,
@@ -965,7 +1006,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_conflict_resolve(
 	int *out,
 	git_merge_diff_list *diff_list,
@@ -999,6 +1042,7 @@ static int merge_conflict_resolve(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Rename detection and coalescing */
 
@@ -1007,6 +1051,7 @@ struct merge_diff_similarity {
 	size_t other_idx;
 };
 
+#ifdef DISABLED_FUNCTION
 static int index_entry_similarity_calc(
 	void **out,
 	git_repository *repo,
@@ -1043,7 +1088,9 @@ static int index_entry_similarity_calc(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_entry_similarity_inexact(
 	git_repository *repo,
 	git_index_entry *a,
@@ -1082,6 +1129,7 @@ static int index_entry_similarity_inexact(
 
 	return score;
 }
+#endif // DISABLED_FUNCTION
 
 /* Tracks deletes by oid for merge_diff_mark_similarity_exact().  This is a
 * non-shrinking queue where next_pos is the next position to dequeue.
@@ -1092,6 +1140,7 @@ typedef struct {
 	size_t first_entry;
 } deletes_by_oid_queue;
 
+#ifdef DISABLED_FUNCTION
 static void deletes_by_oid_free(git_oidmap *map) {
 	deletes_by_oid_queue *queue;
 
@@ -1103,7 +1152,9 @@ static void deletes_by_oid_free(git_oidmap *map) {
 	});
 	git_oidmap_free(map);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int deletes_by_oid_enqueue(git_oidmap *map, git_pool* pool, const git_oid *id, size_t idx) {
 	size_t pos;
 	deletes_by_oid_queue *queue;
@@ -1131,7 +1182,9 @@ static int deletes_by_oid_enqueue(git_oidmap *map, git_pool* pool, const git_oid
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int deletes_by_oid_dequeue(size_t *idx, git_oidmap *map, const git_oid *id) {
 	size_t pos;
 	deletes_by_oid_queue *queue;
@@ -1157,7 +1210,9 @@ static int deletes_by_oid_dequeue(size_t *idx, git_oidmap *map, const git_oid *i
 	queue->next_pos++;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_diff_mark_similarity_exact(
 	git_merge_diff_list *diff_list,
 	struct merge_diff_similarity *similarity_ours,
@@ -1225,7 +1280,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_diff_mark_similarity_inexact(
 	git_repository *repo,
 	git_merge_diff_list *diff_list,
@@ -1304,6 +1361,7 @@ static int merge_diff_mark_similarity_inexact(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Rename conflicts:
@@ -1324,6 +1382,7 @@ static int merge_diff_mark_similarity_inexact(
  * 6    A          C[A]            Both renamed ("2 -> 1")
  *      B                 C[B]     [C~ours C~theirs]    (automergeable)
  */
+#ifdef DISABLED_FUNCTION
 static void merge_diff_mark_rename_conflict(
 	git_merge_diff_list *diff_list,
 	struct merge_diff_similarity *similarity_ours,
@@ -1384,7 +1443,9 @@ static void merge_diff_mark_rename_conflict(
 			theirs_source->type = GIT_MERGE_DIFF_RENAMED_MODIFIED;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(void) merge_diff_coalesce_rename(
 	git_index_entry *source_entry,
 	git_delta_t *source_status,
@@ -1398,7 +1459,9 @@ GIT_INLINE(void) merge_diff_coalesce_rename(
 	memset(target_entry, 0x0, sizeof(git_index_entry));
 	*target_status = GIT_DELTA_UNMODIFIED;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void merge_diff_list_coalesce_renames(
 	git_merge_diff_list *diff_list,
 	struct merge_diff_similarity *similarity_ours,
@@ -1459,7 +1522,9 @@ static void merge_diff_list_coalesce_renames(
 			target, opts);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_diff_empty(const git_vector *conflicts, size_t idx, void *p)
 {
 	git_merge_diff *conflict = conflicts->contents[idx];
@@ -1470,7 +1535,9 @@ static int merge_diff_empty(const git_vector *conflicts, size_t idx, void *p)
 		!GIT_MERGE_INDEX_ENTRY_EXISTS(conflict->our_entry) &&
 		!GIT_MERGE_INDEX_ENTRY_EXISTS(conflict->their_entry));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void merge_diff_list_count_candidates(
 	git_merge_diff_list *diff_list,
 	size_t *src_count,
@@ -1491,7 +1558,9 @@ static void merge_diff_list_count_candidates(
 			(*tgt_count)++;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_diff_list__find_renames(
 	git_repository *repo,
 	git_merge_diff_list *diff_list,
@@ -1561,9 +1630,11 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Directory/file conflict handling */
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(const char *) merge_diff_path(
 	const git_merge_diff *conflict)
 {
@@ -1576,7 +1647,9 @@ GIT_INLINE(const char *) merge_diff_path(
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) merge_diff_any_side_added_or_modified(
 	const git_merge_diff *conflict)
 {
@@ -1588,7 +1661,9 @@ GIT_INLINE(bool) merge_diff_any_side_added_or_modified(
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) path_is_prefixed(const char *parent, const char *child)
 {
 	size_t child_len = strlen(child);
@@ -1600,7 +1675,9 @@ GIT_INLINE(bool) path_is_prefixed(const char *parent, const char *child)
 
 	return (child[parent_len] == '/');
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) merge_diff_detect_df_conflict(
 	struct merge_diff_df_data *df_data,
 	git_merge_diff *conflict)
@@ -1628,9 +1705,11 @@ GIT_INLINE(int) merge_diff_detect_df_conflict(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* Conflict handling */
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) merge_diff_detect_type(
 	git_merge_diff *conflict)
 {
@@ -1654,7 +1733,9 @@ GIT_INLINE(int) merge_diff_detect_type(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) index_entry_dup_pool(
 	git_index_entry *out,
 	git_pool *pool,
@@ -1668,7 +1749,9 @@ GIT_INLINE(int) index_entry_dup_pool(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) merge_delta_type_from_index_entries(
 	const git_index_entry *ancestor,
 	const git_index_entry *other)
@@ -1689,7 +1772,9 @@ GIT_INLINE(int) merge_delta_type_from_index_entries(
 
 	return GIT_DELTA_UNMODIFIED;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_merge_diff *merge_diff_from_index_entries(
 	git_merge_diff_list *diff_list,
 	const git_index_entry **entries)
@@ -1712,9 +1797,11 @@ static git_merge_diff *merge_diff_from_index_entries(
 
 	return conflict;
 }
+#endif // DISABLED_FUNCTION
 
 /* Merge trees */
 
+#ifdef DISABLED_FUNCTION
 static int merge_diff_list_insert_conflict(
 	git_merge_diff_list *diff_list,
 	struct merge_diff_df_data *merge_df_data,
@@ -1730,7 +1817,9 @@ static int merge_diff_list_insert_conflict(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_diff_list_insert_unmodified(
 	git_merge_diff_list *diff_list,
 	const git_index_entry *tree_items[3])
@@ -1746,12 +1835,14 @@ static int merge_diff_list_insert_unmodified(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct merge_diff_find_data {
 	git_merge_diff_list *diff_list;
 	struct merge_diff_df_data df_data;
 };
 
+#ifdef DISABLED_FUNCTION
 static int queue_difference(const git_index_entry **entries, void *data)
 {
 	struct merge_diff_find_data *find_data = data;
@@ -1774,7 +1865,9 @@ static int queue_difference(const git_index_entry **entries, void *data)
 			find_data->diff_list, &find_data->df_data, entries) :
 		merge_diff_list_insert_unmodified(find_data->diff_list, entries);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_diff_list__find_differences(
 	git_merge_diff_list *diff_list,
 	git_iterator *ancestor_iter,
@@ -1786,7 +1879,9 @@ int git_merge_diff_list__find_differences(
 
 	return git_iterator_walk(iterators, 3, queue_difference, &find_data);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_merge_diff_list *git_merge_diff_list__alloc(git_repository *repo)
 {
 	git_merge_diff_list *diff_list = git__calloc(1, sizeof(git_merge_diff_list));
@@ -1807,7 +1902,9 @@ git_merge_diff_list *git_merge_diff_list__alloc(git_repository *repo)
 
 	return diff_list;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_merge_diff_list__free(git_merge_diff_list *diff_list)
 {
 	if (!diff_list)
@@ -1819,7 +1916,9 @@ void git_merge_diff_list__free(git_merge_diff_list *diff_list)
 	git_pool_clear(&diff_list->pool);
 	git__free(diff_list);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_normalize_opts(
 	git_repository *repo,
 	git_merge_options *opts,
@@ -1886,8 +1985,10 @@ done:
 	git_config_entry_free(entry);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 static int merge_index_insert_reuc(
 	git_index *index,
 	size_t idx,
@@ -1914,7 +2015,9 @@ static int merge_index_insert_reuc(
 	return git_index_reuc_add(index, entry->path,
 		mode[0], oid[0], mode[1], oid[1], mode[2], oid[2]);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_update_reuc(git_index *index, git_merge_diff_list *diff_list)
 {
 	int error;
@@ -1951,7 +2054,9 @@ static int index_update_reuc(git_index *index, git_merge_diff_list *diff_list)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_from_diff_list(git_index **out,
 	git_merge_diff_list *diff_list, bool skip_reuc)
 {
@@ -2021,7 +2126,9 @@ on_error:
 	git_index_free(index);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_iterator *iterator_given_or_empty(git_iterator **empty, git_iterator *given)
 {
 	git_iterator_options opts = GIT_ITERATOR_OPTIONS_INIT;
@@ -2036,7 +2143,9 @@ static git_iterator *iterator_given_or_empty(git_iterator **empty, git_iterator 
 
 	return *empty;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge__iterators(
 	git_index **out,
 	git_repository *repo,
@@ -2127,7 +2236,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_trees(
 	git_index **out,
 	git_repository *repo,
@@ -2180,7 +2291,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_annotated_commits(
 	git_index **index_out,
 	git_annotated_commit **base_out,
@@ -2189,7 +2302,9 @@ static int merge_annotated_commits(
 	git_annotated_commit *their_commit,
 	size_t recursion_level,
 	const git_merge_options *opts);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) insert_head_ids(
 	git_array_oid_t *ids,
 	const git_annotated_commit *annotated_commit)
@@ -2213,7 +2328,9 @@ GIT_INLINE(int) insert_head_ids(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_virtual_base(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -2250,7 +2367,9 @@ static int create_virtual_base(
 	*out = result;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int compute_base(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -2323,7 +2442,9 @@ done:
 	git_array_clear(head_ids);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_for_annotated_commit(
 	git_iterator **out,
 	git_annotated_commit *commit)
@@ -2348,6 +2469,7 @@ static int iterator_for_annotated_commit(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int merge_annotated_commits(
 	git_index **index_out,
@@ -2392,6 +2514,7 @@ done:
 }
 
 
+#ifdef DISABLED_FUNCTION
 int git_merge_commits(
 	git_index **out,
 	git_repository *repo,
@@ -2414,9 +2537,11 @@ done:
 	git_annotated_commit_free(base);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Merge setup / cleanup */
 
+#ifdef DISABLED_FUNCTION
 static int write_merge_head(
 	git_repository *repo,
 	const git_annotated_commit *heads[],
@@ -2448,7 +2573,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_merge_mode(git_repository *repo)
 {
 	git_filebuf file = GIT_FILEBUF_INIT;
@@ -2474,12 +2601,14 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct merge_msg_entry {
 	const git_annotated_commit *merge_head;
 	bool written;
 };
 
+#ifdef DISABLED_FUNCTION
 static int msg_entry_is_branch(
 	const struct merge_msg_entry *entry,
 	git_vector *entries)
@@ -2491,7 +2620,9 @@ static int msg_entry_is_branch(
 		entry->merge_head->ref_name != NULL &&
 		git__strncmp(GIT_REFS_HEADS_DIR, entry->merge_head->ref_name, strlen(GIT_REFS_HEADS_DIR)) == 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int msg_entry_is_tracking(
 	const struct merge_msg_entry *entry,
 	git_vector *entries)
@@ -2503,7 +2634,9 @@ static int msg_entry_is_tracking(
 		entry->merge_head->ref_name != NULL &&
 		git__strncmp(GIT_REFS_REMOTES_DIR, entry->merge_head->ref_name, strlen(GIT_REFS_REMOTES_DIR)) == 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int msg_entry_is_tag(
 	const struct merge_msg_entry *entry,
 	git_vector *entries)
@@ -2515,7 +2648,9 @@ static int msg_entry_is_tag(
 		entry->merge_head->ref_name != NULL &&
 		git__strncmp(GIT_REFS_TAGS_DIR, entry->merge_head->ref_name, strlen(GIT_REFS_TAGS_DIR)) == 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int msg_entry_is_remote(
 	const struct merge_msg_entry *entry,
 	git_vector *entries)
@@ -2539,7 +2674,9 @@ static int msg_entry_is_remote(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int msg_entry_is_oid(
 	const struct merge_msg_entry *merge_msg_entry)
 {
@@ -2547,13 +2684,17 @@ static int msg_entry_is_oid(
 		merge_msg_entry->merge_head->ref_name == NULL &&
 		merge_msg_entry->merge_head->remote_url == NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_entry_written(
 	const struct merge_msg_entry *merge_msg_entry)
 {
 	return (merge_msg_entry->written == 1);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_entries(
 	git_vector *v,
 	const struct merge_msg_entry *entries,
@@ -2577,7 +2718,9 @@ static int merge_msg_entries(
 
 	return total;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_write_entries(
 	git_filebuf *file,
 	git_vector *entries,
@@ -2618,7 +2761,9 @@ static int merge_msg_write_entries(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_write_branches(
 	git_filebuf *file,
 	git_vector *entries,
@@ -2627,7 +2772,9 @@ static int merge_msg_write_branches(
 	return merge_msg_write_entries(file, entries,
 		"branch", "branches", strlen(GIT_REFS_HEADS_DIR), NULL, sep);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_write_tracking(
 	git_filebuf *file,
 	git_vector *entries,
@@ -2636,7 +2783,9 @@ static int merge_msg_write_tracking(
 	return merge_msg_write_entries(file, entries,
 		"remote-tracking branch", "remote-tracking branches", 0, NULL, sep);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_write_tags(
 	git_filebuf *file,
 	git_vector *entries,
@@ -2645,7 +2794,9 @@ static int merge_msg_write_tags(
 	return merge_msg_write_entries(file, entries,
 		"tag", "tags", strlen(GIT_REFS_TAGS_DIR), NULL, sep);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_msg_write_remotes(
 	git_filebuf *file,
 	git_vector *entries,
@@ -2661,6 +2812,7 @@ static int merge_msg_write_remotes(
 	return merge_msg_write_entries(file, entries,
 		"branch", "branches", strlen(GIT_REFS_HEADS_DIR), source, sep);
 }
+#endif // DISABLED_FUNCTION
 
 static int write_merge_msg(
 	git_repository *repo,
@@ -2778,6 +2930,7 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_merge__setup(
 	git_repository *repo,
 	const git_annotated_commit *our_head,
@@ -2796,9 +2949,11 @@ int git_merge__setup(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Merge branches */
 
+#ifdef DISABLED_FUNCTION
 static int merge_ancestor_head(
 	git_annotated_commit **ancestor_head,
 	git_repository *repo,
@@ -2830,7 +2985,9 @@ on_error:
 	git__free(oids);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *merge_their_label(const char *branchname)
 {
 	const char *slash;
@@ -2843,7 +3000,9 @@ const char *merge_their_label(const char *branchname)
 
 	return slash+1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_normalize_checkout_opts(
 	git_checkout_options *out,
 	git_repository *repo,
@@ -2893,7 +3052,9 @@ static int merge_normalize_checkout_opts(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_check_index(size_t *conflicts, git_repository *repo, git_index *index_new, git_vector *merged_paths)
 {
 	git_tree *head_tree = NULL;
@@ -2951,7 +3112,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_check_workdir(size_t *conflicts, git_repository *repo, git_index *index_new, git_vector *merged_paths)
 {
 	git_diff *wd_diff_list = NULL;
@@ -2993,7 +3156,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge__check_result(git_repository *repo, git_index *index_new)
 {
 	git_tree *head_tree = NULL;
@@ -3052,7 +3217,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge__append_conflicts_to_merge_msg(
 	git_repository *repo,
 	git_index *index)
@@ -3094,7 +3261,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_state_cleanup(git_repository *repo)
 {
 	const char *state_files[] = {
@@ -3105,7 +3274,9 @@ static int merge_state_cleanup(git_repository *repo)
 
 	return git_repository__cleanup_files(repo, state_files, ARRAY_SIZE(state_files));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_heads(
 	git_annotated_commit **ancestor_head_out,
 	git_annotated_commit **our_head_out,
@@ -3145,7 +3316,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_preference(git_merge_preference_t *out, git_repository *repo)
 {
 	git_config *config;
@@ -3178,7 +3351,9 @@ done:
 	git_config_free(config);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_analysis_for_ref(
 	git_merge_analysis_t *analysis_out,
 	git_merge_preference_t *preference_out,
@@ -3235,7 +3410,9 @@ done:
 	git_annotated_commit_free(our_head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_analysis(
 	git_merge_analysis_t *analysis_out,
 	git_merge_preference_t *preference_out,
@@ -3257,7 +3434,9 @@ int git_merge_analysis(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge(
 	git_repository *repo,
 	const git_annotated_commit **their_heads,
@@ -3332,21 +3511,27 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_init_options(git_merge_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_merge_options, GIT_MERGE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_file_init_input(git_merge_file_input *input, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		input, version, git_merge_file_input, GIT_MERGE_FILE_INPUT_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_file_init_options(
 	git_merge_file_options *opts, unsigned int version)
 {
@@ -3354,3 +3539,4 @@ int git_merge_file_init_options(
 		opts, version, git_merge_file_options, GIT_MERGE_FILE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

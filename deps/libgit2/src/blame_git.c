@@ -16,13 +16,16 @@
  * Origin is refcounted and usually we keep the blob contents to be
  * reused.
  */
+#ifdef DISABLED_FUNCTION
 static git_blame__origin *origin_incref(git_blame__origin *o)
 {
 	if (o)
 		o->refcnt++;
 	return o;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void origin_decref(git_blame__origin *o)
 {
 	if (o && --o->refcnt <= 0) {
@@ -33,8 +36,10 @@ static void origin_decref(git_blame__origin *o)
 		git__free(o);
 	}
 }
+#endif // DISABLED_FUNCTION
 
 /* Given a commit and a path in it, create a new origin structure. */
+#ifdef DISABLED_FUNCTION
 static int make_origin(git_blame__origin **out, git_commit *commit, const char *path)
 {
 	git_blame__origin *o;
@@ -60,8 +65,10 @@ static int make_origin(git_blame__origin **out, git_commit *commit, const char *
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* Locate an existing origin or create a new one. */
+#ifdef DISABLED_FUNCTION
 int git_blame__get_origin(
 		git_blame__origin **out,
 		git_blame *blame,
@@ -77,6 +84,7 @@ int git_blame__get_origin(
 	}
 	return make_origin(out, commit, path);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct blame_chunk_cb_data {
 	git_blame *blame;
@@ -86,6 +94,7 @@ typedef struct blame_chunk_cb_data {
 	long plno;
 }blame_chunk_cb_data;
 
+#ifdef DISABLED_FUNCTION
 static bool same_suspect(git_blame__origin *a, git_blame__origin *b)
 {
 	if (a == b)
@@ -94,8 +103,10 @@ static bool same_suspect(git_blame__origin *a, git_blame__origin *b)
 		return false;
 	return 0 == strcmp(a->path, b->path);
 }
+#endif // DISABLED_FUNCTION
 
 /* find the line number of the last line the target is suspected for */
+#ifdef DISABLED_FUNCTION
 static bool find_last_in_target(size_t *out, git_blame *blame, git_blame__origin *target)
 {
 	git_blame__entry *e;
@@ -116,6 +127,7 @@ static bool find_last_in_target(size_t *out, git_blame *blame, git_blame__origin
 	*out = last_in_target;
 	return found;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * It is known that lines between tlno to same came from parent, and e
@@ -131,6 +143,7 @@ static bool find_last_in_target(size_t *out, git_blame *blame, git_blame__origin
  * Split e into potentially three parts; before this chunk, the chunk
  * to be blamed for the parent, and after that portion.
  */
+#ifdef DISABLED_FUNCTION
 static void split_overlap(git_blame__entry *split, git_blame__entry *e,
 		size_t tlno, size_t plno, size_t same, git_blame__origin *parent)
 {
@@ -169,11 +182,13 @@ static void split_overlap(git_blame__entry *split, git_blame__entry *e,
 		return;
 	split[1].suspect = origin_incref(parent);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Link in a new blame entry to the scoreboard. Entries that cover the same
  * line range have been removed from the scoreboard previously.
  */
+#ifdef DISABLED_FUNCTION
 static void add_blame_entry(git_blame *blame, git_blame__entry *e)
 {
 	git_blame__entry *ent, *prev = NULL;
@@ -195,12 +210,14 @@ static void add_blame_entry(git_blame *blame, git_blame__entry *e)
 	if (e->next)
 		e->next->prev = e;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * src typically is on-stack; we want to copy the information in it to
  * a malloced blame_entry that is already on the linked list of the scoreboard.
  * The origin of dst loses a refcnt while the origin of src gains one.
  */
+#ifdef DISABLED_FUNCTION
 static void dup_entry(git_blame__entry *dst, git_blame__entry *src)
 {
 	git_blame__entry *p, *n;
@@ -214,11 +231,13 @@ static void dup_entry(git_blame__entry *dst, git_blame__entry *src)
 	dst->next = n;
 	dst->score = 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * split_overlap() divided an existing blame e into up to three parts in split.
  * Adjust the linked list of blames in the scoreboard to reflect the split.
  */
+#ifdef DISABLED_FUNCTION
 static void split_blame(git_blame *blame, git_blame__entry *split, git_blame__entry *e)
 {
 	git_blame__entry *new_entry;
@@ -256,22 +275,26 @@ static void split_blame(git_blame *blame, git_blame__entry *split, git_blame__en
 		add_blame_entry(blame, new_entry);
 	}
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * After splitting the blame, the origins used by the on-stack blame_entry
  * should lose one refcnt each.
  */
+#ifdef DISABLED_FUNCTION
 static void decref_split(git_blame__entry *split)
 {
 	int i;
 	for (i=0; i<3; i++)
 		origin_decref(split[i].suspect);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Helper for blame_chunk(). blame_entry e is known to overlap with the patch
  * hunk; split it and pass blame to the parent.
  */
+#ifdef DISABLED_FUNCTION
 static void blame_overlap(
 		git_blame *blame,
 		git_blame__entry *e,
@@ -287,12 +310,14 @@ static void blame_overlap(
 		split_blame(blame, split, e);
 	decref_split(split);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Process one hunk from the patch between the current suspect for blame_entry
  * e and its parent. Find and split the overlap, and pass blame to the
  * overlapping part to the parent.
  */
+#ifdef DISABLED_FUNCTION
 static void blame_chunk(
 		git_blame *blame,
 		size_t tlno,
@@ -313,7 +338,9 @@ static void blame_chunk(
 		}
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int my_emit(
 	long start_a, long count_a,
 	long start_b, long count_b,
@@ -327,7 +354,9 @@ static int my_emit(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
 {
 	const int blk = 1024;
@@ -351,7 +380,9 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
 	a->size -= trimmed - recovered;
 	b->size -= trimmed - recovered;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_hunks(mmfile_t file_a, mmfile_t file_b, void *cb_data)
 {
 	xpparam_t xpp = {0};
@@ -371,7 +402,9 @@ static int diff_hunks(mmfile_t file_a, mmfile_t file_b, void *cb_data)
 
 	return xdl_diff(&file_a, &file_b, &xpp, &xecfg, &ecb);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void fill_origin_blob(git_blame__origin *o, mmfile_t *file)
 {
 	memset(file, 0, sizeof(*file));
@@ -380,7 +413,9 @@ static void fill_origin_blob(git_blame__origin *o, mmfile_t *file)
 		file->size = (size_t)git_blob_rawsize(o->blob);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int pass_blame_to_parent(
 		git_blame *blame,
 		git_blame__origin *target,
@@ -404,14 +439,18 @@ static int pass_blame_to_parent(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int paths_on_dup(void **old, void *new)
 {
 	GIT_UNUSED(old);
 	git__free(new);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_blame__origin* find_origin(
 		git_blame *blame,
 		git_commit *parent,
@@ -474,11 +513,13 @@ cleanup:
 	git_tree_free(ptree);
 	return porigin;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * The blobs of origin and porigin exactly match, so everything origin is
  * suspected for can be blamed on the parent.
  */
+#ifdef DISABLED_FUNCTION
 static int pass_whole_blame(git_blame *blame,
 		git_blame__origin *origin, git_blame__origin *porigin)
 {
@@ -498,7 +539,9 @@ static int pass_whole_blame(git_blame *blame,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int pass_blame(git_blame *blame, git_blame__origin *origin, uint32_t opt)
 {
 	git_commit *commit = origin->commit;
@@ -594,12 +637,14 @@ finish:
 		git__free(sg_origin);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * If two blame entries that are next to each other came from
  * contiguous lines in the same origin (i.e. <commit, path> pair),
  * merge them together.
  */
+#ifdef DISABLED_FUNCTION
 static void coalesce(git_blame *blame)
 {
 	git_blame__entry *ent, *next;
@@ -620,7 +665,9 @@ static void coalesce(git_blame *blame)
 		}
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blame__like_git(git_blame *blame, uint32_t opt)
 {
 	int error = 0;
@@ -659,10 +706,13 @@ int git_blame__like_git(git_blame *blame, uint32_t opt)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_blame__free_entry(git_blame__entry *ent)
 {
 	if (!ent) return;
 	origin_decref(ent->suspect);
 	git__free(ent);
 }
+#endif // DISABLED_FUNCTION

@@ -30,6 +30,7 @@ typedef enum {
 /*
  * This is like mktime, but without normalization of tm_wday and tm_yday.
  */
+#ifdef DISABLED_FUNCTION
 static git_time_t tm_to_time_t(const struct tm *tm)
 {
 	static const int mdays[] = {
@@ -50,6 +51,7 @@ static git_time_t tm_to_time_t(const struct tm *tm)
 	return (year * 365 + (year + 1) / 4 + mdays[month] + day) * 24*60*60UL +
 		tm->tm_hour * 60*60 + tm->tm_min * 60 + tm->tm_sec;
 }
+#endif // DISABLED_FUNCTION
 
 static const char *month_names[] = {
 	"January", "February", "March", "April", "May", "June",
@@ -121,6 +123,7 @@ static const struct {
 	{ "IDLE", +12, 0, },	/* International Date Line East */
 };
 
+#ifdef DISABLED_FUNCTION
 static size_t match_string(const char *date, const char *str)
 {
 	size_t i = 0;
@@ -136,7 +139,9 @@ static size_t match_string(const char *date, const char *str)
 	}
 	return i;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int skip_alpha(const char *date)
 {
 	int i = 0;
@@ -145,10 +150,12 @@ static int skip_alpha(const char *date)
 	} while (isalpha(date[i]));
 	return i;
 }
+#endif // DISABLED_FUNCTION
 
 /*
 * Parse month, weekday, or timezone name
 */
+#ifdef DISABLED_FUNCTION
 static size_t match_alpha(const char *date, struct tm *tm, int *offset)
 {
 	unsigned int i;
@@ -198,7 +205,9 @@ static size_t match_alpha(const char *date, struct tm *tm, int *offset)
 	/* BAD */
 	return skip_alpha(date);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int is_date(int year, int month, int day, struct tm *now_tm, time_t now, struct tm *tm)
 {
 	if (month > 0 && month < 13 && day > 0 && day < 32) {
@@ -240,7 +249,9 @@ static int is_date(int year, int month, int day, struct tm *now_tm, time_t now, 
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static size_t match_multi_number(unsigned long num, char c, const char *date, char *end, struct tm *tm)
 {
 	time_t now;
@@ -300,12 +311,14 @@ static size_t match_multi_number(unsigned long num, char c, const char *date, ch
 	}
 	return end - date;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Have we filled in any part of the time/date yet?
  * We just do a binary 'and' to see if the sign bit
  * is set in all the values.
  */
+#ifdef DISABLED_FUNCTION
 static int nodate(struct tm *tm)
 {
 	return (tm->tm_year &
@@ -315,10 +328,12 @@ static int nodate(struct tm *tm)
 		tm->tm_min &
 		tm->tm_sec) < 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * We've seen a digit. Time? Year? Date?
  */
+#ifdef DISABLED_FUNCTION
 static size_t match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt)
 {
 	size_t n;
@@ -412,7 +427,9 @@ static size_t match_digit(const char *date, struct tm *tm, int *offset, int *tm_
 
 	return n;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static size_t match_tz(const char *date, int *offp)
 {
 	char *end;
@@ -449,11 +466,13 @@ static size_t match_tz(const char *date, int *offp)
 	}
 	return end - date;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Parse a string like "0 +0000" as ancient timestamp near epoch, but
  * only when it appears not as part of any other string.
  */
+#ifdef DISABLED_FUNCTION
 static int match_object_header_date(const char *date, git_time_t *timestamp, int *offset)
 {
 	char *end;
@@ -476,9 +495,11 @@ static int match_object_header_date(const char *date, git_time_t *timestamp, int
 	*offset = ofs;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
    (i.e. English) day/month names, and it doesn't work correctly with %z. */
+#ifdef DISABLED_FUNCTION
 static int parse_date_basic(const char *date, git_time_t *timestamp, int *offset)
 {
 	struct tm tm;
@@ -540,12 +561,14 @@ static int parse_date_basic(const char *date, git_time_t *timestamp, int *offset
 		*timestamp -= *offset * 60;
 	return 0; /* success */
 }
+#endif // DISABLED_FUNCTION
 
 
 /*
  * Relative time update (eg "2 days ago").  If we haven't set the time
  * yet, we need to set it from current time.
  */
+#ifdef DISABLED_FUNCTION
 static git_time_t update_tm(struct tm *tm, struct tm *now, unsigned long sec)
 {
 	time_t n;
@@ -564,19 +587,25 @@ static git_time_t update_tm(struct tm *tm, struct tm *now, unsigned long sec)
 	p_localtime_r(&n, tm);
 	return n;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_now(struct tm *tm, struct tm *now, int *num)
 {
    GIT_UNUSED(num);
 	update_tm(tm, now, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_yesterday(struct tm *tm, struct tm *now, int *num)
 {
    GIT_UNUSED(num);
 	update_tm(tm, now, 24*60*60);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_time(struct tm *tm, struct tm *now, int hour)
 {
 	if (tm->tm_hour < hour)
@@ -585,25 +614,33 @@ static void date_time(struct tm *tm, struct tm *now, int hour)
 	tm->tm_min = 0;
 	tm->tm_sec = 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_midnight(struct tm *tm, struct tm *now, int *num)
 {
    GIT_UNUSED(num);
 	date_time(tm, now, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_noon(struct tm *tm, struct tm *now, int *num)
 {
    GIT_UNUSED(num);
 	date_time(tm, now, 12);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_tea(struct tm *tm, struct tm *now, int *num)
 {
    GIT_UNUSED(num);
 	date_time(tm, now, 17);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_pm(struct tm *tm, struct tm *now, int *num)
 {
 	int hour, n = *num;
@@ -618,7 +655,9 @@ static void date_pm(struct tm *tm, struct tm *now, int *num)
 	}
 	tm->tm_hour = (hour % 12) + 12;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_am(struct tm *tm, struct tm *now, int *num)
 {
 	int hour, n = *num;
@@ -633,7 +672,9 @@ static void date_am(struct tm *tm, struct tm *now, int *num)
 	}
 	tm->tm_hour = (hour % 12);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void date_never(struct tm *tm, struct tm *now, int *num)
 {
 	time_t n = 0;
@@ -641,7 +682,9 @@ static void date_never(struct tm *tm, struct tm *now, int *num)
    GIT_UNUSED(num);
 	p_localtime_r(&n, tm);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const struct special {
 	const char *name;
 	void (*fn)(struct tm *, struct tm *, int *);
@@ -673,7 +716,9 @@ static const struct typelen {
 	{ "weeks", 7*24*60*60 },
 	{ NULL }
 };
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm *now, int *num, int *touched)
 {
 	const struct typelen *tl;
@@ -771,7 +816,9 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm 
 
 	return end;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *approxidate_digit(const char *date, struct tm *tm, int *num)
 {
 	char *end;
@@ -794,12 +841,14 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num)
 		*num = number;
 	return end;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Do we have a pending number at the end, or when
  * we see a new one? Let's assume it's a month day,
  * as in "Dec 6, 1992"
  */
+#ifdef DISABLED_FUNCTION
 static void pending_number(struct tm *tm, int *num)
 {
 	int number = *num;
@@ -821,7 +870,9 @@ static void pending_number(struct tm *tm, int *num)
 		}
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_time_t approxidate_str(const char *date,
 	time_t time_sec,
 	int *error_ret)
@@ -856,7 +907,9 @@ static git_time_t approxidate_str(const char *date,
 		*error_ret = 1;
 	return update_tm(&tm, &now, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git__date_parse(git_time_t *out, const char *date)
 {
 	time_t time_sec;
@@ -874,7 +927,9 @@ int git__date_parse(git_time_t *out, const char *date)
 	*out = approxidate_str(date, time_sec, &error_ret);
    return error_ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git__date_rfc2822_fmt(char *out, size_t len, const git_time *date)
 {
 	int written;
@@ -901,4 +956,4 @@ int git__date_rfc2822_fmt(char *out, size_t len, const git_time *date)
 
 	return 0;
 }
-
+#endif // DISABLED_FUNCTION

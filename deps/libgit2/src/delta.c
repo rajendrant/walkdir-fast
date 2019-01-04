@@ -119,6 +119,7 @@ struct git_delta_index {
 	struct index_entry *hash[GIT_FLEX_ARRAY];
 };
 
+#ifdef DISABLED_FUNCTION
 static int lookup_index_alloc(
 	void **out, unsigned long *out_len, size_t entries, size_t hash_count)
 {
@@ -141,7 +142,9 @@ static int lookup_index_alloc(
 	*out_len = index_len;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_delta_index_init(
 	git_delta_index **out, const void *buf, size_t bufsize)
 {
@@ -248,18 +251,23 @@ int git_delta_index_init(
 	*out = index;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_delta_index_free(git_delta_index *index)
 {
 	git__free(index);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_delta_index_size(git_delta_index *index)
 {
 	assert(index);
 
 	return index->memsize;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * The maximum size for any opcode sequence, including the initial header
@@ -267,6 +275,7 @@ size_t git_delta_index_size(git_delta_index *index)
  */
 #define MAX_OP_SIZE	(5 + 5 + 1 + RABIN_WINDOW + 7)
 
+#ifdef DISABLED_FUNCTION
 int git_delta_create_from_index(
 	void **out,
 	size_t *out_len,
@@ -447,6 +456,7 @@ int git_delta_create_from_index(
 	*out = buf;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
 * Delta application was heavily cribbed from BinaryDelta.java in JGit, which
@@ -479,6 +489,7 @@ static int hdr_sz(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_delta_read_header(
 	size_t *base_out,
 	size_t *result_out,
@@ -491,6 +502,7 @@ int git_delta_read_header(
 		return -1;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define DELTA_HEADER_BUFFER_LEN 16
 int git_delta_read_header_fromstream(

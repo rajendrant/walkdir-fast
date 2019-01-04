@@ -126,10 +126,12 @@ void git_buf_dispose(git_buf *buf)
 	git_buf_init(buf, 0);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_buf_free(git_buf *buf)
 {
 	git_buf_dispose(buf);
 }
+#endif // DISABLED_FUNCTION
 
 void git_buf_sanitize(git_buf *buf)
 {
@@ -174,15 +176,19 @@ int git_buf_set(git_buf *buf, const void *data, size_t len)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_buf_is_binary(const git_buf *buf)
 {
 	return git_buf_text_is_binary(buf);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_contains_nul(const git_buf *buf)
 {
 	return git_buf_text_contains_nul(buf);
 }
+#endif // DISABLED_FUNCTION
 
 int git_buf_sets(git_buf *buf, const char *string)
 {
@@ -199,6 +205,7 @@ int git_buf_putc(git_buf *buf, char c)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_buf_putcn(git_buf *buf, char c, size_t len)
 {
 	size_t new_size;
@@ -210,6 +217,7 @@ int git_buf_putcn(git_buf *buf, char c, size_t len)
 	buf->ptr[buf->size] = '\0';
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_buf_put(git_buf *buf, const char *data, size_t len)
 {
@@ -237,6 +245,7 @@ int git_buf_puts(git_buf *buf, const char *string)
 static const char base64_encode[] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+#ifdef DISABLED_FUNCTION
 int git_buf_encode_base64(git_buf *buf, const char *data, size_t len)
 {
 	size_t extra = len % 3;
@@ -278,6 +287,7 @@ int git_buf_encode_base64(git_buf *buf, const char *data, size_t len)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* The inverse of base64_encode */
 static const int8_t base64_decode[] = {
@@ -299,6 +309,7 @@ static const int8_t base64_decode[] = {
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 };
 
+#ifdef DISABLED_FUNCTION
 int git_buf_decode_base64(git_buf *buf, const char *base64, size_t len)
 {
 	size_t i;
@@ -335,10 +346,12 @@ int git_buf_decode_base64(git_buf *buf, const char *base64, size_t len)
 	buf->ptr[buf->size] = '\0';
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static const char base85_encode[] =
 	"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~";
 
+#ifdef DISABLED_FUNCTION
 int git_buf_encode_base85(git_buf *buf, const char *data, size_t len)
 {
 	size_t blocks = (len / 4) + !!(len % 4), alloclen;
@@ -377,6 +390,7 @@ int git_buf_encode_base85(git_buf *buf, const char *data, size_t len)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* The inverse of base85_encode */
 static const int8_t base85_decode[] = {
@@ -398,6 +412,7 @@ static const int8_t base85_decode[] = {
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 };
 
+#ifdef DISABLED_FUNCTION
 int git_buf_decode_base85(
 	git_buf *buf,
 	const char *base85,
@@ -459,9 +474,11 @@ on_error:
 	giterr_set(GITERR_INVALID, "invalid base85 input");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 #define HEX_DECODE(c) ((c | 32) % 39 - 9)
 
+#ifdef DISABLED_FUNCTION
 int git_buf_decode_percent(
 	git_buf *buf,
 	const char *str,
@@ -489,6 +506,7 @@ int git_buf_decode_percent(
 	buf->ptr[buf->size] = '\0';
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_buf_vprintf(git_buf *buf, const char *format, va_list ap)
 {
@@ -542,6 +560,7 @@ int git_buf_printf(git_buf *buf, const char *format, ...)
 	return r;
 }
 
+#ifdef DISABLED_FUNCTION
 void git_buf_copy_cstr(char *data, size_t datasize, const git_buf *buf)
 {
 	size_t copylen;
@@ -559,7 +578,9 @@ void git_buf_copy_cstr(char *data, size_t datasize, const git_buf *buf)
 	memmove(data, buf->ptr, copylen);
 	data[copylen] = '\0';
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_buf_consume(git_buf *buf, const char *end)
 {
 	if (end > buf->ptr && end <= buf->ptr + buf->size) {
@@ -569,6 +590,7 @@ void git_buf_consume(git_buf *buf, const char *end)
 		buf->ptr[buf->size] = '\0';
 	}
 }
+#endif // DISABLED_FUNCTION
 
 void git_buf_truncate(git_buf *buf, size_t len)
 {
@@ -630,6 +652,7 @@ int git_buf_attach(git_buf *buf, char *ptr, size_t asize)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 void git_buf_attach_notowned(git_buf *buf, const char *ptr, size_t size)
 {
 	if (git_buf_is_allocated(buf))
@@ -643,7 +666,9 @@ void git_buf_attach_notowned(git_buf *buf, const char *ptr, size_t size)
 		buf->size = size;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_join_n(git_buf *buf, char separator, int nbuf, ...)
 {
 	va_list ap;
@@ -731,7 +756,9 @@ int git_buf_join_n(git_buf *buf, char separator, int nbuf, ...)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+// #ifdef DISABLED_FUNCTION
 int git_buf_join(
 	git_buf *buf,
 	char separator,
@@ -779,7 +806,9 @@ int git_buf_join(
 
 	return 0;
 }
+// #endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_join3(
 	git_buf *buf,
 	char separator,
@@ -839,6 +868,7 @@ int git_buf_join3(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_buf_rtrim(git_buf *buf)
 {
@@ -853,13 +883,16 @@ void git_buf_rtrim(git_buf *buf)
 		buf->ptr[buf->size] = '\0';
 }
 
+#ifdef DISABLED_FUNCTION
 int git_buf_cmp(const git_buf *a, const git_buf *b)
 {
 	int result = memcmp(a->ptr, b->ptr, min(a->size, b->size));
 	return (result != 0) ? result :
 		(a->size < b->size) ? -1 : (a->size > b->size) ? 1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_splice(
 	git_buf *buf,
 	size_t where,
@@ -891,8 +924,10 @@ int git_buf_splice(
 	buf->ptr[buf->size] = '\0';
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* Quote per http://marc.info/?l=git&m=112927316408690&w=2 */
+#ifdef DISABLED_FUNCTION
 int git_buf_quote(git_buf *buf)
 {
 	const char whitespace[] = { 'a', 'b', 't', 'n', 'v', 'f', 'r' };
@@ -957,8 +992,10 @@ done:
 	git_buf_dispose(&quoted);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Unquote per http://marc.info/?l=git&m=112927316408690&w=2 */
+#ifdef DISABLED_FUNCTION
 int git_buf_unquote(git_buf *buf)
 {
 	size_t i, j;
@@ -1032,3 +1069,4 @@ invalid:
 	giterr_set(GITERR_INVALID, "invalid quoted line");
 	return -1;
 }
+#endif // DISABLED_FUNCTION

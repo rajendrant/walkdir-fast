@@ -21,6 +21,7 @@
 #include "diff.h"
 #include "diff_generate.h"
 
+#ifdef DISABLED_FUNCTION
 static unsigned int index_delta2status(const git_diff_delta *head2idx)
 {
 	git_status_t st = GIT_STATUS_CURRENT;
@@ -54,7 +55,9 @@ static unsigned int index_delta2status(const git_diff_delta *head2idx)
 
 	return st;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static unsigned int workdir_delta2status(
 	git_diff *diff, git_diff_delta *idx2wd)
 {
@@ -115,7 +118,9 @@ static unsigned int workdir_delta2status(
 
 	return st;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool status_is_included(
 	git_status_list *status,
 	git_diff_delta *head2idx,
@@ -145,7 +150,9 @@ static bool status_is_included(
 	/* only get here if every valid mode is GIT_FILEMODE_COMMIT */
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_status_t status_compute(
 	git_status_list *status,
 	git_diff_delta *head2idx,
@@ -161,7 +168,9 @@ static git_status_t status_compute(
 
 	return st;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int status_collect(
 	git_diff_delta *head2idx,
 	git_diff_delta *idx2wd,
@@ -182,7 +191,9 @@ static int status_collect(
 
 	return git_vector_insert(&status->paired, status_entry);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) status_entry_cmp_base(
 	const void *a,
 	const void *b,
@@ -206,17 +217,23 @@ GIT_INLINE(int) status_entry_cmp_base(
 
 	return strcomp(delta_a->new_file.path, delta_b->new_file.path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int status_entry_icmp(const void *a, const void *b)
 {
 	return status_entry_cmp_base(a, b, git__strcasecmp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int status_entry_cmp(const void *a, const void *b)
 {
 	return status_entry_cmp_base(a, b, git__strcmp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_status_list *git_status_list_alloc(git_index *index)
 {
 	git_status_list *status = NULL;
@@ -234,7 +251,9 @@ static git_status_list *git_status_list_alloc(git_index *index)
 
 	return status;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int status_validate_options(const git_status_options *opts)
 {
 	if (!opts)
@@ -256,7 +275,9 @@ static int status_validate_options(const git_status_options *opts)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_list_new(
 	git_status_list **out,
 	git_repository *repo,
@@ -387,21 +408,27 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_status_list_entrycount(git_status_list *status)
 {
 	assert(status);
 
 	return status->paired.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_status_entry *git_status_byindex(git_status_list *status, size_t i)
 {
 	assert(status);
 
 	return git_vector_get(&status->paired, i);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_status_list_free(git_status_list *status)
 {
 	if (status == NULL)
@@ -415,7 +442,9 @@ void git_status_list_free(git_status_list *status)
 	git__memzero(status, sizeof(*status));
 	git__free(status);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_foreach_ext(
 	git_repository *repo,
 	const git_status_options *opts,
@@ -446,11 +475,14 @@ int git_status_foreach_ext(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_foreach(git_repository *repo, git_status_cb cb, void *payload)
 {
 	return git_status_foreach_ext(repo, NULL, cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
 struct status_file_info {
 	char *expected;
@@ -460,6 +492,7 @@ struct status_file_info {
 	int ambiguous;
 };
 
+#ifdef DISABLED_FUNCTION
 static int get_one_status(const char *path, unsigned int status, void *data)
 {
 	struct status_file_info *sfi = data;
@@ -480,7 +513,9 @@ static int get_one_status(const char *path, unsigned int status, void *data)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_file(
 	unsigned int *status_flags,
 	git_repository *repo,
@@ -531,7 +566,9 @@ int git_status_file(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_should_ignore(
 	int *ignored,
 	git_repository *repo,
@@ -539,14 +576,18 @@ int git_status_should_ignore(
 {
 	return git_ignore_path_is_ignored(ignored, repo, path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_init_options(git_status_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_status_options, GIT_STATUS_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_status_list_get_perfdata(
 	git_diff_perfdata *out, const git_status_list *status)
 {
@@ -567,4 +608,5 @@ int git_status_list_get_perfdata(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 

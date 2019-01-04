@@ -362,6 +362,7 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_ignore__push_dir(git_ignores *ign, const char *dir)
 {
 	if (git_buf_joinpath(&ign->dir, ign->dir.ptr, dir) < 0)
@@ -372,6 +373,7 @@ int git_ignore__push_dir(git_ignores *ign, const char *dir)
 	return push_ignore_file(
 		ign, &ign->ign_path, ign->dir.ptr, GIT_IGNORE_FILE);
 }
+#endif // DISABLED_FUNCTION
 
 int git_ignore__pop_dir(git_ignores *ign)
 {
@@ -450,6 +452,7 @@ static bool ignore_lookup_in_rules(
 	return false;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_ignore__lookup(
 	int *out, git_ignores *ignores, const char *pathname, git_dir_flag dir_flag)
 {
@@ -483,7 +486,9 @@ cleanup:
 	git_attr_path__free(&path);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_ignore_add_rule(git_repository *repo, const char *rules)
 {
 	int error;
@@ -497,7 +502,9 @@ int git_ignore_add_rule(git_repository *repo, const char *rules)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_ignore_clear_internal_rules(git_repository *repo)
 {
 	int error;
@@ -513,6 +520,7 @@ int git_ignore_clear_internal_rules(git_repository *repo)
 	git_attr_file__free(ign_internal);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_ignore_path_is_ignored(
 	int *ignored,
@@ -580,6 +588,7 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_ignore__check_pathspec_for_exact_ignores(
 	git_repository *repo,
 	git_vector *vspec,
@@ -636,4 +645,5 @@ int git_ignore__check_pathspec_for_exact_ignores(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 

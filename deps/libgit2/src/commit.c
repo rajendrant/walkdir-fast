@@ -40,6 +40,7 @@ void git_commit__free(void *_commit)
 	git__free(commit);
 }
 
+#ifdef DISABLED_FUNCTION
 static int git_commit__create_buffer_internal(
 	git_buf *out,
 	const git_signature *author,
@@ -78,7 +79,9 @@ on_error:
 	git_buf_dispose(out);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int validate_tree_and_parents(git_array_oid_t *parents, git_repository *repo, const git_oid *tree,
 				     git_commit_parent_callback parent_cb, void *parent_payload,
 				     const git_oid *current_id, bool validate)
@@ -117,7 +120,9 @@ on_error:
 	git_array_clear(*parents);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_commit__create_internal(
 	git_oid *id,
 	git_repository *repo,
@@ -180,7 +185,9 @@ cleanup:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_create_from_callback(
 	git_oid *id,
 	git_repository *repo,
@@ -197,12 +204,14 @@ int git_commit_create_from_callback(
 		id, repo, update_ref, author, committer, message_encoding, message,
 		tree, parent_cb, parent_payload, true);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	size_t total;
 	va_list args;
 } commit_parent_varargs;
 
+#ifdef DISABLED_FUNCTION
 static const git_oid *commit_parent_from_varargs(size_t curr, void *payload)
 {
 	commit_parent_varargs *data = payload;
@@ -212,7 +221,9 @@ static const git_oid *commit_parent_from_varargs(size_t curr, void *payload)
 	commit = va_arg(data->args, const git_commit *);
 	return commit ? git_commit_id(commit) : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_create_v(
 	git_oid *id,
 	git_repository *repo,
@@ -241,18 +252,22 @@ int git_commit_create_v(
 	va_end(data.args);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	size_t total;
 	const git_oid **parents;
 } commit_parent_oids;
 
+#ifdef DISABLED_FUNCTION
 static const git_oid *commit_parent_from_ids(size_t curr, void *payload)
 {
 	commit_parent_oids *data = payload;
 	return (curr < data->total) ? data->parents[curr] : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_create_from_ids(
 	git_oid *id,
 	git_repository *repo,
@@ -272,6 +287,7 @@ int git_commit_create_from_ids(
 		message_encoding, message, tree,
 		commit_parent_from_ids, &data, true);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	size_t total;
@@ -279,6 +295,7 @@ typedef struct {
 	git_repository *repo;
 } commit_parent_data;
 
+#ifdef DISABLED_FUNCTION
 static const git_oid *commit_parent_from_array(size_t curr, void *payload)
 {
 	commit_parent_data *data = payload;
@@ -290,7 +307,9 @@ static const git_oid *commit_parent_from_array(size_t curr, void *payload)
 		return NULL;
 	return git_commit_id(commit);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_create(
 	git_oid *id,
 	git_repository *repo,
@@ -312,7 +331,9 @@ int git_commit_create(
 		message_encoding, message, git_tree_id(tree),
 		commit_parent_from_array, &data, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const git_oid *commit_parent_for_amend(size_t curr, void *payload)
 {
 	const git_commit *commit_to_amend = payload;
@@ -320,7 +341,9 @@ static const git_oid *commit_parent_for_amend(size_t curr, void *payload)
 		return NULL;
 	return git_array_get(commit_to_amend->parent_ids, curr);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_amend(
 	git_oid *id,
 	const git_commit *commit_to_amend,
@@ -382,6 +405,7 @@ int git_commit_amend(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_commit__parse_raw(void *_commit, const char *data, size_t size)
 {
@@ -501,6 +525,7 @@ GIT_COMMIT_GETTER(int, time_offset, commit->committer->when.offset)
 GIT_COMMIT_GETTER(unsigned int, parentcount, (unsigned int)git_array_size(commit->parent_ids))
 GIT_COMMIT_GETTER(const git_oid *, tree_id, &commit->tree_id)
 
+#ifdef DISABLED_FUNCTION
 const char *git_commit_message(const git_commit *commit)
 {
 	const char *message;
@@ -515,7 +540,9 @@ const char *git_commit_message(const git_commit *commit)
 
 	return message;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_commit_summary(git_commit *commit)
 {
 	git_buf summary = GIT_BUF_INIT;
@@ -560,7 +587,9 @@ const char *git_commit_summary(git_commit *commit)
 
 	return commit->summary;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_commit_body(git_commit *commit)
 {
 	const char *msg, *end;
@@ -587,13 +616,17 @@ const char *git_commit_body(git_commit *commit)
 
 	return commit->body;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_tree(git_tree **tree_out, const git_commit *commit)
 {
 	assert(commit);
 	return git_tree_lookup(tree_out, commit->object.repo, &commit->tree_id);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_commit_parent_id(
 	const git_commit *commit, unsigned int n)
 {
@@ -601,7 +634,9 @@ const git_oid *git_commit_parent_id(
 
 	return git_array_get(commit->parent_ids, n);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_parent(
 	git_commit **parent, const git_commit *commit, unsigned int n)
 {
@@ -616,7 +651,9 @@ int git_commit_parent(
 
 	return git_commit_lookup(parent, commit->object.repo, parent_id);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_nth_gen_ancestor(
 	git_commit **ancestor,
 	const git_commit *commit,
@@ -649,7 +686,9 @@ int git_commit_nth_gen_ancestor(
 	*ancestor = parent;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_header_field(git_buf *out, const git_commit *commit, const char *field)
 {
 	const char *eol, *buf = commit->raw_header;
@@ -709,7 +748,9 @@ oom:
 	giterr_set_oom();
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_extract_signature(git_buf *signature, git_buf *signed_data, git_repository *repo, git_oid *commit_id, const char *field)
 {
 	git_odb_object *obj;
@@ -802,7 +843,9 @@ cleanup:
 	git_buf_clear(signed_data);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_create_buffer(git_buf *out,
 	git_repository *repo,
 	const git_signature *author,
@@ -833,10 +876,12 @@ int git_commit_create_buffer(git_buf *out,
 	git_array_clear(parents_arr);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Append to 'out' properly marking continuations when there's a newline in 'content'
  */
+#ifdef DISABLED_FUNCTION
 static void format_header_field(git_buf *out, const char *field, const char *content)
 {
 	const char *lf;
@@ -855,7 +900,9 @@ static void format_header_field(git_buf *out, const char *field, const char *con
 	git_buf_puts(out, content);
 	git_buf_putc(out, '\n');
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_create_with_signature(
 	git_oid *out,
 	git_repository *repo,
@@ -897,15 +944,20 @@ cleanup:
 	git_buf_dispose(&commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_committer_with_mailmap(
 	git_signature **out, const git_commit *commit, const git_mailmap *mailmap)
 {
 	return git_mailmap_resolve_signature(out, mailmap, commit->committer);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_author_with_mailmap(
 	git_signature **out, const git_commit *commit, const git_mailmap *mailmap)
 {
 	return git_mailmap_resolve_signature(out, mailmap, commit->author);
 }
+#endif // DISABLED_FUNCTION

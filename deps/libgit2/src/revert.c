@@ -20,6 +20,7 @@
 
 #define GIT_REVERT_FILE_MODE		0666
 
+#ifdef DISABLED_FUNCTION
 static int write_revert_head(
 	git_repository *repo,
 	const char *commit_oidstr)
@@ -40,7 +41,9 @@ static int write_revert_head(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_merge_msg(
 	git_repository *repo,
 	const char *commit_oidstr,
@@ -66,7 +69,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revert_normalize_opts(
 	git_repository *repo,
 	git_revert_options *opts,
@@ -97,14 +102,18 @@ static int revert_normalize_opts(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revert_state_cleanup(git_repository *repo)
 {
 	const char *state_files[] = { GIT_REVERT_HEAD_FILE, GIT_MERGE_MSG_FILE };
 
 	return git_repository__cleanup_files(repo, state_files, ARRAY_SIZE(state_files));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revert_seterr(git_commit *commit, const char *fmt)
 {
 	char commit_oidstr[GIT_OID_HEXSZ + 1];
@@ -116,7 +125,9 @@ static int revert_seterr(git_commit *commit, const char *fmt)
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revert_commit(
 	git_index **out,
 	git_repository *repo,
@@ -164,7 +175,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revert(
 	git_repository *repo,
 	git_commit *commit,
@@ -223,10 +236,13 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revert_init_options(git_revert_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_revert_options, GIT_REVERT_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

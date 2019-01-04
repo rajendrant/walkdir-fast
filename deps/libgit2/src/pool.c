@@ -92,6 +92,7 @@ static void *pool_alloc(git_pool *pool, uint32_t size)
 	return ptr;
 }
 
+#ifdef DISABLED_FUNCTION
 uint32_t git_pool__open_pages(git_pool *pool)
 {
 	uint32_t ct = 0;
@@ -99,7 +100,9 @@ uint32_t git_pool__open_pages(git_pool *pool)
 	for (scan = pool->pages; scan != NULL; scan = scan->next) ct++;
 	return ct;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_pool__ptr_in_pool(git_pool *pool, void *ptr)
 {
 	git_pool_page *scan;
@@ -109,6 +112,7 @@ bool git_pool__ptr_in_pool(git_pool *pool, void *ptr)
 			return true;
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
 #else
 
@@ -157,6 +161,7 @@ bool git_pool__ptr_in_pool(git_pool *pool, void *ptr)
 }
 #endif
 
+#ifdef DISABLED_FUNCTION
 void git_pool_swap(git_pool *a, git_pool *b)
 {
 	git_pool temp;
@@ -168,6 +173,7 @@ void git_pool_swap(git_pool *a, git_pool *b)
 	memcpy(a, b, sizeof(temp));
 	memcpy(b, &temp, sizeof(temp));
 }
+#endif // DISABLED_FUNCTION
 
 static uint32_t alloc_size(git_pool *pool, uint32_t count)
 {
@@ -218,11 +224,14 @@ char *git_pool_strdup(git_pool *pool, const char *str)
 	return git_pool_strndup(pool, str, strlen(str));
 }
 
+#ifdef DISABLED_FUNCTION
 char *git_pool_strdup_safe(git_pool *pool, const char *str)
 {
 	return str ? git_pool_strdup(pool, str) : NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 char *git_pool_strcat(git_pool *pool, const char *a, const char *b)
 {
 	void *ptr;
@@ -242,3 +251,4 @@ char *git_pool_strcat(git_pool *pool, const char *a, const char *b)
 	}
 	return ptr;
 }
+#endif // DISABLED_FUNCTION

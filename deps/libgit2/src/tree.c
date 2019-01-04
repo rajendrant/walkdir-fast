@@ -29,6 +29,7 @@ static bool valid_filemode(const int filemode)
 		|| filemode == GIT_FILEMODE_COMMIT);
 }
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(git_filemode_t) normalize_filemode(git_filemode_t filemode)
 {
 	/* Tree bits set, but it's not a commit */
@@ -50,14 +51,18 @@ GIT_INLINE(git_filemode_t) normalize_filemode(git_filemode_t filemode)
 	/* Otherwise, return a blob */
 	return GIT_FILEMODE_BLOB;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int valid_entry_name(git_repository *repo, const char *filename)
 {
 	return *filename != '\0' &&
 		git_path_isvalid(repo, filename, 0,
 		GIT_PATH_REJECT_TRAVERSAL | GIT_PATH_REJECT_DOT_GIT | GIT_PATH_REJECT_SLASH);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int entry_sort_cmp(const void *a, const void *b)
 {
 	const git_tree_entry *e1 = (const git_tree_entry *)a;
@@ -68,16 +73,20 @@ static int entry_sort_cmp(const void *a, const void *b)
 		e2->filename, e2->filename_len, git_tree_entry__is_tree(e2),
 		git__strncmp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_entry_cmp(const git_tree_entry *e1, const git_tree_entry *e2)
 {
 	return entry_sort_cmp(e1, e2);
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Allocate a new self-contained entry, with enough space after it to
  * store the filename and the id.
  */
+#ifdef DISABLED_FUNCTION
 static git_tree_entry *alloc_entry(const char *filename, size_t filename_len, const git_oid *id)
 {
 	git_tree_entry *entry = NULL;
@@ -111,12 +120,14 @@ static git_tree_entry *alloc_entry(const char *filename, size_t filename_len, co
 
 	return entry;
 }
+#endif // DISABLED_FUNCTION
 
 struct tree_key_search {
 	const char *filename;
 	uint16_t filename_len;
 };
 
+#ifdef DISABLED_FUNCTION
 static int homing_search_cmp(const void *key, const void *array_member)
 {
 	const struct tree_key_search *ksearch = key;
@@ -131,6 +142,7 @@ static int homing_search_cmp(const void *key, const void *array_member)
 		len1 < len2 ? len1 : len2
 	);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Search for an entry in a given tree.
@@ -152,6 +164,7 @@ static int homing_search_cmp(const void *key, const void *array_member)
  * ambiguous because of folder vs file sorting, we look linearly
  * around the area for our target file.
  */
+#ifdef DISABLED_FUNCTION
 static int tree_key_search(
 	size_t *at_pos,
 	const git_tree *tree,
@@ -215,7 +228,9 @@ static int tree_key_search(
 	/* The filename doesn't exist at all */
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_tree_entry_free(git_tree_entry *entry)
 {
 	if (entry == NULL)
@@ -223,7 +238,9 @@ void git_tree_entry_free(git_tree_entry *entry)
 
 	git__free(entry);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_entry_dup(git_tree_entry **dest, const git_tree_entry *source)
 {
 	git_tree_entry *cpy;
@@ -239,6 +256,7 @@ int git_tree_entry_dup(git_tree_entry **dest, const git_tree_entry *source)
 	*dest = cpy;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_tree__free(void *_tree)
 {
@@ -249,28 +267,37 @@ void git_tree__free(void *_tree)
 	git__free(tree);
 }
 
+#ifdef DISABLED_FUNCTION
 git_filemode_t git_tree_entry_filemode(const git_tree_entry *entry)
 {
 	return normalize_filemode(entry->attr);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_filemode_t git_tree_entry_filemode_raw(const git_tree_entry *entry)
 {
 	return entry->attr;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_tree_entry_name(const git_tree_entry *entry)
 {
 	assert(entry);
 	return entry->filename;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_tree_entry_id(const git_tree_entry *entry)
 {
 	assert(entry);
 	return entry->oid;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_object_t git_tree_entry_type(const git_tree_entry *entry)
 {
 	assert(entry);
@@ -282,7 +309,9 @@ git_object_t git_tree_entry_type(const git_tree_entry *entry)
 	else
 		return GIT_OBJECT_BLOB;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_entry_to_object(
 	git_object **object_out,
 	git_repository *repo,
@@ -291,7 +320,9 @@ int git_tree_entry_to_object(
 	assert(entry && object_out);
 	return git_object_lookup(object_out, repo, entry->oid, GIT_OBJECT_ANY);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const git_tree_entry *entry_fromname(
 	const git_tree *tree, const char *name, size_t name_len)
 {
@@ -302,7 +333,9 @@ static const git_tree_entry *entry_fromname(
 
 	return git_array_get(tree->entries, idx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_tree_entry *git_tree_entry_byname(
 	const git_tree *tree, const char *filename)
 {
@@ -310,14 +343,18 @@ const git_tree_entry *git_tree_entry_byname(
 
 	return entry_fromname(tree, filename, strlen(filename));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_tree_entry *git_tree_entry_byindex(
 	const git_tree *tree, size_t idx)
 {
 	assert(tree);
 	return git_array_get(tree->entries, idx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_tree_entry *git_tree_entry_byid(
 	const git_tree *tree, const git_oid *id)
 {
@@ -333,19 +370,24 @@ const git_tree_entry *git_tree_entry_byid(
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_tree_entrycount(const git_tree *tree)
 {
 	assert(tree);
 	return tree->entries.size;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 unsigned int git_treebuilder_entrycount(git_treebuilder *bld)
 {
 	assert(bld);
 
 	return git_strmap_num_entries(bld->map);
 }
+#endif // DISABLED_FUNCTION
 
 static int tree_error(const char *str, const char *path)
 {
@@ -442,6 +484,7 @@ int git_tree__parse(void *_tree, git_odb_object *odb_obj)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static size_t find_next_dir(const char *dirname, git_index *index, size_t start)
 {
 	size_t dirlen, i, entries = git_index_entrycount(index);
@@ -458,7 +501,9 @@ static size_t find_next_dir(const char *dirname, git_index *index, size_t start)
 
 	return i;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_object_t otype_from_mode(git_filemode_t filemode)
 {
 	switch (filemode) {
@@ -470,7 +515,9 @@ static git_object_t otype_from_mode(git_filemode_t filemode)
 		return GIT_OBJECT_BLOB;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_entry(git_repository *repo, const char *filename, const git_oid *id, git_filemode_t filemode)
 {
 	if (!valid_filemode(filemode))
@@ -488,7 +535,9 @@ static int check_entry(git_repository *repo, const char *filename, const git_oid
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int append_entry(
 	git_treebuilder *bld,
 	const char *filename,
@@ -516,6 +565,7 @@ static int append_entry(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static int write_tree(
 	git_oid *oid,
@@ -619,6 +669,7 @@ on_error:
 	return -1;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_tree__write_index(
 	git_oid *oid, git_index *index, git_repository *repo)
 {
@@ -672,7 +723,9 @@ int git_tree__write_index(
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_treebuilder_new(
 	git_treebuilder **builder_p,
 	git_repository *repo,
@@ -713,7 +766,9 @@ on_error:
 	git_treebuilder_free(bld);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_treebuilder_insert(
 	const git_tree_entry **entry_out,
 	git_treebuilder *bld,
@@ -754,7 +809,9 @@ int git_treebuilder_insert(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_tree_entry *treebuilder_get(git_treebuilder *bld, const char *filename)
 {
 	git_tree_entry *entry = NULL;
@@ -768,12 +825,16 @@ static git_tree_entry *treebuilder_get(git_treebuilder *bld, const char *filenam
 
 	return entry;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_tree_entry *git_treebuilder_get(git_treebuilder *bld, const char *filename)
 {
 	return treebuilder_get(bld, filename);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_treebuilder_remove(git_treebuilder *bld, const char *filename)
 {
 	git_tree_entry *entry = treebuilder_get(bld, filename);
@@ -786,7 +847,9 @@ int git_treebuilder_remove(git_treebuilder *bld, const char *filename)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_treebuilder_write(git_oid *oid, git_treebuilder *bld)
 {
 	int error;
@@ -797,7 +860,9 @@ int git_treebuilder_write(git_oid *oid, git_treebuilder *bld)
 	git_buf_dispose(&buffer);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_treebuilder_write_with_buffer(git_oid *oid, git_treebuilder *bld, git_buf *tree)
 {
 	int error = 0;
@@ -847,7 +912,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_treebuilder_filter(
 	git_treebuilder *bld,
 	git_treebuilder_filter_cb filter,
@@ -865,7 +932,9 @@ void git_treebuilder_filter(
 			}
 	});
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_treebuilder_clear(git_treebuilder *bld)
 {
 	git_tree_entry *e;
@@ -875,7 +944,9 @@ void git_treebuilder_clear(git_treebuilder *bld)
 	git_strmap_foreach_value(bld->map, e, git_tree_entry_free(e));
 	git_strmap_clear(bld->map);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_treebuilder_free(git_treebuilder *bld)
 {
 	if (bld == NULL)
@@ -885,7 +956,9 @@ void git_treebuilder_free(git_treebuilder *bld)
 	git_strmap_free(bld->map);
 	git__free(bld);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static size_t subpath_len(const char *path)
 {
 	const char *slash_pos = strchr(path, '/');
@@ -894,7 +967,9 @@ static size_t subpath_len(const char *path)
 
 	return slash_pos - path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_entry_bypath(
 	git_tree_entry **entry_out,
 	const git_tree *root,
@@ -956,7 +1031,9 @@ int git_tree_entry_bypath(
 	git_tree_free(subtree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_walk(
 	const git_tree *tree,
 	git_treewalk_cb callback,
@@ -1017,7 +1094,9 @@ static int tree_walk(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_walk(
 	const git_tree *tree,
 	git_treewalk_mode mode,
@@ -1039,7 +1118,9 @@ int git_tree_walk(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int compare_entries(const void *_a, const void *_b)
 {
 	const git_tree_update *a = (git_tree_update *) _a;
@@ -1047,7 +1128,9 @@ static int compare_entries(const void *_a, const void *_b)
 
 	return strcmp(a->path, b->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int on_dup_entry(void **old, void *new)
 {
 	GIT_UNUSED(old); GIT_UNUSED(new);
@@ -1055,6 +1138,7 @@ static int on_dup_entry(void **old, void *new)
 	giterr_set(GITERR_TREE, "duplicate entries given for update");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * We keep the previous tree and the new one at each level of the
@@ -1068,6 +1152,7 @@ typedef struct {
 } tree_stack_entry;
 
 /** Count how many slashes (i.e. path components) there are in this string */
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(size_t) count_slashes(const char *path)
 {
 	size_t count = 0;
@@ -1080,7 +1165,9 @@ GIT_INLINE(size_t) count_slashes(const char *path)
 
 	return count;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool next_component(git_buf *out, const char *in)
 {
 	const char *slash = strchr(in, '/');
@@ -1092,7 +1179,9 @@ static bool next_component(git_buf *out, const char *in)
 
 	return !!slash;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_popped_tree(tree_stack_entry *current, tree_stack_entry *popped, git_buf *component)
 {
 	int error;
@@ -1135,7 +1224,9 @@ static int create_popped_tree(tree_stack_entry *current, tree_stack_entry *poppe
 
 	return git_treebuilder_insert(NULL, current->bld, component->ptr, &new_tree, GIT_FILEMODE_TREE);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tree_create_updated(git_oid *out, git_repository *repo, git_tree *baseline, size_t nupdates, const git_tree_update *updates)
 {
 	git_array_t(tree_stack_entry) stack = GIT_ARRAY_INIT;
@@ -1305,3 +1396,4 @@ cleanup:
 	git_vector_free(&entries);
 	return error;
 }
+#endif // DISABLED_FUNCTION

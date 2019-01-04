@@ -28,13 +28,16 @@
 #include "streams/openssl.h"
 #include "streams/mbedtls.h"
 
+#ifdef DISABLED_FUNCTION
 void git_libgit2_version(int *major, int *minor, int *rev)
 {
 	*major = LIBGIT2_VER_MAJOR;
 	*minor = LIBGIT2_VER_MINOR;
 	*rev = LIBGIT2_VER_REVISION;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_libgit2_features(void)
 {
 	return 0
@@ -52,12 +55,14 @@ int git_libgit2_features(void)
 #endif
 	;
 }
+#endif // DISABLED_FUNCTION
 
 /* Declarations for tuneable settings */
 extern size_t git_mwindow__window_size;
 extern size_t git_mwindow__mapped_limit;
 extern size_t git_indexer__max_objects;
 
+#ifdef DISABLED_FUNCTION
 static int config_level_to_sysdir(int config_level)
 {
 	int val = -1;
@@ -82,20 +87,26 @@ static int config_level_to_sysdir(int config_level)
 
 	return val;
 }
+#endif // DISABLED_FUNCTION
 
 extern char *git__user_agent;
 extern char *git__ssl_ciphers;
 
+#ifdef DISABLED_FUNCTION
 const char *git_libgit2__user_agent(void)
 {
 	return git__user_agent;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_libgit2__ssl_ciphers(void)
 {
 	return git__ssl_ciphers;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_libgit2_opts(int key, ...)
 {
 	int error = 0;
@@ -288,3 +299,4 @@ int git_libgit2_opts(int key, ...)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

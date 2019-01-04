@@ -6,6 +6,7 @@
  */
 #include "buf_text.h"
 
+#ifdef DISABLED_FUNCTION
 int git_buf_text_puts_escaped(
 	git_buf *buf,
 	const char *string,
@@ -55,12 +56,16 @@ int git_buf_text_puts_escaped(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_buf_text_unescape(git_buf *buf)
 {
 	buf->size = git__unescape(buf->ptr);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_text_crlf_to_lf(git_buf *tgt, const git_buf *src)
 {
 	const char *scan = src->ptr;
@@ -107,7 +112,9 @@ int git_buf_text_crlf_to_lf(git_buf *tgt, const git_buf *src)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_text_lf_to_crlf(git_buf *tgt, const git_buf *src)
 {
 	const char *start = src->ptr;
@@ -151,7 +158,9 @@ int git_buf_text_lf_to_crlf(git_buf *tgt, const git_buf *src)
 	tgt->ptr[tgt->size] = '\0';
 	return git_buf_put(tgt, scan, end - scan);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_buf_text_common_prefix(git_buf *buf, const git_strarray *strings)
 {
 	size_t i;
@@ -181,7 +190,9 @@ int git_buf_text_common_prefix(git_buf *buf, const git_strarray *strings)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_buf_text_is_binary(const git_buf *buf)
 {
 	const char *scan = buf->ptr, *end = buf->ptr + buf->size;
@@ -209,11 +220,14 @@ bool git_buf_text_is_binary(const git_buf *buf)
 
 	return ((printable >> 7) < nonprintable);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_buf_text_contains_nul(const git_buf *buf)
 {
 	return (memchr(buf->ptr, '\0', buf->size) != NULL);
 }
+#endif // DISABLED_FUNCTION
 
 int git_buf_text_detect_bom(git_bom_t *bom, const git_buf *buf)
 {
@@ -265,6 +279,7 @@ int git_buf_text_detect_bom(git_bom_t *bom, const git_buf *buf)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 bool git_buf_text_gather_stats(
 	git_buf_text_stats *stats, const git_buf *buf, bool skip_bom)
 {
@@ -313,3 +328,4 @@ bool git_buf_text_gather_stats(
 	return (stats->nul > 0 ||
 		((stats->printable >> 7) < stats->nonprintable));
 }
+#endif // DISABLED_FUNCTION

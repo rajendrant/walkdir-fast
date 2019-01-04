@@ -9,13 +9,16 @@
 
 #include "git2/proxy.h"
 
+#ifdef DISABLED_FUNCTION
 int git_proxy_init_options(git_proxy_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_proxy_options, GIT_PROXY_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_proxy_options_dup(git_proxy_options *tgt, const git_proxy_options *src)
 {
 	if (!src) {
@@ -31,9 +34,12 @@ int git_proxy_options_dup(git_proxy_options *tgt, const git_proxy_options *src)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_proxy_options_clear(git_proxy_options *opts)
 {
 	git__free((char *) opts->url);
 	opts->url = NULL;
 }
+#endif // DISABLED_FUNCTION

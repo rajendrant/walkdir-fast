@@ -36,6 +36,7 @@ int git_allocator_global_init(void)
 	return setup_default_allocator();
 }
 
+#ifdef DISABLED_FUNCTION
 int git_allocator_setup(git_allocator *allocator)
 {
 	if (!allocator)
@@ -44,12 +45,15 @@ int git_allocator_setup(git_allocator *allocator)
 	memcpy(&git__allocator, allocator, sizeof(*allocator));
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #if !defined(GIT_MSVC_CRTDBG)
+#ifdef DISABLED_FUNCTION
 int git_win32_crtdbg_init_allocator(git_allocator *allocator)
 {
 	GIT_UNUSED(allocator);
 	giterr_set(GIT_EINVALID, "crtdbg memory allocator not available");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 #endif

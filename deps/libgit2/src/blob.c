@@ -34,6 +34,7 @@ git_off_t git_blob_rawsize(const git_blob *blob)
 		return (git_off_t)git_odb_object_size(blob->data.odb);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_blob__getbuf(git_buf *buffer, git_blob *blob)
 {
 	return git_buf_set(
@@ -41,6 +42,7 @@ int git_blob__getbuf(git_buf *buffer, git_blob *blob)
 		git_blob_rawcontent(blob),
 		git_blob_rawsize(blob));
 }
+#endif // DISABLED_FUNCTION
 
 void git_blob__free(void *_blob)
 {
@@ -70,6 +72,7 @@ int git_blob__parse(void *_blob, git_odb_object *odb_obj)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_blob_create_frombuffer(
 	git_oid *id, git_repository *repo, const void *buffer, size_t len)
 {
@@ -89,7 +92,9 @@ int git_blob_create_frombuffer(
 	git_odb_stream_free(stream);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_file_stream(
 	git_oid *id, git_odb *odb, const char *path, git_off_t file_size)
 {
@@ -126,7 +131,9 @@ static int write_file_stream(
 	git_odb_stream_free(stream);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_file_filtered(
 	git_oid *id,
 	git_off_t *size,
@@ -149,7 +156,9 @@ static int write_file_filtered(
 	git_buf_dispose(&tgt);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_symlink(
 	git_oid *id, git_odb *odb, const char *path, size_t link_size)
 {
@@ -171,7 +180,9 @@ static int write_symlink(
 	git__free(link_data);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob__create_from_paths(
 	git_oid *id,
 	struct stat *out_st,
@@ -262,13 +273,17 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_create_fromworkdir(
 	git_oid *id, git_repository *repo, const char *path)
 {
 	return git_blob__create_from_paths(id, NULL, repo, NULL, path, 0, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_create_fromdisk(
 	git_oid *id, git_repository *repo, const char *path)
 {
@@ -293,6 +308,7 @@ int git_blob_create_fromdisk(
 	git_buf_dispose(&full_path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_writestream parent;
@@ -301,6 +317,7 @@ typedef struct {
 	char *hintpath;
 } blob_writestream;
 
+#ifdef DISABLED_FUNCTION
 static int blob_writestream_close(git_writestream *_stream)
 {
 	blob_writestream *stream = (blob_writestream *) _stream;
@@ -308,7 +325,9 @@ static int blob_writestream_close(git_writestream *_stream)
 	git_filebuf_cleanup(&stream->fbuf);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void blob_writestream_free(git_writestream *_stream)
 {
 	blob_writestream *stream = (blob_writestream *) _stream;
@@ -317,14 +336,18 @@ static void blob_writestream_free(git_writestream *_stream)
 	git__free(stream->hintpath);
 	git__free(stream);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int blob_writestream_write(git_writestream *_stream, const char *buffer, size_t len)
 {
 	blob_writestream *stream = (blob_writestream *) _stream;
 
 	return git_filebuf_write(&stream->fbuf, buffer, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_create_fromstream(git_writestream **out, git_repository *repo, const char *hintpath)
 {
 	int error;
@@ -363,7 +386,9 @@ cleanup:
 	git_buf_dispose(&path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_create_fromstream_commit(git_oid *out, git_writestream *_stream)
 {
 	int error;
@@ -385,7 +410,9 @@ cleanup:
 	return error;
 
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_is_binary(const git_blob *blob)
 {
 	git_buf content = GIT_BUF_INIT;
@@ -397,7 +424,9 @@ int git_blob_is_binary(const git_blob *blob)
 		GIT_FILTER_BYTES_TO_CHECK_NUL));
 	return git_buf_text_is_binary(&content);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_blob_filtered_content(
 	git_buf *out,
 	git_blob *blob,
@@ -425,3 +454,4 @@ int git_blob_filtered_content(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

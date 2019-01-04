@@ -28,15 +28,19 @@ void git_offmap_free(git_offmap *map)
 	kh_destroy(off, map);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_offmap_clear(git_offmap *map)
 {
 	kh_clear(off, map);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_offmap_num_entries(git_offmap *map)
 {
 	return kh_size(map);
 }
+#endif // DISABLED_FUNCTION
 
 size_t git_offmap_lookup_index(git_offmap *map, const git_off_t key)
 {
@@ -83,6 +87,7 @@ int git_offmap_put(git_offmap *map, const git_off_t key, int *err)
 	return kh_put(off, map, key, err);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_offmap_insert(git_offmap *map, const git_off_t key, void *value, int *rval)
 {
 	khiter_t idx = kh_put(off, map, key, rval);
@@ -93,6 +98,7 @@ void git_offmap_insert(git_offmap *map, const git_off_t key, void *value, int *r
 		kh_val(map, idx) = value;
 	}
 }
+#endif // DISABLED_FUNCTION
 
 void git_offmap_delete(git_offmap *map, const git_off_t key)
 {

@@ -138,6 +138,7 @@ const git_error *giterr_last(void)
 	return GIT_GLOBAL->last_error;
 }
 
+#ifdef DISABLED_FUNCTION
 int giterr_state_capture(git_error_state *state, int error_code)
 {
 	git_error *error = GIT_GLOBAL->last_error;
@@ -163,7 +164,9 @@ int giterr_state_capture(git_error_state *state, int error_code)
 	giterr_clear();
 	return error_code;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int giterr_state_restore(git_error_state *state)
 {
 	int ret = 0;
@@ -182,7 +185,9 @@ int giterr_state_restore(git_error_state *state)
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void giterr_state_free(git_error_state *state)
 {
 	if (!state)
@@ -193,7 +198,9 @@ void giterr_state_free(git_error_state *state)
 
 	memset(state, 0, sizeof(git_error_state));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int giterr_system_last(void)
 {
 #ifdef GIT_WIN32
@@ -202,7 +209,9 @@ int giterr_system_last(void)
 	return errno;
 #endif
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void giterr_system_set(int code)
 {
 #ifdef GIT_WIN32
@@ -211,3 +220,4 @@ void giterr_system_set(int code)
 	errno = code;
 #endif
 }
+#endif // DISABLED_FUNCTION

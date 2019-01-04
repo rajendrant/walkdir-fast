@@ -24,40 +24,52 @@ void git_tag__free(void *_tag)
 	git__free(tag);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_tag_target(git_object **target, const git_tag *t)
 {
 	assert(t);
 	return git_object_lookup(target, t->object.repo, &t->target, t->type);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_tag_target_id(const git_tag *t)
 {
 	assert(t);
 	return &t->target;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_object_t git_tag_target_type(const git_tag *t)
 {
 	assert(t);
 	return t->type;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_tag_name(const git_tag *t)
 {
 	assert(t);
 	return t->tag_name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_signature *git_tag_tagger(const git_tag *t)
 {
 	return t->tagger;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_tag_message(const git_tag *t)
 {
 	assert(t);
 	return t->message;
 }
+#endif // DISABLED_FUNCTION
 
 static int tag_error(const char *str)
 {
@@ -173,6 +185,7 @@ int git_tag__parse(void *_tag, git_odb_object *odb_obj)
 	return tag_parse(tag, buffer, buffer_end);
 }
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_tag_reference(
 	git_reference **tag_reference_out,
 	git_buf *ref_name_out,
@@ -195,7 +208,9 @@ static int retrieve_tag_reference(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_tag_reference_oid(
 	git_oid *oid,
 	git_buf *ref_name_out,
@@ -207,7 +222,9 @@ static int retrieve_tag_reference_oid(
 
 	return git_reference_name_to_id(oid, repo, ref_name_out->ptr);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_tag_annotation(
 		git_oid *oid,
 		git_repository *repo,
@@ -242,7 +259,9 @@ on_error:
 	giterr_set(GITERR_OBJECT, "failed to create tag annotation");
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_tag_create__internal(
 		git_oid *oid,
 		git_repository *repo,
@@ -291,7 +310,9 @@ cleanup:
 	git_buf_dispose(&ref_name);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_create(
 	git_oid *oid,
 	git_repository *repo,
@@ -303,7 +324,9 @@ int git_tag_create(
 {
 	return git_tag_create__internal(oid, repo, tag_name, target, tagger, message, allow_ref_overwrite, 1);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_annotation_create(
 	git_oid *oid,
 	git_repository *repo,
@@ -316,7 +339,9 @@ int git_tag_annotation_create(
 
 	return write_tag_annotation(oid, repo, tag_name, target, tagger, message);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_create_lightweight(
 	git_oid *oid,
 	git_repository *repo,
@@ -326,7 +351,9 @@ int git_tag_create_lightweight(
 {
 	return git_tag_create__internal(oid, repo, tag_name, target, NULL, NULL, allow_ref_overwrite, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_create_frombuffer(git_oid *oid, git_repository *repo, const char *buffer, int allow_ref_overwrite)
 {
 	git_tag tag;
@@ -405,7 +432,9 @@ on_error:
 	git_odb_object_free(target_obj);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_delete(git_repository *repo, const char *tag_name)
 {
 	git_reference *tag_ref;
@@ -425,6 +454,7 @@ int git_tag_delete(git_repository *repo, const char *tag_name)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_repository *repo;
@@ -432,6 +462,7 @@ typedef struct {
 	void *cb_data;
 } tag_cb_data;
 
+#ifdef DISABLED_FUNCTION
 static int tags_cb(const char *ref, void *data)
 {
 	int error;
@@ -448,7 +479,9 @@ static int tags_cb(const char *ref, void *data)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_foreach(git_repository *repo, git_tag_foreach_cb cb, void *cb_data)
 {
 	tag_cb_data data;
@@ -461,6 +494,7 @@ int git_tag_foreach(git_repository *repo, git_tag_foreach_cb cb, void *cb_data)
 
 	return git_reference_foreach_name(repo, &tags_cb, &data);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_vector *taglist;
@@ -469,6 +503,7 @@ typedef struct {
 
 #define GIT_REFS_TAGS_DIR_LEN strlen(GIT_REFS_TAGS_DIR)
 
+#ifdef DISABLED_FUNCTION
 static int tag_list_cb(const char *tag_name, git_oid *oid, void *data)
 {
 	tag_filter_data *filter = (tag_filter_data *)data;
@@ -485,7 +520,9 @@ static int tag_list_cb(const char *tag_name, git_oid *oid, void *data)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_list_match(git_strarray *tag_names, const char *pattern, git_repository *repo)
 {
 	int error;
@@ -510,13 +547,18 @@ int git_tag_list_match(git_strarray *tag_names, const char *pattern, git_reposit
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_list(git_strarray *tag_names, git_repository *repo)
 {
 	return git_tag_list_match(tag_names, "", repo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_tag_peel(git_object **tag_target, const git_tag *tag)
 {
 	return git_object_peel(tag_target, (const git_object *)tag, GIT_OBJECT_ANY);
 }
+#endif // DISABLED_FUNCTION

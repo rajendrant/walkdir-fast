@@ -18,6 +18,7 @@
 #include "diff.h"
 
 /* what is the common non-wildcard prefix for all items in the pathspec */
+#ifdef DISABLED_FUNCTION
 char *git_pathspec_prefix(const git_strarray *pathspec)
 {
 	git_buf prefix = GIT_BUF_INIT;
@@ -44,8 +45,10 @@ char *git_pathspec_prefix(const git_strarray *pathspec)
 
 	return git_buf_detach(&prefix);
 }
+#endif // DISABLED_FUNCTION
 
 /* is there anything in the spec that needs to be filtered on */
+#ifdef DISABLED_FUNCTION
 bool git_pathspec_is_empty(const git_strarray *pathspec)
 {
 	size_t i;
@@ -62,8 +65,10 @@ bool git_pathspec_is_empty(const git_strarray *pathspec)
 
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
 /* build a vector of fnmatch patterns to evaluate efficiently */
+#ifdef DISABLED_FUNCTION
 int git_pathspec__vinit(
 	git_vector *vspec, const git_strarray *strspec, git_pool *strpool)
 {
@@ -102,12 +107,15 @@ int git_pathspec__vinit(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* free data from the pathspec vector */
+#ifdef DISABLED_FUNCTION
 void git_pathspec__vfree(git_vector *vspec)
 {
 	git_vector_free_deep(vspec);
 }
+#endif // DISABLED_FUNCTION
 
 struct pathspec_match_context {
 	int fnmatch_flags;
@@ -115,6 +123,7 @@ struct pathspec_match_context {
 	int (*strncomp)(const char *, const char *, size_t);
 };
 
+#ifdef DISABLED_FUNCTION
 static void pathspec_match_context_init(
 	struct pathspec_match_context *ctxt,
 	bool disable_fnmatch,
@@ -135,7 +144,9 @@ static void pathspec_match_context_init(
 		ctxt->strncomp = git__strncmp;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int pathspec_match_one(
 	const git_attr_fnmatch *match,
 	struct pathspec_match_context *ctxt,
@@ -170,7 +181,9 @@ static int pathspec_match_one(
 		return (match->flags & GIT_ATTR_FNMATCH_NEGATIVE) ? 0 : 1;
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_pathspec__match_at(
 	size_t *matched_at,
 	const git_vector *vspec,
@@ -192,8 +205,10 @@ static int git_pathspec__match_at(
 	*matched_at = i;
 	return result;
 }
+#endif // DISABLED_FUNCTION
 
 /* match a path against the vectorized pathspec */
+#ifdef DISABLED_FUNCTION
 bool git_pathspec__match(
 	const git_vector *vspec,
 	const char *path,
@@ -229,8 +244,10 @@ bool git_pathspec__match(
 
 	return (result > 0);
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec__init(git_pathspec *ps, const git_strarray *paths)
 {
 	int error = 0;
@@ -245,7 +262,9 @@ int git_pathspec__init(git_pathspec *ps, const git_strarray *paths)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_pathspec__clear(git_pathspec *ps)
 {
 	git__free(ps->prefix);
@@ -253,7 +272,9 @@ void git_pathspec__clear(git_pathspec *ps)
 	git_pool_clear(&ps->pool);
 	memset(ps, 0, sizeof(*ps));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec_new(git_pathspec **out, const git_strarray *pathspec)
 {
 	int error = 0;
@@ -269,20 +290,26 @@ int git_pathspec_new(git_pathspec **out, const git_strarray *pathspec)
 	*out = ps;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void pathspec_free(git_pathspec *ps)
 {
 	git_pathspec__clear(ps);
 	git__free(ps);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_pathspec_free(git_pathspec *ps)
 {
 	if (!ps)
 		return;
 	GIT_REFCOUNT_DEC(ps, pathspec_free);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec_matches_path(
 	const git_pathspec *ps, uint32_t flags, const char *path)
 {
@@ -294,7 +321,9 @@ int git_pathspec_matches_path(
 	return (0 != git_pathspec__match(
 		&ps->pathspec, path, no_fnmatch, casefold, NULL, NULL));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void pathspec_match_free(git_pathspec_match_list *m)
 {
 	if (!m)
@@ -308,7 +337,9 @@ static void pathspec_match_free(git_pathspec_match_list *m)
 	git_pool_clear(&m->pool);
 	git__free(m);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_pathspec_match_list *pathspec_match_alloc(
 	git_pathspec *ps, int datatype)
 {
@@ -328,7 +359,9 @@ static git_pathspec_match_list *pathspec_match_alloc(
 
 	return m;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(size_t) pathspec_mark_pattern(git_bitvec *used, size_t pos)
 {
 	if (!git_bitvec_get(used, pos)) {
@@ -338,7 +371,9 @@ GIT_INLINE(size_t) pathspec_mark_pattern(git_bitvec *used, size_t pos)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static size_t pathspec_mark_remaining(
 	git_bitvec *used,
 	git_vector *patterns,
@@ -366,7 +401,9 @@ static size_t pathspec_mark_remaining(
 
 	return count;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int pathspec_build_failure_array(
 	git_pathspec_string_array_t *failures,
 	git_vector *patterns,
@@ -392,7 +429,9 @@ static int pathspec_build_failure_array(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int pathspec_match_from_iterator(
 	git_pathspec_match_list **out,
 	git_iterator *iter,
@@ -502,7 +541,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_iterator_flag_t pathspec_match_iter_flags(uint32_t flags)
 {
 	git_iterator_flag_t f = 0;
@@ -514,7 +555,9 @@ static git_iterator_flag_t pathspec_match_iter_flags(uint32_t flags)
 
 	return f;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec_match_workdir(
 	git_pathspec_match_list **out,
 	git_repository *repo,
@@ -536,7 +579,9 @@ int git_pathspec_match_workdir(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec_match_index(
 	git_pathspec_match_list **out,
 	git_index *index,
@@ -558,7 +603,9 @@ int git_pathspec_match_index(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec_match_tree(
 	git_pathspec_match_list **out,
 	git_tree *tree,
@@ -580,7 +627,9 @@ int git_pathspec_match_tree(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pathspec_match_diff(
 	git_pathspec_match_list **out,
 	git_diff *diff,
@@ -673,19 +722,25 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_pathspec_match_list_free(git_pathspec_match_list *m)
 {
 	if (m)
 		pathspec_match_free(m);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_pathspec_match_list_entrycount(
 	const git_pathspec_match_list *m)
 {
 	return m ? git_array_size(m->matches) : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_pathspec_match_list_entry(
 	const git_pathspec_match_list *m, size_t pos)
 {
@@ -695,7 +750,9 @@ const char *git_pathspec_match_list_entry(
 
 	return *((const char **)git_array_get(m->matches, pos));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_diff_delta *git_pathspec_match_list_diff_entry(
 	const git_pathspec_match_list *m, size_t pos)
 {
@@ -705,13 +762,17 @@ const git_diff_delta *git_pathspec_match_list_diff_entry(
 
 	return *((const git_diff_delta **)git_array_get(m->matches, pos));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_pathspec_match_list_failed_entrycount(
 	const git_pathspec_match_list *m)
 {
 	return m ? git_array_size(m->failures) : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char * git_pathspec_match_list_failed_entry(
 	const git_pathspec_match_list *m, size_t pos)
 {
@@ -719,3 +780,4 @@ const char * git_pathspec_match_list_failed_entry(
 
 	return entry ? *entry : NULL;
 }
+#endif // DISABLED_FUNCTION

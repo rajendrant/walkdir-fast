@@ -11,6 +11,7 @@
 #include "merge.h"
 #include "git2/graph.h"
 
+#ifdef DISABLED_FUNCTION
 static int interesting(git_pqueue *list, git_commit_list *roots)
 {
 	unsigned int i;
@@ -29,7 +30,9 @@ static int interesting(git_pqueue *list, git_commit_list *roots)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mark_parents(git_revwalk *walk, git_commit_list_node *one,
 	git_commit_list_node *two)
 {
@@ -103,8 +106,10 @@ on_error:
 	git_pqueue_free(&list);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 static int ahead_behind(git_commit_list_node *one, git_commit_list_node *two,
 	size_t *ahead, size_t *behind)
 {
@@ -142,7 +147,9 @@ done:
 	git_pqueue_free(&pq);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_graph_ahead_behind(size_t *ahead, size_t *behind, git_repository *repo,
 	const git_oid *local, const git_oid *upstream)
 {
@@ -173,7 +180,9 @@ on_error:
 	git_revwalk_free(walk);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_graph_descendant_of(git_repository *repo, const git_oid *commit, const git_oid *ancestor)
 {
 	git_oid merge_base;
@@ -192,3 +201,4 @@ int git_graph_descendant_of(git_repository *repo, const git_oid *commit, const g
 
 	return git_oid_equal(&merge_base, ancestor);
 }
+#endif // DISABLED_FUNCTION

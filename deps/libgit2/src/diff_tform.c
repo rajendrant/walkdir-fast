@@ -17,6 +17,7 @@
 #include "fileops.h"
 #include "config.h"
 
+#ifdef DISABLED_FUNCTION
 git_diff_delta *git_diff__delta_dup(
 	const git_diff_delta *d, git_pool *pool)
 {
@@ -47,7 +48,9 @@ fail:
 	git__free(delta);
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_diff_delta *git_diff__merge_like_cgit(
 	const git_diff_delta *a,
 	const git_diff_delta *b,
@@ -110,7 +113,9 @@ git_diff_delta *git_diff__merge_like_cgit(
 
 	return dup;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__merge(
 	git_diff *onto, const git_diff *from, git_diff__merge_cb cb)
 {
@@ -195,12 +200,16 @@ int git_diff__merge(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_merge(git_diff *onto, const git_diff *from)
 {
 	return git_diff__merge(onto, from, git_diff__merge_like_cgit);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_find_similar__hashsig_for_file(
 	void **out, const git_diff_file *f, const char *path, void *p)
 {
@@ -209,7 +218,9 @@ int git_diff_find_similar__hashsig_for_file(
 	GIT_UNUSED(f);
 	return git_hashsig_create_fromfile((git_hashsig **)out, path, opt);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_find_similar__hashsig_for_buf(
 	void **out, const git_diff_file *f, const char *buf, size_t len, void *p)
 {
@@ -218,13 +229,17 @@ int git_diff_find_similar__hashsig_for_buf(
 	GIT_UNUSED(f);
 	return git_hashsig_create((git_hashsig **)out, buf, len, opt);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_find_similar__hashsig_free(void *sig, void *payload)
 {
 	GIT_UNUSED(payload);
 	git_hashsig_free(sig);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_find_similar__calc_similarity(
 	int *score, void *siga, void *sigb, void *payload)
 {
@@ -238,11 +253,13 @@ int git_diff_find_similar__calc_similarity(
 	*score = error;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define DEFAULT_THRESHOLD 50
 #define DEFAULT_BREAK_REWRITE_THRESHOLD 60
 #define DEFAULT_RENAME_LIMIT 200
 
+#ifdef DISABLED_FUNCTION
 static int normalize_find_opts(
 	git_diff *diff,
 	git_diff_find_options *opts,
@@ -351,7 +368,9 @@ static int normalize_find_opts(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int insert_delete_side_of_split(
 	git_diff *diff, git_vector *onto, const git_diff_delta *delta)
 {
@@ -367,7 +386,9 @@ static int insert_delete_side_of_split(
 
 	return git_vector_insert(onto, deleted);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int apply_splits_and_deletes(
 	git_diff *diff, size_t expected_size, bool actually_split)
 {
@@ -432,12 +453,15 @@ on_error:
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(git_diff_file *) similarity_get_file(git_diff *diff, size_t idx)
 {
 	git_diff_delta *delta = git_vector_get(&diff->deltas, idx / 2);
 	return (idx & 1) ? &delta->new_file : &delta->old_file;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	size_t idx;
@@ -449,6 +473,7 @@ typedef struct {
 	git_blob *blob;
 } similarity_info;
 
+#ifdef DISABLED_FUNCTION
 static int similarity_init(
 	similarity_info *info, git_diff *diff, size_t file_idx)
 {
@@ -466,7 +491,9 @@ static int similarity_init(
 	return git_diff_file__resolve_zero_size(
 		info->file, &info->odb_obj, info->repo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int similarity_sig(
 	similarity_info *info,
 	const git_diff_find_options *opts,
@@ -520,7 +547,9 @@ static int similarity_sig(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void similarity_unload(similarity_info *info)
 {
 	if (info->odb_obj)
@@ -531,6 +560,7 @@ static void similarity_unload(similarity_info *info)
 	else
 		git_buf_dispose(&info->data);
 }
+#endif // DISABLED_FUNCTION
 
 #define FLAG_SET(opts,flag_name) (((opts)->flags & flag_name) != 0)
 
@@ -538,6 +568,7 @@ static void similarity_unload(similarity_info *info)
  * - score >= 100 means files are exact match
  * - score == 0 means files are completely different
  */
+#ifdef DISABLED_FUNCTION
 static int similarity_measure(
 	int *score,
 	git_diff *diff,
@@ -624,7 +655,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int calc_self_similarity(
 	git_diff *diff,
 	const git_diff_find_options *opts,
@@ -649,7 +682,9 @@ static int calc_self_similarity(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool is_rename_target(
 	git_diff *diff,
 	const git_diff_find_options *opts,
@@ -705,7 +740,9 @@ static bool is_rename_target(
 	delta->flags |= GIT_DIFF_FLAG__IS_RENAME_TARGET;
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool is_rename_source(
 	git_diff *diff,
 	const git_diff_find_options *opts,
@@ -766,13 +803,17 @@ static bool is_rename_source(
 	delta->flags |= GIT_DIFF_FLAG__IS_RENAME_SOURCE;
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) delta_is_split(git_diff_delta *delta)
 {
 	return (delta->status == GIT_DELTA_TYPECHANGE ||
 			(delta->flags & GIT_DIFF_FLAG__TO_SPLIT) != 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) delta_is_new_only(git_diff_delta *delta)
 {
 	return (delta->status == GIT_DELTA_ADDED ||
@@ -780,7 +821,9 @@ GIT_INLINE(bool) delta_is_new_only(git_diff_delta *delta)
 			delta->status == GIT_DELTA_UNREADABLE ||
 			delta->status == GIT_DELTA_IGNORED);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(void) delta_make_rename(
 	git_diff_delta *to, const git_diff_delta *from, uint16_t similarity)
 {
@@ -790,12 +833,14 @@ GIT_INLINE(void) delta_make_rename(
 	memcpy(&to->old_file, &from->old_file, sizeof(to->old_file));
 	to->flags &= ~GIT_DIFF_FLAG__TO_SPLIT;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	size_t   idx;
 	uint16_t similarity;
 } diff_find_match;
 
+#ifdef DISABLED_FUNCTION
 int git_diff_find_similar(
 	git_diff *diff,
 	const git_diff_find_options *given_opts)
@@ -1114,5 +1159,6 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 #undef FLAG_SET

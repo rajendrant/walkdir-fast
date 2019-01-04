@@ -33,6 +33,7 @@ struct git_diff_stats {
 	int max_digits;
 };
 
+#ifdef DISABLED_FUNCTION
 static int digits_for_value(size_t val)
 {
 	int count = 1;
@@ -45,7 +46,9 @@ static int digits_for_value(size_t val)
 
 	return count;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_file_stats__full_to_buf(
 	git_buf *out,
 	const git_diff_delta *delta,
@@ -132,7 +135,9 @@ int git_diff_file_stats__full_to_buf(
 on_error:
 	return (git_buf_oom(out) ? -1 : 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_file_stats__number_to_buf(
 	git_buf *out,
 	const git_diff_delta *delta,
@@ -149,7 +154,9 @@ int git_diff_file_stats__number_to_buf(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_file_stats__summary_to_buf(
 	git_buf *out,
 	const git_diff_delta *delta)
@@ -171,7 +178,9 @@ int git_diff_file_stats__summary_to_buf(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_get_stats(
 	git_diff_stats **out,
 	git_diff *diff)
@@ -245,7 +254,9 @@ int git_diff_get_stats(
 	*out = stats;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_diff_stats_files_changed(
 	const git_diff_stats *stats)
 {
@@ -253,7 +264,9 @@ size_t git_diff_stats_files_changed(
 
 	return stats->files_changed;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_diff_stats_insertions(
 	const git_diff_stats *stats)
 {
@@ -261,7 +274,9 @@ size_t git_diff_stats_insertions(
 
 	return stats->insertions;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_diff_stats_deletions(
 	const git_diff_stats *stats)
 {
@@ -269,7 +284,9 @@ size_t git_diff_stats_deletions(
 
 	return stats->deletions;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_stats_to_buf(
 	git_buf *out,
 	const git_diff_stats *stats,
@@ -349,7 +366,9 @@ int git_diff_stats_to_buf(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_stats_free(git_diff_stats *stats)
 {
 	if (stats == NULL)
@@ -359,3 +378,4 @@ void git_diff_stats_free(git_diff_stats *stats)
 	git__free(stats->filestats);
 	git__free(stats);
 }
+#endif // DISABLED_FUNCTION

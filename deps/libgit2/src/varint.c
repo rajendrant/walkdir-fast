@@ -27,6 +27,7 @@ uintmax_t git_decode_varint(const unsigned char *bufp, size_t *varint_len)
 	return val;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_encode_varint(unsigned char *buf, size_t bufsize, uintmax_t value)
 {
 	unsigned char varint[16];
@@ -41,3 +42,4 @@ int git_encode_varint(unsigned char *buf, size_t bufsize, uintmax_t value)
 	}
 	return sizeof(varint) - pos;
 }
+#endif // DISABLED_FUNCTION

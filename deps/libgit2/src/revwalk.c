@@ -15,8 +15,11 @@
 #include "merge.h"
 #include "vector.h"
 
+#ifdef DISABLED_FUNCTION
 static int get_revision(git_commit_list_node **out, git_revwalk *walk, git_commit_list **list);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_commit_list_node *git_revwalk__commit_lookup(
 	git_revwalk *walk, const git_oid *oid)
 {
@@ -41,7 +44,9 @@ git_commit_list_node *git_revwalk__commit_lookup(
 
 	return commit;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int push_commit(git_revwalk *walk, const git_oid *oid, int uninteresting, int from_glob)
 {
 	git_oid commit_id;
@@ -96,20 +101,26 @@ static int push_commit(git_revwalk *walk, const git_oid *oid, int uninteresting,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_push(git_revwalk *walk, const git_oid *oid)
 {
 	assert(walk && oid);
 	return push_commit(walk, oid, 0, false);
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_hide(git_revwalk *walk, const git_oid *oid)
 {
 	assert(walk && oid);
 	return push_commit(walk, oid, 1, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int push_ref(git_revwalk *walk, const char *refname, int hide, int from_glob)
 {
 	git_oid oid;
@@ -119,7 +130,9 @@ static int push_ref(git_revwalk *walk, const char *refname, int hide, int from_g
 
 	return push_commit(walk, &oid, hide, from_glob);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int push_glob(git_revwalk *walk, const char *glob, int hide)
 {
 	int error = 0;
@@ -159,37 +172,49 @@ out:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_push_glob(git_revwalk *walk, const char *glob)
 {
 	assert(walk && glob);
 	return push_glob(walk, glob, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_hide_glob(git_revwalk *walk, const char *glob)
 {
 	assert(walk && glob);
 	return push_glob(walk, glob, 1);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_push_head(git_revwalk *walk)
 {
 	assert(walk);
 	return push_ref(walk, GIT_HEAD_FILE, 0, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_hide_head(git_revwalk *walk)
 {
 	assert(walk);
 	return push_ref(walk, GIT_HEAD_FILE, 1, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_push_ref(git_revwalk *walk, const char *refname)
 {
 	assert(walk && refname);
 	return push_ref(walk, refname, 0, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_push_range(git_revwalk *walk, const char *range)
 {
 	git_revspec revspec;
@@ -214,23 +239,31 @@ out:
 	git_object_free(revspec.to);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_hide_ref(git_revwalk *walk, const char *refname)
 {
 	assert(walk && refname);
 	return push_ref(walk, refname, 1, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revwalk_enqueue_timesort(git_revwalk *walk, git_commit_list_node *commit)
 {
 	return git_pqueue_insert(&walk->iterator_time, commit);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revwalk_enqueue_unsorted(git_revwalk *walk, git_commit_list_node *commit)
 {
 	return git_commit_list_insert(commit, &walk->iterator_rand) ? 0 : -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revwalk_next_timesort(git_commit_list_node **object_out, git_revwalk *walk)
 {
 	git_commit_list_node *next;
@@ -246,7 +279,9 @@ static int revwalk_next_timesort(git_commit_list_node **object_out, git_revwalk 
 	giterr_clear();
 	return GIT_ITEROVER;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revwalk_next_unsorted(git_commit_list_node **object_out, git_revwalk *walk)
 {
 	int error;
@@ -262,7 +297,9 @@ static int revwalk_next_unsorted(git_commit_list_node **object_out, git_revwalk 
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revwalk_next_toposort(git_commit_list_node **object_out, git_revwalk *walk)
 {
 	int error;
@@ -278,13 +315,17 @@ static int revwalk_next_toposort(git_commit_list_node **object_out, git_revwalk 
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int revwalk_next_reverse(git_commit_list_node **object_out, git_revwalk *walk)
 {
 	*object_out = git_commit_list_pop(&walk->iterator_reverse);
 	return *object_out ? 0 : GIT_ITEROVER;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void mark_parents_uninteresting(git_commit_list_node *commit)
 {
 	unsigned short i;
@@ -316,7 +357,9 @@ static void mark_parents_uninteresting(git_commit_list_node *commit)
 		}
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int add_parents_to_list(git_revwalk *walk, git_commit_list_node *commit, git_commit_list **list)
 {
 	unsigned short i;
@@ -378,10 +421,12 @@ static int add_parents_to_list(git_revwalk *walk, git_commit_list_node *commit, 
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* How many unintersting commits we want to look at after we run out of interesting ones */
 #define SLOP 5
 
+#ifdef DISABLED_FUNCTION
 static int still_interesting(git_commit_list *list, int64_t time, int slop)
 {
 	/* The empty list is pretty boring */
@@ -407,7 +452,9 @@ static int still_interesting(git_commit_list *list, int64_t time, int slop)
 	/* Everything's uninteresting, reduce the count */
 	return slop - 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int limit_list(git_commit_list **out, git_revwalk *walk, git_commit_list *commits)
 {
 	int error, slop = SLOP;
@@ -443,6 +490,7 @@ static int limit_list(git_commit_list **out, git_revwalk *walk, git_commit_list 
 	*out = newlist;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static int get_revision(git_commit_list_node **out, git_revwalk *walk, git_commit_list **list)
 {
@@ -468,6 +516,7 @@ static int get_revision(git_commit_list_node **out, git_revwalk *walk, git_commi
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static int sort_in_topological_order(git_commit_list **out, git_revwalk *walk, git_commit_list *list)
 {
 	git_commit_list *ll = NULL, *newlist, **pptr;
@@ -553,7 +602,9 @@ cleanup:
 	git_pqueue_free(&queue);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int prepare_walk(git_revwalk *walk)
 {
 	int error = 0;
@@ -619,8 +670,10 @@ static int prepare_walk(git_revwalk *walk)
 	walk->walking = 1;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_new(git_revwalk **revwalk_out, git_repository *repo)
 {
 	git_revwalk *walk = git__calloc(1, sizeof(git_revwalk));
@@ -646,7 +699,9 @@ int git_revwalk_new(git_revwalk **revwalk_out, git_repository *repo)
 	*revwalk_out = walk;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_revwalk_free(git_revwalk *walk)
 {
 	if (walk == NULL)
@@ -660,13 +715,17 @@ void git_revwalk_free(git_revwalk *walk)
 	git_pqueue_free(&walk->iterator_time);
 	git__free(walk);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_revwalk_repository(git_revwalk *walk)
 {
 	assert(walk);
 	return walk->repo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_revwalk_sorting(git_revwalk *walk, unsigned int sort_mode)
 {
 	assert(walk);
@@ -687,12 +746,16 @@ void git_revwalk_sorting(git_revwalk *walk, unsigned int sort_mode)
 	if (walk->sorting != GIT_SORT_NONE)
 		walk->limited = 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_revwalk_simplify_first_parent(git_revwalk *walk)
 {
 	walk->first_parent = 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_next(git_oid *oid, git_revwalk *walk)
 {
 	int error;
@@ -718,7 +781,9 @@ int git_revwalk_next(git_oid *oid, git_revwalk *walk)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_revwalk_reset(git_revwalk *walk)
 {
 	git_commit_list_node *commit;
@@ -745,7 +810,9 @@ void git_revwalk_reset(git_revwalk *walk)
 	walk->did_push = walk->did_hide = 0;
 	walk->sorting = GIT_SORT_NONE;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_revwalk_add_hide_cb(
 	git_revwalk *walk,
 	git_revwalk_hide_cb hide_cb,
@@ -764,4 +831,5 @@ int git_revwalk_add_hide_cb(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 

@@ -26,10 +26,17 @@
 #define CONFIG_PUSH_FMT "remote.%s.push"
 #define CONFIG_TAGOPT_FMT "remote.%s.tagopt"
 
+#ifdef DISABLED_FUNCTION
 static int dwim_refspecs(git_vector *out, git_vector *refspecs, git_vector *refs);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int lookup_remote_prune_config(git_remote *remote, git_config *config, const char *name);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 char *apply_insteadof(git_config *config, const char *url, int direction);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int add_refspec_to(git_vector *vector, const char *string, bool is_fetch)
 {
 	git_refspec *spec;
@@ -51,12 +58,16 @@ static int add_refspec_to(git_vector *vector, const char *string, bool is_fetch)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int add_refspec(git_remote *remote, const char *string, bool is_fetch)
 {
 	return add_refspec_to(&remote->refspecs, string, is_fetch);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int download_tags_value(git_remote *remote, git_config *cfg)
 {
 	git_config_entry *ce;
@@ -79,7 +90,9 @@ static int download_tags_value(git_remote *remote, git_config *cfg)
 	git_config_entry_free(ce);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_remote_name_is_valid(const char *name)
 {
 	int error = 0;
@@ -93,7 +106,9 @@ static int ensure_remote_name_is_valid(const char *name)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_add_refspec(git_repository *repo, const char *name, const char *refspec, bool fetch)
 {
 	git_config *cfg;
@@ -135,6 +150,7 @@ cleanup:
 	git_buf_dispose(&var);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #if 0
 /* We could export this as a helper */
@@ -165,6 +181,7 @@ static int get_check_cert(int *out, git_repository *repo)
 }
 #endif
 
+#ifdef DISABLED_FUNCTION
 static int canonicalize_url(git_buf *out, const char *in)
 {
 	if (in == NULL || strlen(in) == 0) {
@@ -188,7 +205,9 @@ static int canonicalize_url(git_buf *out, const char *in)
 
 	return git_buf_puts(out, in);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int default_fetchspec_for_name(git_buf *buf, const char *name)
 {
 	if (git_buf_printf(buf, "+refs/heads/*:refs/remotes/%s/*", name) < 0)
@@ -196,7 +215,9 @@ static int default_fetchspec_for_name(git_buf *buf, const char *name)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_remote_doesnot_exist(git_repository *repo, const char *name)
 {
 	int error;
@@ -216,14 +237,18 @@ static int ensure_remote_doesnot_exist(git_repository *repo, const char *name)
 
 	return GIT_EEXISTS;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_create_init_options(git_remote_create_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_remote_create_options, GIT_REMOTE_CREATE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_create_with_opts(git_remote **out, const char *url, const git_remote_create_options *opts)
 {
 	git_remote *remote = NULL;
@@ -331,7 +356,9 @@ on_error:
 	git_buf_dispose(&var);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_create(git_remote **out, git_repository *repo, const char *name, const char *url)
 {
 	git_buf buf = GIT_BUF_INIT;
@@ -356,7 +383,9 @@ int git_remote_create(git_remote **out, git_repository *repo, const char *name, 
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_create_with_fetchspec(git_remote **out, git_repository *repo, const char *name, const char *url, const char *fetch)
 {
 	int error;
@@ -372,7 +401,9 @@ int git_remote_create_with_fetchspec(git_remote **out, git_repository *repo, con
 
 	return git_remote_create_with_opts(out, url, &opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_create_anonymous(git_remote **out, git_repository *repo, const char *url)
 {
 	git_remote_create_options opts = GIT_REMOTE_CREATE_OPTIONS_INIT;
@@ -381,12 +412,16 @@ int git_remote_create_anonymous(git_remote **out, git_repository *repo, const ch
 
 	return git_remote_create_with_opts(out, url, &opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_create_detached(git_remote **out, const char *url)
 {
 	return git_remote_create_with_opts(out, url, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_dup(git_remote **dest, git_remote *source)
 {
 	size_t i;
@@ -435,18 +470,22 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct refspec_cb_data {
 	git_remote *remote;
 	int fetch;
 };
 
+#ifdef DISABLED_FUNCTION
 static int refspec_cb(const git_config_entry *entry, void *payload)
 {
 	struct refspec_cb_data *data = (struct refspec_cb_data *)payload;
 	return add_refspec(data->remote, entry->value, data->fetch);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int get_optional_config(
 	bool *found, git_config *config, git_buf *buf,
 	git_config_foreach_cb cb, void *payload)
@@ -472,7 +511,9 @@ static int get_optional_config(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_lookup(git_remote **out, git_repository *repo, const char *name)
 {
 	git_remote *remote = NULL;
@@ -578,6 +619,7 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int lookup_remote_prune_config(git_remote *remote, git_config *config, const char *name)
 {
@@ -603,24 +645,31 @@ static int lookup_remote_prune_config(git_remote *remote, git_config *config, co
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 const char *git_remote_name(const git_remote *remote)
 {
 	assert(remote);
 	return remote->name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_remote_owner(const git_remote *remote)
 {
 	assert(remote);
 	return remote->repo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_remote_url(const git_remote *remote)
 {
 	assert(remote);
 	return remote->url;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int set_url(git_repository *repo, const char *remote, const char *pattern, const char *url)
 {
 	git_config *cfg;
@@ -653,23 +702,31 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_set_url(git_repository *repo, const char *remote, const char *url)
 {
 	return set_url(repo, remote, CONFIG_URL_FMT, url);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_remote_pushurl(const git_remote *remote)
 {
 	assert(remote);
 	return remote->pushurl;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_set_pushurl(git_repository *repo, const char *remote, const char* url)
 {
 	return set_url(repo, remote, CONFIG_PUSHURL_FMT, url);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char* git_remote__urlfordirection(git_remote *remote, int direction)
 {
 	assert(remote);
@@ -686,7 +743,9 @@ const char* git_remote__urlfordirection(git_remote *remote, int direction)
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int set_transport_callbacks(git_transport *t, const git_remote_callbacks *cbs)
 {
 	if (!t->set_callbacks || !cbs)
@@ -695,7 +754,9 @@ int set_transport_callbacks(git_transport *t, const git_remote_callbacks *cbs)
 	return t->set_callbacks(t, cbs->sideband_progress, NULL,
 				cbs->certificate_check, cbs->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int set_transport_custom_headers(git_transport *t, const git_strarray *custom_headers)
 {
 	if (!t->set_custom_headers)
@@ -703,7 +764,9 @@ static int set_transport_custom_headers(git_transport *t, const git_strarray *cu
 
 	return t->set_custom_headers(t, custom_headers);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote__connect(git_remote *remote, git_direction direction, const git_remote_callbacks *callbacks, const git_remote_connection_opts *conn)
 {
 	git_transport *t;
@@ -767,7 +830,9 @@ on_error:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_connect(git_remote *remote, git_direction direction, const git_remote_callbacks *callbacks, const git_proxy_options *proxy, const git_strarray *custom_headers)
 {
 	git_remote_connection_opts conn;
@@ -777,7 +842,9 @@ int git_remote_connect(git_remote *remote, git_direction direction, const git_re
 
 	return git_remote__connect(remote, direction, callbacks, &conn);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_ls(const git_remote_head ***out, size_t *size, git_remote *remote)
 {
 	assert(remote);
@@ -789,7 +856,9 @@ int git_remote_ls(const git_remote_head ***out, size_t *size, git_remote *remote
 
 	return remote->transport->ls(out, size, remote->transport);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote__get_http_proxy(git_remote *remote, bool use_ssl, char **proxy_url)
 {
 	git_config *cfg;
@@ -862,6 +931,7 @@ found:
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* DWIM `refspecs` based on `refs` and append the output to `out` */
 static int dwim_refspecs(git_vector *out, git_vector *refspecs, git_vector *refs)
@@ -877,6 +947,7 @@ static int dwim_refspecs(git_vector *out, git_vector *refspecs, git_vector *refs
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static void free_refspecs(git_vector *vec)
 {
 	size_t i;
@@ -889,7 +960,9 @@ static void free_refspecs(git_vector *vec)
 
 	git_vector_clear(vec);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remote_head_cmp(const void *_a, const void *_b)
 {
 	const git_remote_head *a = (git_remote_head *) _a;
@@ -897,7 +970,9 @@ static int remote_head_cmp(const void *_a, const void *_b)
 
 	return git__strcmp_cb(a->name, b->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ls_to_vector(git_vector *out, git_remote *remote)
 {
 	git_remote_head **heads;
@@ -916,7 +991,9 @@ static int ls_to_vector(git_vector *out, git_remote *remote)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_download(git_remote *remote, const git_strarray *refspecs, const git_fetch_options *opts)
 {
 	int error = -1;
@@ -994,7 +1071,9 @@ on_error:
 	git_vector_free(&specs);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_fetch(
 		git_remote *remote,
 		const git_strarray *refspecs,
@@ -1059,7 +1138,9 @@ int git_remote_fetch(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remote_head_for_fetchspec_src(git_remote_head **out, git_vector *update_heads, const char *fetchspec_src)
 {
 	unsigned int i;
@@ -1078,7 +1159,9 @@ static int remote_head_for_fetchspec_src(git_remote_head **out, git_vector *upda
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ref_to_update(int *update, git_buf *remote_name, git_remote *remote, git_refspec *spec, const char *ref_name)
 {
 	int error = 0;
@@ -1110,7 +1193,9 @@ static int ref_to_update(int *update, git_buf *remote_name, git_remote *remote, 
 	git_buf_dispose(&upstream_name);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remote_head_for_ref(git_remote_head **out, git_remote *remote, git_refspec *spec, git_vector *update_heads, git_reference *ref)
 {
 	git_reference *resolved_ref = NULL;
@@ -1145,7 +1230,9 @@ cleanup:
 	git_config_free(config);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_remote_write_fetchhead(git_remote *remote, git_refspec *spec, git_vector *update_heads)
 {
 	git_reference *head_ref = NULL;
@@ -1210,11 +1297,13 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Generate a list of candidates for pruning by getting a list of
  * references which match the rhs of an active refspec.
  */
+#ifdef DISABLED_FUNCTION
 static int prune_candidates(git_vector *candidates, git_remote *remote)
 {
 	git_strarray arr = { 0 };
@@ -1242,7 +1331,9 @@ out:
 	git_strarray_free(&arr);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_head(const void *_a, const void *_b)
 {
 	git_remote_head *a = (git_remote_head *) _a;
@@ -1250,7 +1341,9 @@ static int find_head(const void *_a, const void *_b)
 
 	return strcmp(a->name, b->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_prune(git_remote *remote, const git_remote_callbacks *callbacks)
 {
 	size_t i, j;
@@ -1352,7 +1445,9 @@ cleanup:
 	git_vector_free_deep(&candidates);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_tips_for_spec(
 		git_remote *remote,
 		const git_remote_callbacks *callbacks,
@@ -1483,6 +1578,7 @@ on_error:
 	return -1;
 
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Iteration over the three vectors, with a pause whenever we find a match
@@ -1491,6 +1587,7 @@ on_error:
  * parameters, and return the currently matching passive refspec as
  * well as the head which we matched.
  */
+#ifdef DISABLED_FUNCTION
 static int next_head(const git_remote *remote, git_vector *refs,
 		     git_refspec **out_spec, git_remote_head **out_head,
 		     size_t *out_i, size_t *out_j, size_t *out_k)
@@ -1540,7 +1637,9 @@ static int next_head(const git_remote *remote, git_vector *refs,
 
 	return GIT_ITEROVER;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int opportunistic_updates(const git_remote *remote, const git_remote_callbacks *callbacks,
 				 git_vector *refs, const char *msg)
 {
@@ -1596,7 +1695,9 @@ cleanup:
 	git_buf_dispose(&refname);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int truncate_fetch_head(const char *gitdir)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -1610,7 +1711,9 @@ static int truncate_fetch_head(const char *gitdir)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_update_tips(
 		git_remote *remote,
 		const git_remote_callbacks *callbacks,
@@ -1666,7 +1769,9 @@ out:
 	git_refspec__dispose(&tagspec);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_connected(const git_remote *remote)
 {
 	assert(remote);
@@ -1677,7 +1782,9 @@ int git_remote_connected(const git_remote *remote)
 	/* Ask the transport if it's connected. */
 	return remote->transport->is_connected(remote->transport);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_remote_stop(git_remote *remote)
 {
 	assert(remote);
@@ -1685,7 +1792,9 @@ void git_remote_stop(git_remote *remote)
 	if (remote->transport && remote->transport->cancel)
 		remote->transport->cancel(remote->transport);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_remote_disconnect(git_remote *remote)
 {
 	assert(remote);
@@ -1693,7 +1802,9 @@ void git_remote_disconnect(git_remote *remote)
 	if (git_remote_connected(remote))
 		remote->transport->close(remote->transport);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_remote_free(git_remote *remote)
 {
 	if (remote == NULL)
@@ -1723,7 +1834,9 @@ void git_remote_free(git_remote *remote)
 	git__free(remote->name);
 	git__free(remote);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remote_list_cb(const git_config_entry *entry, void *payload)
 {
 	git_vector *list = payload;
@@ -1741,7 +1854,9 @@ static int remote_list_cb(const git_config_entry *entry, void *payload)
 
 	return git_vector_insert(list, remote_name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_list(git_strarray *remotes_list, git_repository *repo)
 {
 	int error;
@@ -1769,18 +1884,24 @@ int git_remote_list(git_strarray *remotes_list, git_repository *repo)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_transfer_progress* git_remote_stats(git_remote *remote)
 {
 	assert(remote);
 	return &remote->stats;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_remote_autotag_option_t git_remote_autotag(const git_remote *remote)
 {
 	return remote->download_tags;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_set_autotag(git_repository *repo, const char *remote, git_remote_autotag_option_t value)
 {
 	git_buf var = GIT_BUF_INIT;
@@ -1818,12 +1939,16 @@ int git_remote_set_autotag(git_repository *repo, const char *remote, git_remote_
 	git_buf_dispose(&var);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_prune_refs(const git_remote *remote)
 {
 	return remote->prune_refs;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rename_remote_config_section(
 	git_repository *repo,
 	const char *old_name,
@@ -1851,6 +1976,7 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct update_data {
 	git_config *config;
@@ -1858,6 +1984,7 @@ struct update_data {
 	const char *new_remote_name;
 };
 
+#ifdef DISABLED_FUNCTION
 static int update_config_entries_cb(
 	const git_config_entry *entry,
 	void *payload)
@@ -1870,7 +1997,9 @@ static int update_config_entries_cb(
 	return git_config_set_string(
 		data->config, entry->name, data->new_remote_name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_branch_remote_config_entry(
 	git_repository *repo,
 	const char *old_name,
@@ -1888,7 +2017,9 @@ static int update_branch_remote_config_entry(
 	return git_config_foreach_match(
 		data.config, "branch\\..+\\.remote", update_config_entries_cb, &data);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rename_one_remote_reference(
 	git_reference *reference_in,
 	const char *old_remote_name,
@@ -1949,7 +2080,9 @@ cleanup:
 	git_buf_dispose(&log_message);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rename_remote_references(
 	git_repository *repo,
 	const char *old_name,
@@ -1978,7 +2111,9 @@ static int rename_remote_references(
 
 	return (error == GIT_ITEROVER) ? 0 : error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rename_fetch_refspecs(git_vector *problems, git_remote *remote, const char *new_name)
 {
 	git_config *config;
@@ -2044,7 +2179,9 @@ static int rename_fetch_refspecs(git_vector *problems, git_remote *remote, const
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_rename(git_strarray *out, git_repository *repo, const char *name, const char *new_name)
 {
 	int error;
@@ -2084,7 +2221,9 @@ cleanup:
 	git_remote_free(remote);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_is_valid_name(
 	const char *remote_name)
 {
@@ -2104,7 +2243,9 @@ int git_remote_is_valid_name(
 	giterr_clear();
 	return error == 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_refspec *git_remote__matching_refspec(git_remote *remote, const char *refname)
 {
 	git_refspec *spec;
@@ -2120,7 +2261,9 @@ git_refspec *git_remote__matching_refspec(git_remote *remote, const char *refnam
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_refspec *git_remote__matching_dst_refspec(git_remote *remote, const char *refname)
 {
 	git_refspec *spec;
@@ -2136,17 +2279,23 @@ git_refspec *git_remote__matching_dst_refspec(git_remote *remote, const char *re
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_add_fetch(git_repository *repo, const char *remote, const char *refspec)
 {
 	return write_add_refspec(repo, remote, refspec, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_add_push(git_repository *repo, const char *remote, const char *refspec)
 {
 	return write_add_refspec(repo, remote, refspec, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int copy_refspecs(git_strarray *array, const git_remote *remote, unsigned int push)
 {
 	size_t i;
@@ -2180,35 +2329,47 @@ on_error:
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_get_fetch_refspecs(git_strarray *array, const git_remote *remote)
 {
 	return copy_refspecs(array, remote, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_get_push_refspecs(git_strarray *array, const git_remote *remote)
 {
 	return copy_refspecs(array, remote, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_remote_refspec_count(const git_remote *remote)
 {
 	return remote->refspecs.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_refspec *git_remote_get_refspec(const git_remote *remote, size_t n)
 {
 	return git_vector_get(&remote->refspecs, n);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_init_callbacks(git_remote_callbacks *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_remote_callbacks, GIT_REMOTE_CALLBACKS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* asserts a branch.<foo>.remote format */
+#ifdef DISABLED_FUNCTION
 static const char *name_offset(size_t *len_out, const char *name)
 {
 	size_t prefix_len;
@@ -2222,7 +2383,9 @@ static const char *name_offset(size_t *len_out, const char *name)
 	*len_out = dot - name - prefix_len;
 	return name + prefix_len;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remove_branch_config_related_entries(
 	git_repository *repo,
 	const char *remote_name)
@@ -2277,7 +2440,9 @@ static int remove_branch_config_related_entries(
 	git_config_iterator_free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remove_refs(git_repository *repo, const git_refspec *spec)
 {
 	git_reference_iterator *iter = NULL;
@@ -2324,7 +2489,9 @@ cleanup:
 	git_vector_free(&refs);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remove_remote_tracking(git_repository *repo, const char *remote_name)
 {
 	git_remote *remote;
@@ -2350,7 +2517,9 @@ static int remove_remote_tracking(git_repository *repo, const char *remote_name)
 	git_remote_free(remote);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_delete(git_repository *repo, const char *name)
 {
 	int error;
@@ -2364,7 +2533,9 @@ int git_remote_delete(git_repository *repo, const char *name)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_default_branch(git_buf *out, git_remote *remote)
 {
 	const git_remote_head **heads;
@@ -2419,7 +2590,9 @@ int git_remote_default_branch(git_buf *out, git_remote *remote)
 
 	return git_buf_puts(out, guess->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_upload(git_remote *remote, const git_strarray *refspecs, const git_push_options *opts)
 {
 	size_t i;
@@ -2487,7 +2660,9 @@ int git_remote_upload(git_remote *remote, const git_strarray *refspecs, const gi
 cleanup:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_remote_push(git_remote *remote, const git_strarray *refspecs, const git_push_options *opts)
 {
 	int error;
@@ -2523,6 +2698,7 @@ int git_remote_push(git_remote *remote, const git_strarray *refspecs, const git_
 	git_remote_disconnect(remote);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 #define PREFIX "url"
 #define SUFFIX_FETCH "insteadof"

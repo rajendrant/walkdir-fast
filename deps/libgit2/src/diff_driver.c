@@ -56,6 +56,7 @@ static git_diff_driver global_drivers[3] = {
 	{ DIFF_DRIVER_TEXT,   GIT_DIFF_FORCE_TEXT, 0 },
 };
 
+#ifdef DISABLED_FUNCTION
 git_diff_driver_registry *git_diff_driver_registry_new(void)
 {
 	git_diff_driver_registry *reg =
@@ -70,6 +71,7 @@ git_diff_driver_registry *git_diff_driver_registry_new(void)
 
 	return reg;
 }
+#endif // DISABLED_FUNCTION
 
 void git_diff_driver_registry_free(git_diff_driver_registry *reg)
 {
@@ -83,6 +85,7 @@ void git_diff_driver_registry_free(git_diff_driver_registry *reg)
 	git__free(reg);
 }
 
+#ifdef DISABLED_FUNCTION
 static int diff_driver_add_patterns(
 	git_diff_driver *drv, const char *regex_str, int regex_flags)
 {
@@ -126,17 +129,23 @@ static int diff_driver_add_patterns(
 	/* We want to ignore bad patterns, so return success regardless */
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_driver_xfuncname(const git_config_entry *entry, void *payload)
 {
 	return diff_driver_add_patterns(payload, entry->value, REG_EXTENDED);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_driver_funcname(const git_config_entry *entry, void *payload)
 {
 	return diff_driver_add_patterns(payload, entry->value, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_diff_driver_registry *git_repository_driver_registry(
 	git_repository *repo)
 {
@@ -153,7 +162,9 @@ static git_diff_driver_registry *git_repository_driver_registry(
 
 	return repo->diff_drivers;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_driver_alloc(
 	git_diff_driver **out, size_t *namelen_out, const char *name)
 {
@@ -177,7 +188,9 @@ static int diff_driver_alloc(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_diff_driver_builtin(
 	git_diff_driver **out,
 	git_diff_driver_registry *reg,
@@ -227,7 +240,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_diff_driver_load(
 	git_diff_driver **out, git_repository *repo, const char *driver_name)
 {
@@ -351,7 +366,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_driver_lookup(
 	git_diff_driver **out, git_repository *repo,
 	git_attr_session *attrsession, const char *path)
@@ -388,6 +405,7 @@ int git_diff_driver_lookup(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 void git_diff_driver_free(git_diff_driver *driver)
 {
@@ -405,6 +423,7 @@ void git_diff_driver_free(git_diff_driver *driver)
 	git__free(driver);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_diff_driver_update_options(
 	uint32_t *option_flags, git_diff_driver *driver)
 {
@@ -413,7 +432,9 @@ void git_diff_driver_update_options(
 
 	*option_flags |= driver->other_flags;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_driver_content_is_binary(
 	git_diff_driver *driver, const char *content, size_t content_len)
 {
@@ -435,7 +456,9 @@ int git_diff_driver_content_is_binary(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_context_line__simple(
 	git_diff_driver *driver, git_buf *line)
 {
@@ -443,7 +466,9 @@ static int diff_context_line__simple(
 	GIT_UNUSED(driver);
 	return (git__isalpha(firstch) || firstch == '_' || firstch == '$');
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_context_line__pattern_match(
 	git_diff_driver *driver, git_buf *line)
 {
@@ -469,7 +494,9 @@ static int diff_context_line__pattern_match(
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static long diff_context_find(
 	const char *line,
 	long line_len,
@@ -495,7 +522,9 @@ static long diff_context_find(
 
 	return out_size;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_find_context_init(
 	git_diff_find_context_fn *findfn_out,
 	git_diff_find_context_payload *payload_out,
@@ -511,7 +540,9 @@ void git_diff_find_context_init(
 		git_buf_init(&payload_out->line, 0);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff_find_context_clear(git_diff_find_context_payload *payload)
 {
 	if (payload) {
@@ -519,3 +550,4 @@ void git_diff_find_context_clear(git_diff_find_context_payload *payload)
 		payload->driver = NULL;
 	}
 }
+#endif // DISABLED_FUNCTION

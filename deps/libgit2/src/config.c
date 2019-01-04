@@ -129,6 +129,7 @@ int git_config_add_file_ondisk(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_open_ondisk(git_config **out, const char *path)
 {
 	int error;
@@ -146,6 +147,7 @@ int git_config_open_ondisk(git_config **out, const char *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_config_snapshot(git_config **out, git_config *in)
 {
@@ -179,6 +181,7 @@ int git_config_snapshot(git_config **out, git_config *in)
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 static int find_backend_by_level(
 	backend_internal **out,
 	const git_config *cfg,
@@ -212,6 +215,7 @@ static int find_backend_by_level(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static int duplicate_level(void **old_raw, void *new_raw)
 {
@@ -271,6 +275,7 @@ static int git_config__add_internal(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_open_global(git_config **cfg_out, git_config *cfg)
 {
 	if (!git_config_open_level(cfg_out, cfg, GIT_CONFIG_LEVEL_XDG))
@@ -278,7 +283,9 @@ int git_config_open_global(git_config **cfg_out, git_config *cfg)
 
 	return git_config_open_level(cfg_out, cfg, GIT_CONFIG_LEVEL_GLOBAL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_open_level(
 	git_config **cfg_out,
 	const git_config *cfg_parent,
@@ -303,6 +310,7 @@ int git_config_open_level(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_config_add_backend(
 	git_config *cfg,
@@ -349,6 +357,7 @@ typedef struct {
 	size_t i;
 } all_iter;
 
+#ifdef DISABLED_FUNCTION
 static int find_next_backend(size_t *out, const git_config *cfg, size_t i)
 {
 	backend_internal *internal;
@@ -364,7 +373,9 @@ static int find_next_backend(size_t *out, const git_config *cfg, size_t i)
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int all_iter_next(git_config_entry **entry, git_config_iterator *_iter)
 {
 	all_iter *iter = (all_iter *) _iter;
@@ -411,7 +422,9 @@ static int all_iter_next(git_config_entry **entry, git_config_iterator *_iter)
 
 	return GIT_ITEROVER;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int all_iter_glob_next(git_config_entry **entry, git_config_iterator *_iter)
 {
 	int error;
@@ -432,7 +445,9 @@ static int all_iter_glob_next(git_config_entry **entry, git_config_iterator *_it
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void all_iter_free(git_config_iterator *_iter)
 {
 	all_iter *iter = (all_iter *) _iter;
@@ -442,7 +457,9 @@ static void all_iter_free(git_config_iterator *_iter)
 
 	git__free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void all_iter_glob_free(git_config_iterator *_iter)
 {
 	all_iter *iter = (all_iter *) _iter;
@@ -450,7 +467,9 @@ static void all_iter_glob_free(git_config_iterator *_iter)
 	regfree(&iter->regex);
 	all_iter_free(_iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_iterator_new(git_config_iterator **out, const git_config *cfg)
 {
 	all_iter *iter;
@@ -468,7 +487,9 @@ int git_config_iterator_new(git_config_iterator **out, const git_config *cfg)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_iterator_glob_new(git_config_iterator **out, const git_config *cfg, const char *regexp)
 {
 	all_iter *iter;
@@ -495,13 +516,17 @@ int git_config_iterator_glob_new(git_config_iterator **out, const git_config *cf
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_foreach(
 	const git_config *cfg, git_config_foreach_cb cb, void *payload)
 {
 	return git_config_foreach_match(cfg, NULL, cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_backend_foreach_match(
 	git_config_backend *backend,
 	const char *regexp,
@@ -545,7 +570,9 @@ int git_config_backend_foreach_match(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_foreach_match(
 	const git_config *cfg,
 	const char *regexp,
@@ -573,6 +600,7 @@ int git_config_foreach_match(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**************
  * Setters
@@ -588,6 +616,7 @@ static const char *uses[] = {
     "delete"
 };
 
+#ifdef DISABLED_FUNCTION
 static int get_backend_for_use(git_config_backend **out,
 	git_config *cfg, const char *name, backend_use use)
 {
@@ -615,7 +644,9 @@ static int get_backend_for_use(git_config_backend **out,
 		uses[use], name);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_delete_entry(git_config *cfg, const char *name)
 {
 	git_config_backend *backend;
@@ -625,24 +656,32 @@ int git_config_delete_entry(git_config *cfg, const char *name)
 
 	return backend->del(backend, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_set_int64(git_config *cfg, const char *name, int64_t value)
 {
 	char str_value[32]; /* All numbers should fit in here */
 	p_snprintf(str_value, sizeof(str_value), "%" PRId64, value);
 	return git_config_set_string(cfg, name, str_value);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_set_int32(git_config *cfg, const char *name, int32_t value)
 {
 	return git_config_set_int64(cfg, name, (int64_t)value);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_set_bool(git_config *cfg, const char *name, int value)
 {
 	return git_config_set_string(cfg, name, value ? "true" : "false");
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_set_string(git_config *cfg, const char *name, const char *value)
 {
 	int error;
@@ -663,7 +702,9 @@ int git_config_set_string(git_config *cfg, const char *name, const char *value)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config__update_entry(
 	git_config *config,
 	const char *key,
@@ -694,6 +735,7 @@ int git_config__update_entry(
 	git_config_entry_free(ce);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /***********
  * Getters
@@ -755,11 +797,13 @@ cleanup:
 	return res;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_entry(
 	git_config_entry **out, const git_config *cfg, const char *name)
 {
 	return get_entry(out, cfg, name, true, GET_ALL_ERRORS);
 }
+#endif // DISABLED_FUNCTION
 
 int git_config__lookup_entry(
 	git_config_entry **out,
@@ -771,6 +815,7 @@ int git_config__lookup_entry(
 		out, cfg, key, false, no_errors ? GET_NO_ERRORS : GET_NO_MISSING);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_mapped(
 	int *out,
 	const git_config *cfg,
@@ -789,7 +834,9 @@ int git_config_get_mapped(
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_int64(int64_t *out, const git_config *cfg, const char *name)
 {
 	git_config_entry *entry;
@@ -803,6 +850,7 @@ int git_config_get_int64(int64_t *out, const git_config *cfg, const char *name)
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
 int git_config_get_int32(int32_t *out, const git_config *cfg, const char *name)
 {
@@ -832,6 +880,7 @@ int git_config_get_bool(int *out, const git_config *cfg, const char *name)
 	return ret;
 }
 
+#ifdef DISABLED_FUNCTION
 static int is_readonly(const git_config *cfg)
 {
 	size_t i;
@@ -847,7 +896,9 @@ static int is_readonly(const git_config *cfg)
 
 	return 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_path(git_buf *out, const git_config *cfg, const char *name)
 {
 	git_config_entry *entry;
@@ -861,7 +912,9 @@ int git_config_get_path(git_buf *out, const git_config *cfg, const char *name)
 
 	 return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_string(
 	const char **out, const git_config *cfg, const char *name)
 {
@@ -880,7 +933,9 @@ int git_config_get_string(
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_string_buf(
 	git_buf *out, const git_config *cfg, const char *name)
 {
@@ -900,7 +955,9 @@ int git_config_get_string_buf(
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 char *git_config__get_string_force(
 	const git_config *cfg, const char *key, const char *fallback_value)
 {
@@ -913,7 +970,9 @@ char *git_config__get_string_force(
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config__get_bool_force(
 	const git_config *cfg, const char *key, int fallback_value)
 {
@@ -928,7 +987,9 @@ int git_config__get_bool_force(
 	git_config_entry_free(entry);
 	return val;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config__get_int_force(
 	const git_config *cfg, const char *key, int fallback_value)
 {
@@ -943,7 +1004,9 @@ int git_config__get_int_force(
 	git_config_entry_free(entry);
 	return (int)val;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_get_multivar_foreach(
 	const git_config *cfg, const char *name, const char *regexp,
 	git_config_foreach_cb cb, void *payload)
@@ -974,6 +1037,7 @@ int git_config_get_multivar_foreach(
 
 	return err;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_config_iterator parent;
@@ -983,6 +1047,7 @@ typedef struct {
 	int have_regex;
 } multivar_iter;
 
+#ifdef DISABLED_FUNCTION
 static int multivar_iter_next(git_config_entry **entry, git_config_iterator *_iter)
 {
 	multivar_iter *iter = (multivar_iter *) _iter;
@@ -1001,7 +1066,9 @@ static int multivar_iter_next(git_config_entry **entry, git_config_iterator *_it
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void multivar_iter_free(git_config_iterator *_iter)
 {
 	multivar_iter *iter = (multivar_iter *) _iter;
@@ -1013,7 +1080,9 @@ void multivar_iter_free(git_config_iterator *_iter)
 		regfree(&iter->regex);
 	git__free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_multivar_iterator_new(git_config_iterator **out, const git_config *cfg, const char *name, const char *regexp)
 {
 	multivar_iter *iter = NULL;
@@ -1055,7 +1124,9 @@ on_error:
 	git__free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_set_multivar(git_config *cfg, const char *name, const char *regexp, const char *value)
 {
 	git_config_backend *backend;
@@ -1065,7 +1136,9 @@ int git_config_set_multivar(git_config *cfg, const char *name, const char *regex
 
 	return backend->set_multivar(backend, name, regexp, value);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_delete_multivar(git_config *cfg, const char *name, const char *regexp)
 {
 	git_config_backend *backend;
@@ -1075,12 +1148,16 @@ int git_config_delete_multivar(git_config *cfg, const char *name, const char *re
 
 	return backend->del_multivar(backend, name, regexp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_next(git_config_entry **entry, git_config_iterator *iter)
 {
 	return iter->next(entry, iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_config_iterator_free(git_config_iterator *iter)
 {
 	if (iter == NULL)
@@ -1088,6 +1165,7 @@ void git_config_iterator_free(git_config_iterator *iter)
 
 	iter->free(iter);
 }
+#endif // DISABLED_FUNCTION
 
 int git_config_find_global(git_buf *path)
 {
@@ -1138,6 +1216,7 @@ int git_config__global_location(git_buf *buf)
 	return git_buf_joinpath(buf, buf->ptr, GIT_CONFIG_FILENAME_GLOBAL);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_open_default(git_config **out)
 {
 	int error;
@@ -1175,7 +1254,9 @@ int git_config_open_default(git_config **out)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_lock(git_transaction **out, git_config *cfg)
 {
 	int error;
@@ -1196,7 +1277,9 @@ int git_config_lock(git_transaction **out, git_config *cfg)
 
 	return git_transaction_config_new(out, cfg);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_unlock(git_config *cfg, int commit)
 {
 	git_config_backend *backend;
@@ -1214,6 +1297,7 @@ int git_config_unlock(git_config *cfg, int commit)
 
 	return backend->unlock(backend, commit);
 }
+#endif // DISABLED_FUNCTION
 
 /***********
  * Parsers
@@ -1265,6 +1349,7 @@ fail_parse:
 	return -1;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_lookup_map_enum(git_cvar_t *type_out, const char **str_out,
 			       const git_cvar_map *maps, size_t map_n, int enum_val)
 {
@@ -1284,6 +1369,7 @@ int git_config_lookup_map_enum(git_cvar_t *type_out, const char **str_out,
 	giterr_set(GITERR_CONFIG, "invalid enum value");
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
 int git_config_parse_bool(int *out, const char *value)
 {
@@ -1362,6 +1448,7 @@ fail_parse:
 	return -1;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_config_parse_path(git_buf *out, const char *value)
 {
 	assert(out && value);
@@ -1379,6 +1466,7 @@ int git_config_parse_path(git_buf *out, const char *value)
 
 	return git_buf_sets(out, value);
 }
+#endif // DISABLED_FUNCTION
 
 static int normalize_section(char *start, char *end)
 {
@@ -1445,6 +1533,7 @@ struct rename_data {
 	size_t old_len;
 };
 
+#ifdef DISABLED_FUNCTION
 static int rename_config_entries_cb(
 	const git_config_entry *entry,
 	void *payload)
@@ -1467,7 +1556,9 @@ static int rename_config_entries_cb(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_rename_section(
 	git_repository *repo,
 	const char *old_section_name,
@@ -1510,10 +1601,13 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_config_init_backend(git_config_backend *backend, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		backend, version, git_config_backend, GIT_CONFIG_BACKEND_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

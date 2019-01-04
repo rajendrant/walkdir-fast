@@ -17,13 +17,18 @@
 #include "zstream.h"
 #include "fileops.h"
 
+#ifdef DISABLED_FUNCTION
 static void diff_output_init(
 	git_patch_generated_output *, const git_diff_options *, git_diff_file_cb,
 	git_diff_binary_cb, git_diff_hunk_cb, git_diff_line_cb, void*);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void diff_output_to_patch(
 	git_patch_generated_output *, git_patch_generated *);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void patch_generated_free(git_patch *p)
 {
 	git_patch_generated *patch = (git_patch_generated *)p;
@@ -48,7 +53,9 @@ static void patch_generated_free(git_patch *p)
 	if (patch->flags & GIT_PATCH_GENERATED_ALLOCATED)
 		git__free(patch);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void patch_generated_update_binary(git_patch_generated *patch)
 {
 	if ((patch->base.delta->flags & DIFF_FLAGS_KNOWN_BINARY) != 0)
@@ -66,7 +73,9 @@ static void patch_generated_update_binary(git_patch_generated *patch)
 		(patch->nfile.file->flags & DIFF_FLAGS_NOT_BINARY) != 0)
 		patch->base.delta->flags |= GIT_DIFF_FLAG_NOT_BINARY;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void patch_generated_init_common(git_patch_generated *patch)
 {
 	patch->base.free_fn = patch_generated_free;
@@ -78,7 +87,9 @@ static void patch_generated_init_common(git_patch_generated *patch)
 	if (patch->diff)
 		git_diff_addref(patch->diff);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_normalize_options(
 	git_diff_options *out,
 	const git_diff_options *opts)
@@ -104,7 +115,9 @@ static int patch_generated_normalize_options(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_init(
 	git_patch_generated *patch, git_diff *diff, size_t delta_index)
 {
@@ -129,7 +142,9 @@ static int patch_generated_init(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_alloc_from_diff(
 	git_patch_generated **out, git_diff *diff, size_t delta_index)
 {
@@ -148,7 +163,9 @@ static int patch_generated_alloc_from_diff(
 	*out = patch;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) should_skip_binary(git_patch_generated *patch, git_diff_file *file)
 {
 	if ((patch->base.diff_opts.flags & GIT_DIFF_SHOW_BINARY) != 0)
@@ -156,7 +173,9 @@ GIT_INLINE(bool) should_skip_binary(git_patch_generated *patch, git_diff_file *f
 
 	return (file->flags & GIT_DIFF_FLAG_BINARY) != 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool patch_generated_diffable(git_patch_generated *patch)
 {
 	size_t olen, nlen;
@@ -185,7 +204,9 @@ static bool patch_generated_diffable(git_patch_generated *patch)
 	return (olen != nlen ||
 		!git_oid_equal(&patch->ofile.file->id, &patch->nfile.file->id));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_load(git_patch_generated *patch, git_patch_generated_output *output)
 {
 	int error = 0;
@@ -238,7 +259,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_invoke_file_callback(
 	git_patch_generated *patch, git_patch_generated_output *output)
 {
@@ -252,7 +275,9 @@ static int patch_generated_invoke_file_callback(
 		output->file_cb(patch->base.delta, progress, output->payload),
 		"git_patch");
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_binary(
 	git_diff_binary_t *out_type,
 	char **out_data,
@@ -319,7 +344,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_binary(git_patch_generated_output *output, git_patch_generated *patch)
 {
 	git_diff_binary binary = {0};
@@ -359,7 +386,9 @@ static int diff_binary(git_patch_generated_output *output, git_patch_generated *
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_create(
 	git_patch_generated *patch,
 	git_patch_generated_output *output)
@@ -392,7 +421,9 @@ static int patch_generated_create(
 	patch->flags |= GIT_PATCH_GENERATED_DIFFED;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_required(git_diff *diff, const char *action)
 {
 	if (diff)
@@ -400,6 +431,7 @@ static int diff_required(git_diff *diff, const char *action)
 	giterr_set(GITERR_INVALID, "must provide valid diff to %s", action);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_patch_generated patch;
@@ -407,6 +439,7 @@ typedef struct {
 	char paths[GIT_FLEX_ARRAY];
 } patch_generated_with_delta;
 
+#ifdef DISABLED_FUNCTION
 static int diff_single_generate(patch_generated_with_delta *pd, git_xdiff_output *xo)
 {
 	int error = 0;
@@ -445,7 +478,9 @@ static int diff_single_generate(patch_generated_with_delta *pd, git_xdiff_output
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_from_sources(
 	patch_generated_with_delta *pd,
 	git_xdiff_output *xo,
@@ -490,7 +525,9 @@ static int patch_generated_from_sources(
 
 	return diff_single_generate(pd, xo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_with_delta_alloc(
 	patch_generated_with_delta **out,
 	const char **old_path,
@@ -524,7 +561,9 @@ static int patch_generated_with_delta_alloc(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_from_sources(
 	git_diff_file_content_src *oldsrc,
 	git_diff_file_content_src *newsrc,
@@ -552,7 +591,9 @@ static int diff_from_sources(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_from_sources(
 	git_patch **out,
 	git_diff_file_content_src *oldsrc,
@@ -581,7 +622,9 @@ static int patch_from_sources(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_blobs(
 	const git_blob *old_blob,
 	const char *old_path,
@@ -601,7 +644,9 @@ int git_diff_blobs(
 	return diff_from_sources(
 		&osrc, &nsrc, opts, file_cb, binary_cb, hunk_cb, data_cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_from_blobs(
 	git_patch **out,
 	const git_blob *old_blob,
@@ -616,7 +661,9 @@ int git_patch_from_blobs(
 		GIT_DIFF_FILE_CONTENT_SRC__BLOB(new_blob, new_path);
 	return patch_from_sources(out, &osrc, &nsrc, opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_blob_to_buffer(
 	const git_blob *old_blob,
 	const char *old_path,
@@ -637,7 +684,9 @@ int git_diff_blob_to_buffer(
 	return diff_from_sources(
 		&osrc, &nsrc, opts, file_cb, binary_cb, hunk_cb, data_cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_from_blob_and_buffer(
 	git_patch **out,
 	const git_blob *old_blob,
@@ -653,7 +702,9 @@ int git_patch_from_blob_and_buffer(
 		GIT_DIFF_FILE_CONTENT_SRC__BUF(buf, buflen, buf_path);
 	return patch_from_sources(out, &osrc, &nsrc, opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_buffers(
 	const void *old_buf,
 	size_t old_len,
@@ -675,7 +726,9 @@ int git_diff_buffers(
 	return diff_from_sources(
 		&osrc, &nsrc, opts, file_cb, binary_cb, hunk_cb, data_cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_from_buffers(
 	git_patch **out,
 	const void *old_buf,
@@ -692,7 +745,9 @@ int git_patch_from_buffers(
 		GIT_DIFF_FILE_CONTENT_SRC__BUF(new_buf, new_len, new_path);
 	return patch_from_sources(out, &osrc, &nsrc, opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_generated_from_diff(
 	git_patch **patch_ptr, git_diff *diff, size_t idx)
 {
@@ -745,27 +800,35 @@ int git_patch_generated_from_diff(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_diff_driver *git_patch_generated_driver(git_patch_generated *patch)
 {
 	/* ofile driver is representative for whole patch */
 	return patch->ofile.driver;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_patch_generated_old_data(
 	char **ptr, size_t *len, git_patch_generated *patch)
 {
 	*ptr = patch->ofile.map.data;
 	*len = patch->ofile.map.len;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_patch_generated_new_data(
 	char **ptr, size_t *len, git_patch_generated *patch)
 {
 	*ptr = patch->nfile.map.data;
 	*len = patch->nfile.map.len;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_file_cb(
 	const git_diff_delta *delta,
 	float progress,
@@ -774,7 +837,9 @@ static int patch_generated_file_cb(
 	GIT_UNUSED(delta); GIT_UNUSED(progress); GIT_UNUSED(payload);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_binary_cb(
 	const git_diff_delta *delta,
 	const git_diff_binary *binary,
@@ -804,7 +869,9 @@ static int patch_generated_binary_cb(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_patch_hunk_cb(
 	const git_diff_delta *delta,
 	const git_diff_hunk *hunk_,
@@ -827,7 +894,9 @@ static int git_patch_hunk_cb(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_generated_line_cb(
 	const git_diff_delta *delta,
 	const git_diff_hunk *hunk_,
@@ -866,6 +935,7 @@ static int patch_generated_line_cb(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static void diff_output_init(
 	git_patch_generated_output *out,
@@ -887,6 +957,7 @@ static void diff_output_init(
 	out->payload = payload;
 }
 
+#ifdef DISABLED_FUNCTION
 static void diff_output_to_patch(
 	git_patch_generated_output *out, git_patch_generated *patch)
 {
@@ -899,3 +970,4 @@ static void diff_output_to_patch(
 		patch_generated_line_cb,
 		patch);
 }
+#endif // DISABLED_FUNCTION

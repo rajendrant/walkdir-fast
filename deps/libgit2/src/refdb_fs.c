@@ -66,14 +66,19 @@ typedef struct refdb_fs_backend {
 	int fsync;
 } refdb_fs_backend;
 
+#ifdef DISABLED_FUNCTION
 static int refdb_reflog_fs__delete(git_refdb_backend *_backend, const char *name);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int packref_cmp(const void *a_, const void *b_)
 {
 	const struct packref *a = a_, *b = b_;
 	return strcmp(a->name, b->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int packed_reload(refdb_fs_backend *backend)
 {
 	int error;
@@ -196,7 +201,9 @@ parse_failed:
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int loose_parse_oid(
 	git_oid *oid, const char *filename, git_buf *file_content)
 {
@@ -218,7 +225,9 @@ corrupted:
 	giterr_set(GITERR_REFERENCE, "corrupted loose reference file: %s", filename);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int loose_readbuffer(git_buf *buf, const char *base, const char *path)
 {
 	int error;
@@ -230,7 +239,9 @@ static int loose_readbuffer(git_buf *buf, const char *base, const char *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int loose_lookup_to_packfile(refdb_fs_backend *backend, const char *name)
 {
 	int error = 0;
@@ -269,7 +280,9 @@ done:
 	git_buf_dispose(&ref_file);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int _dirent_loose_load(void *payload, git_buf *full_path)
 {
 	refdb_fs_backend *backend = payload;
@@ -294,6 +307,7 @@ static int _dirent_loose_load(void *payload, git_buf *full_path)
 
 	return loose_lookup_to_packfile(backend, file_path);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Load all the loose references from the repository
@@ -301,6 +315,7 @@ static int _dirent_loose_load(void *payload, git_buf *full_path)
  * all the references so it can be written back to
  * disk.
  */
+#ifdef DISABLED_FUNCTION
 static int packed_loadloose(refdb_fs_backend *backend)
 {
 	int error;
@@ -321,7 +336,9 @@ static int packed_loadloose(refdb_fs_backend *backend)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__exists(
 	int *exists,
 	git_refdb_backend *_backend,
@@ -343,7 +360,9 @@ static int refdb_fs_backend__exists(
 	git_buf_dispose(&ref_path);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *loose_parse_symbolic(git_buf *file_content)
 {
 	const unsigned int header_len = (unsigned int)strlen(GIT_SYMREF);
@@ -364,6 +383,7 @@ static const char *loose_parse_symbolic(git_buf *file_content)
 
 	return refname_start;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Returns whether a reference is stored per worktree or not.
@@ -372,12 +392,15 @@ static const char *loose_parse_symbolic(git_buf *file_content)
  * - all pseudorefs, e.g. HEAD and MERGE_HEAD
  * - all references stored inside of "refs/bisect/"
  */
+#ifdef DISABLED_FUNCTION
 static bool is_per_worktree_ref(const char *ref_name)
 {
 	return git__prefixcmp(ref_name, "refs/") != 0 ||
 	    git__prefixcmp(ref_name, "refs/bisect/") == 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int loose_lookup(
 	git_reference **out,
 	refdb_fs_backend *backend,
@@ -417,13 +440,17 @@ static int loose_lookup(
 	git_buf_dispose(&ref_file);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ref_error_notfound(const char *name)
 {
 	giterr_set(GITERR_REFERENCE, "reference '%s' not found", name);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int packed_lookup(
 	git_reference **out,
 	refdb_fs_backend *backend,
@@ -451,7 +478,9 @@ static int packed_lookup(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__lookup(
 	git_reference **out,
 	git_refdb_backend *_backend,
@@ -474,6 +503,7 @@ static int refdb_fs_backend__lookup(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_reference_iterator parent;
@@ -488,6 +518,7 @@ typedef struct {
 	size_t packed_pos;
 } refdb_fs_iter;
 
+#ifdef DISABLED_FUNCTION
 static void refdb_fs_backend__iterator_free(git_reference_iterator *_iter)
 {
 	refdb_fs_iter *iter = (refdb_fs_iter *) _iter;
@@ -497,7 +528,9 @@ static void refdb_fs_backend__iterator_free(git_reference_iterator *_iter)
 	git_sortedcache_free(iter->cache);
 	git__free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iter_load_loose_paths(refdb_fs_backend *backend, refdb_fs_iter *iter)
 {
 	int error = 0;
@@ -581,7 +614,9 @@ static int iter_load_loose_paths(refdb_fs_backend *backend, refdb_fs_iter *iter)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__iterator_next(
 	git_reference **out, git_reference_iterator *_iter)
 {
@@ -622,7 +657,9 @@ static int refdb_fs_backend__iterator_next(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__iterator_next_name(
 	const char **out, git_reference_iterator *_iter)
 {
@@ -665,7 +702,9 @@ static int refdb_fs_backend__iterator_next_name(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__iterator(
 	git_reference_iterator **out, git_refdb_backend *_backend, const char *glob)
 {
@@ -704,7 +743,9 @@ fail:
 	refdb_fs_backend__iterator_free((git_reference_iterator *)iter);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool ref_is_available(
 	const char *old_ref, const char *new_ref, const char *this_ref)
 {
@@ -721,7 +762,9 @@ static bool ref_is_available(
 
 	return true;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reference_path_available(
 	refdb_fs_backend *backend,
 	const char *new_ref,
@@ -766,7 +809,9 @@ static int reference_path_available(
 	git_sortedcache_runlock(backend->refcache);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int loose_lock(git_filebuf *file, refdb_fs_backend *backend, const char *name)
 {
 	int error, filebuf_flags;
@@ -806,7 +851,9 @@ static int loose_lock(git_filebuf *file, refdb_fs_backend *backend, const char *
 	git_buf_dispose(&ref_path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int loose_commit(git_filebuf *file, const git_reference *ref)
 {
 	assert(file && ref);
@@ -824,7 +871,9 @@ static int loose_commit(git_filebuf *file, const git_reference *ref)
 
 	return git_filebuf_commit(file);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__lock(void **out, git_refdb_backend *_backend, const char *refname)
 {
 	int error;
@@ -842,7 +891,9 @@ static int refdb_fs_backend__lock(void **out, git_refdb_backend *_backend, const
 	*out = lock;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__write_tail(
 	git_refdb_backend *_backend,
 	const git_reference *ref,
@@ -852,13 +903,17 @@ static int refdb_fs_backend__write_tail(
 	const char *message,
 	const git_oid *old_id,
 	const char *old_target);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__delete_tail(
 	git_refdb_backend *_backend,
 	git_filebuf *file,
 	const char *ref_name,
 	const git_oid *old_id, const char *old_target);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__unlock(git_refdb_backend *backend, void *payload, int success, int update_reflog,
 				    const git_reference *ref, const git_signature *sig, const char *message)
 {
@@ -875,6 +930,7 @@ static int refdb_fs_backend__unlock(git_refdb_backend *backend, void *payload, i
 	git__free(lock);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Find out what object this reference resolves to.
@@ -884,6 +940,7 @@ static int refdb_fs_backend__unlock(git_refdb_backend *backend, void *payload, i
  * cache on the packfile the OID of the object to
  * which that 'big tag' is pointing to.
  */
+#ifdef DISABLED_FUNCTION
 static int packed_find_peel(refdb_fs_backend *backend, struct packref *ref)
 {
 	git_object *object;
@@ -921,10 +978,12 @@ static int packed_find_peel(refdb_fs_backend *backend, struct packref *ref)
 	git_object_free(object);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Write a single reference into a packfile
  */
+#ifdef DISABLED_FUNCTION
 static int packed_write_ref(struct packref *ref, git_filebuf *file)
 {
 	char oid[GIT_OID_HEXSZ + 1];
@@ -953,6 +1012,7 @@ static int packed_write_ref(struct packref *ref, git_filebuf *file)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Remove all loose references
@@ -965,6 +1025,7 @@ static int packed_write_ref(struct packref *ref, git_filebuf *file)
  * is well-written, because we are destructing references
  * here otherwise.
  */
+#ifdef DISABLED_FUNCTION
 static int packed_remove_loose(refdb_fs_backend *backend)
 {
 	size_t i;
@@ -1025,10 +1086,12 @@ static int packed_remove_loose(refdb_fs_backend *backend)
 	git_filebuf_cleanup(&lock);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Write all the contents in the in-memory packfile to disk.
  */
+#ifdef DISABLED_FUNCTION
 static int packed_write(refdb_fs_backend *backend)
 {
 	git_sortedcache *refcache = backend->refcache;
@@ -1086,10 +1149,16 @@ fail:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reflog_append(refdb_fs_backend *backend, const git_reference *ref, const git_oid *old, const git_oid *new, const git_signature *author, const char *message);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int has_reflog(git_repository *repo, const char *name);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int should_write_reflog(int *write, git_repository *repo, const char *name)
 {
 	int error, logall;
@@ -1126,7 +1195,9 @@ static int should_write_reflog(int *write, git_repository *repo, const char *nam
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int cmp_old_ref(int *cmp, git_refdb_backend *backend, const char *name,
 	const git_oid *old_id, const char *old_target)
 {
@@ -1162,6 +1233,7 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * The git.git comment regarding this, for your viewing pleasure:
@@ -1177,6 +1249,7 @@ out:
  * check with HEAD only which should cover 99% of all usage
  * scenarios (even 100% of the default ones).
  */
+#ifdef DISABLED_FUNCTION
 static int maybe_append_head(refdb_fs_backend *backend, const git_reference *ref, const git_signature *who, const char *message)
 {
 	int error;
@@ -1229,7 +1302,9 @@ cleanup:
 	git_reference_free(head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__write(
 	git_refdb_backend *_backend,
 	const git_reference *ref,
@@ -1254,6 +1329,7 @@ static int refdb_fs_backend__write(
 
 	return refdb_fs_backend__write_tail(_backend, ref, &file, true, who, message, old_id, old_target);
 }
+#endif // DISABLED_FUNCTION
 
 static int refdb_fs_backend__write_tail(
 	git_refdb_backend *_backend,
@@ -1313,6 +1389,7 @@ on_error:
         return error;
 }
 
+#ifdef DISABLED_FUNCTION
 static void refdb_fs_backend__try_delete_empty_ref_hierarchie(
 	refdb_fs_backend *backend,
 	const char *ref_name,
@@ -1349,7 +1426,9 @@ cleanup:
 	git_buf_dispose(&relative_path);
 	git_buf_dispose(&base_path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__delete(
 	git_refdb_backend *_backend,
 	const char *ref_name,
@@ -1371,6 +1450,7 @@ static int refdb_fs_backend__delete(
 
 	return refdb_fs_backend__delete_tail(_backend, &file, ref_name, old_id, old_target);
 }
+#endif // DISABLED_FUNCTION
 
 static int refdb_fs_backend__delete_tail(
 	git_refdb_backend *_backend,
@@ -1435,8 +1515,11 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 static int refdb_reflog_fs__rename(git_refdb_backend *_backend, const char *old_name, const char *new_name);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__rename(
 	git_reference **out,
 	git_refdb_backend *_backend,
@@ -1498,7 +1581,9 @@ static int refdb_fs_backend__rename(
 	*out = new;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_fs_backend__compress(git_refdb_backend *_backend)
 {
 	int error;
@@ -1513,7 +1598,9 @@ static int refdb_fs_backend__compress(git_refdb_backend *_backend)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void refdb_fs_backend__free(git_refdb_backend *_backend)
 {
 	refdb_fs_backend *backend = (refdb_fs_backend *)_backend;
@@ -1525,7 +1612,9 @@ static void refdb_fs_backend__free(git_refdb_backend *_backend)
 	git__free(backend->commonpath);
 	git__free(backend);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static char *setup_namespace(git_repository *repo, const char *in)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -1571,7 +1660,9 @@ done:
 	git_buf_dispose(&path);
 	return out;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reflog_alloc(git_reflog **reflog, const char *name)
 {
 	git_reflog *log;
@@ -1594,7 +1685,9 @@ static int reflog_alloc(git_reflog **reflog, const char *name)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reflog_parse(git_reflog *log, const char *buf, size_t buf_size)
 {
 	const char *ptr;
@@ -1662,7 +1755,9 @@ fail:
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_new_reflog_file(const char *filepath)
 {
 	int fd, error;
@@ -1677,14 +1772,18 @@ static int create_new_reflog_file(const char *filepath)
 
 	return p_close(fd);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) retrieve_reflog_path(git_buf *path, git_repository *repo, const char *name)
 {
 	if (strcmp(name, GIT_HEAD_FILE) == 0)
 		return git_buf_join3(path, '/', repo->gitdir, GIT_REFLOG_DIR, name);
 	return git_buf_join3(path, '/', repo->commondir, GIT_REFLOG_DIR, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_reflog_fs__ensure_log(git_refdb_backend *_backend, const char *name)
 {
 	refdb_fs_backend *backend;
@@ -1705,6 +1804,7 @@ static int refdb_reflog_fs__ensure_log(git_refdb_backend *_backend, const char *
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int has_reflog(git_repository *repo, const char *name)
 {
@@ -1721,6 +1821,7 @@ cleanup:
 	return ret;
 }
 
+#ifdef DISABLED_FUNCTION
 static int refdb_reflog_fs__has_log(git_refdb_backend *_backend, const char *name)
 {
 	refdb_fs_backend *backend;
@@ -1731,7 +1832,9 @@ static int refdb_reflog_fs__has_log(git_refdb_backend *_backend, const char *nam
 
 	return has_reflog(backend->repo, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_reflog_fs__read(git_reflog **out, git_refdb_backend *_backend, const char *name)
 {
 	int error = -1;
@@ -1776,7 +1879,9 @@ success:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int serialize_reflog_entry(
 	git_buf *buf,
 	const git_oid *oid_old,
@@ -1810,7 +1915,9 @@ static int serialize_reflog_entry(
 
 	return git_buf_oom(buf);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int lock_reflog(git_filebuf *file, refdb_fs_backend *backend, const char *refname)
 {
 	git_repository *repo;
@@ -1841,7 +1948,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refdb_reflog_fs__write(git_refdb_backend *_backend, git_reflog *reflog)
 {
 	int error = -1;
@@ -1877,6 +1986,7 @@ success:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Append to the reflog, must be called under reference lock */
 static int reflog_append(refdb_fs_backend *backend, const git_reference *ref, const git_oid *old, const git_oid *new, const git_signature *who, const char *message)
@@ -2069,6 +2179,7 @@ out:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_backend_fs(
 	git_refdb_backend **backend_out,
 	git_repository *repository)
@@ -2144,3 +2255,4 @@ fail:
 	git__free(backend);
 	return -1;
 }
+#endif // DISABLED_FUNCTION

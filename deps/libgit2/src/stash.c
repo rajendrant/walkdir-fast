@@ -27,12 +27,15 @@
 #include "diff.h"
 #include "diff_generate.h"
 
+#ifdef DISABLED_FUNCTION
 static int create_error(int error, const char *msg)
 {
 	giterr_set(GITERR_STASH, "cannot stash changes - %s", msg);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_head(git_reference **out, git_repository *repo)
 {
 	int error = git_repository_head(out, repo);
@@ -42,7 +45,9 @@ static int retrieve_head(git_reference **out, git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int append_abbreviated_oid(git_buf *out, const git_oid *b_commit)
 {
 	char *formatted_oid;
@@ -55,7 +60,9 @@ static int append_abbreviated_oid(git_buf *out, const git_oid *b_commit)
 
 	return git_buf_oom(out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int append_commit_description(git_buf *out, git_commit* commit)
 {
 	const char *summary = git_commit_summary(commit);
@@ -70,7 +77,9 @@ static int append_commit_description(git_buf *out, git_commit* commit)
 
 	return git_buf_oom(out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_base_commit_and_message(
 	git_commit **b_commit,
 	git_buf *stash_message,
@@ -103,7 +112,9 @@ cleanup:
 	git_reference_free(head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int build_tree_from_index(
 	git_tree **out,
 	git_repository *repo,
@@ -117,7 +128,9 @@ static int build_tree_from_index(
 
 	return git_tree_lookup(out, repo, &i_tree_oid);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int commit_index(
 	git_commit **i_commit,
 	git_repository *repo,
@@ -157,6 +170,7 @@ cleanup:
 	git_buf_dispose(&msg);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct stash_update_rules {
 	bool include_changed;
@@ -168,6 +182,7 @@ struct stash_update_rules {
  * Similar to git_index_add_bypath but able to operate on any
  * index without making assumptions about the repository's index
  */
+#ifdef DISABLED_FUNCTION
 static int stash_to_index(
 	git_repository *repo,
 	git_index *index,
@@ -193,7 +208,9 @@ static int stash_to_index(
 
 	return git_index_add(index, &entry);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int stash_update_index_from_diff(
 	git_repository *repo,
 	git_index *index,
@@ -246,7 +263,9 @@ static int stash_update_index_from_diff(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int build_untracked_tree(
 	git_tree **tree_out,
 	git_repository *repo,
@@ -292,7 +311,9 @@ cleanup:
 	git_index_free(i_index);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int commit_untracked(
 	git_commit **u_commit,
 	git_repository *repo,
@@ -332,7 +353,9 @@ cleanup:
 	git_buf_dispose(&msg);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_diff_delta *stash_delta_merge(
 	const git_diff_delta *a,
 	const git_diff_delta *b,
@@ -351,7 +374,9 @@ static git_diff_delta *stash_delta_merge(
 
 	return git_diff__merge_like_cgit(a, b, pool);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int build_workdir_tree(
 	git_tree **tree_out,
 	git_repository *repo,
@@ -388,7 +413,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int commit_worktree(
 	git_oid *w_commit_oid,
 	git_repository *repo,
@@ -441,7 +468,9 @@ cleanup:
 	git_index_free(i_index);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int prepare_worktree_commit_message(
 	git_buf* msg,
 	const char *user_message)
@@ -474,7 +503,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_reflog(
 	git_oid *w_commit_oid,
 	git_repository *repo,
@@ -492,7 +523,9 @@ static int update_reflog(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int is_dirty_cb(const char *path, unsigned int status, void *payload)
 {
 	GIT_UNUSED(path);
@@ -501,7 +534,9 @@ static int is_dirty_cb(const char *path, unsigned int status, void *payload)
 
 	return GIT_PASSTHROUGH;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ensure_there_are_changes_to_stash(
 	git_repository *repo,
 	bool include_untracked_files,
@@ -531,7 +566,9 @@ static int ensure_there_are_changes_to_stash(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int reset_index_and_workdir(
 	git_repository *repo,
 	git_commit *commit,
@@ -550,7 +587,9 @@ static int reset_index_and_workdir(
 
 	return git_checkout_tree(repo, (git_object *)commit, &opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_stash_save(
 	git_oid *out,
 	git_repository *repo,
@@ -620,7 +659,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_stash_commit(
 	git_commit **commit,
 	git_repository *repo,
@@ -654,7 +695,9 @@ cleanup:
 	git_reflog_free(reflog);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_stash_trees(
 	git_tree **out_stash_tree,
 	git_tree **out_base_tree,
@@ -719,7 +762,9 @@ cleanup:
 	}
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_indexes(
 	git_index **out,
 	git_repository *repo,
@@ -746,7 +791,9 @@ done:
 	git_iterator_free(theirs);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_index_and_tree(
 	git_index **out,
 	git_repository *repo,
@@ -773,7 +820,9 @@ done:
 	git_iterator_free(theirs);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void normalize_apply_options(
 	git_stash_apply_options *opts,
 	const git_stash_apply_options *given_apply_opts)
@@ -793,13 +842,16 @@ static void normalize_apply_options(
 	if (!opts->checkout_options.their_label)
 		opts->checkout_options.their_label = "Stashed changes";
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_stash_apply_init_options(git_stash_apply_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_stash_apply_options, GIT_STASH_APPLY_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define NOTIFY_PROGRESS(opts, progress_type)				\
 	do {								\
@@ -810,6 +862,7 @@ int git_stash_apply_init_options(git_stash_apply_options *opts, unsigned int ver
 		}							\
 	} while(false);
 
+#ifdef DISABLED_FUNCTION
 static int ensure_clean_index(git_repository *repo, git_index *index)
 {
 	git_tree *head_tree = NULL;
@@ -832,7 +885,9 @@ done:
 	git_tree_free(head_tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int stage_new_file(const git_index_entry **entries, void *data)
 {
 	git_index *index = data;
@@ -842,7 +897,9 @@ static int stage_new_file(const git_index_entry **entries, void *data)
 	else
 		return git_index_add(index, entries[0]);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int stage_new_files(
 	git_index **out,
 	git_tree *parent_tree,
@@ -873,7 +930,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_stash_apply(
 	git_repository *repo,
 	size_t index,
@@ -1013,7 +1072,9 @@ cleanup:
 	git_commit_free(stash_commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_stash_foreach(
 	git_repository *repo,
 	git_stash_cb callback,
@@ -1056,7 +1117,9 @@ cleanup:
 	git_reflog_free(reflog);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_stash_drop(
 	git_repository *repo,
 	size_t index)
@@ -1112,7 +1175,9 @@ cleanup:
 	git_reflog_free(reflog);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_stash_pop(
 	git_repository *repo,
 	size_t index,
@@ -1125,3 +1190,4 @@ int git_stash_pop(
 
 	return git_stash_drop(repo, index);
 }
+#endif // DISABLED_FUNCTION

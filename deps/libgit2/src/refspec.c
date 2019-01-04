@@ -14,6 +14,7 @@
 #include "refs.h"
 #include "vector.h"
 
+#ifdef DISABLED_FUNCTION
 int git_refspec__parse(git_refspec *refspec, const char *input, bool is_fetch)
 {
 	/* Ported from https://github.com/git/git/blob/f06d47e7e0d9db709ee204ed13a8a7486149f494/remote.c#L518-636 */
@@ -147,7 +148,9 @@ int git_refspec__parse(git_refspec *refspec, const char *input, bool is_fetch)
         git_refspec__dispose(refspec);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_refspec__dispose(git_refspec *refspec)
 {
 	if (refspec == NULL)
@@ -159,7 +162,9 @@ void git_refspec__dispose(git_refspec *refspec)
 
 	memset(refspec, 0x0, sizeof(git_refspec));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_parse(git_refspec **out_refspec, const char *input, int is_fetch)
 {
 	git_refspec *refspec;
@@ -178,35 +183,47 @@ int git_refspec_parse(git_refspec **out_refspec, const char *input, int is_fetch
 	*out_refspec = refspec;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_refspec_free(git_refspec *refspec)
 {
 	git_refspec__dispose(refspec);
 	git__free(refspec);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_refspec_src(const git_refspec *refspec)
 {
 	return refspec == NULL ? NULL : refspec->src;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_refspec_dst(const git_refspec *refspec)
 {
 	return refspec == NULL ? NULL : refspec->dst;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_refspec_string(const git_refspec *refspec)
 {
 	return refspec == NULL ? NULL : refspec->string;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_force(const git_refspec *refspec)
 {
 	assert(refspec);
 
 	return refspec->force;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_src_matches(const git_refspec *refspec, const char *refname)
 {
 	if (refspec == NULL || refspec->src == NULL)
@@ -214,7 +231,9 @@ int git_refspec_src_matches(const git_refspec *refspec, const char *refname)
 
 	return (p_fnmatch(refspec->src, refname, 0) == 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_dst_matches(const git_refspec *refspec, const char *refname)
 {
 	if (refspec == NULL || refspec->dst == NULL)
@@ -222,7 +241,9 @@ int git_refspec_dst_matches(const git_refspec *refspec, const char *refname)
 
 	return (p_fnmatch(refspec->dst, refname, 0) == 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int refspec_transform(
 	git_buf *out, const char *from, const char *to, const char *name)
 {
@@ -265,7 +286,9 @@ static int refspec_transform(
 
 	return git_buf_puts(out, to_star + 1);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_transform(git_buf *out, const git_refspec *spec, const char *name)
 {
 	assert(out && spec && name);
@@ -281,7 +304,9 @@ int git_refspec_transform(git_buf *out, const git_refspec *spec, const char *nam
 
 	return refspec_transform(out, spec->src, spec->dst, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_rtransform(git_buf *out, const git_refspec *spec, const char *name)
 {
 	assert(out && spec && name);
@@ -297,7 +322,9 @@ int git_refspec_rtransform(git_buf *out, const git_refspec *spec, const char *na
 
 	return refspec_transform(out, spec->dst, spec->src, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec__serialize(git_buf *out, const git_refspec *refspec)
 {
 	if (refspec->force)
@@ -309,21 +336,27 @@ int git_refspec__serialize(git_buf *out, const git_refspec *refspec)
 
 	return git_buf_oom(out) == false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec_is_wildcard(const git_refspec *spec)
 {
 	assert(spec && spec->src);
 
 	return (spec->src[strlen(spec->src) - 1] == '*');
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_direction git_refspec_direction(const git_refspec *spec)
 {
 	assert(spec);
 
 	return spec->push;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refspec__dwim_one(git_vector *out, git_refspec *spec, git_vector *refs)
 {
 	git_buf buf = GIT_BUF_INIT;
@@ -393,3 +426,4 @@ int git_refspec__dwim_one(git_vector *out, git_refspec *spec, git_vector *refs)
 
 	return git_vector_insert(out, cur);
 }
+#endif // DISABLED_FUNCTION

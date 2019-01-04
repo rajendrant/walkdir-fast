@@ -54,6 +54,7 @@ struct git_transaction {
 	git_pool pool;
 };
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_config_new(git_transaction **out, git_config *cfg)
 {
 	git_transaction *tx;
@@ -67,7 +68,9 @@ int git_transaction_config_new(git_transaction **out, git_config *cfg)
 	*out = tx;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_new(git_transaction **out, git_repository *repo)
 {
 	int error;
@@ -102,7 +105,9 @@ on_error:
 	git_pool_clear(&pool);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_lock_ref(git_transaction *tx, const char *refname)
 {
 	int error;
@@ -130,7 +135,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_locked(transaction_node **out, git_transaction *tx, const char *refname)
 {
 	transaction_node *node;
@@ -147,7 +154,9 @@ static int find_locked(transaction_node **out, git_transaction *tx, const char *
 	*out = node;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int copy_common(transaction_node *node, git_transaction *tx, const git_signature *sig, const char *msg)
 {
 	if (sig && git_signature__pdup(&node->sig, sig, &tx->pool) < 0)
@@ -174,7 +183,9 @@ static int copy_common(transaction_node *node, git_transaction *tx, const git_si
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_set_target(git_transaction *tx, const char *refname, const git_oid *target, const git_signature *sig, const char *msg)
 {
 	int error;
@@ -193,7 +204,9 @@ int git_transaction_set_target(git_transaction *tx, const char *refname, const g
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_set_symbolic_target(git_transaction *tx, const char *refname, const char *target, const git_signature *sig, const char *msg)
 {
 	int error;
@@ -213,7 +226,9 @@ int git_transaction_set_symbolic_target(git_transaction *tx, const char *refname
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_remove(git_transaction *tx, const char *refname)
 {
 	int error;
@@ -227,7 +242,9 @@ int git_transaction_remove(git_transaction *tx, const char *refname)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int dup_reflog(git_reflog **out, const git_reflog *in, git_pool *pool)
 {
 	git_reflog *reflog;
@@ -270,7 +287,9 @@ static int dup_reflog(git_reflog **out, const git_reflog *in, git_pool *pool)
 	*out = reflog;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_set_reflog(git_transaction *tx, const char *refname, const git_reflog *reflog)
 {
 	int error;
@@ -286,7 +305,9 @@ int git_transaction_set_reflog(git_transaction *tx, const char *refname, const g
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_target(git_refdb *db, transaction_node *node)
 {
 	git_reference *ref;
@@ -318,7 +339,9 @@ static int update_target(git_refdb *db, transaction_node *node)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transaction_commit(git_transaction *tx)
 {
 	transaction_node *node;
@@ -347,7 +370,9 @@ int git_transaction_commit(git_transaction *tx)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_transaction_free(git_transaction *tx)
 {
 	transaction_node *node;
@@ -380,3 +405,4 @@ void git_transaction_free(git_transaction *tx)
 	memcpy(&pool, &tx->pool, sizeof(git_pool));
 	git_pool_clear(&pool);
 }
+#endif // DISABLED_FUNCTION

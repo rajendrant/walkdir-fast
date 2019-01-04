@@ -11,6 +11,7 @@
 #include "patch.h"
 #include "patch_parse.h"
 
+#ifdef DISABLED_FUNCTION
 static void diff_parsed_free(git_diff *d)
 {
 	git_diff_parsed *diff = (git_diff_parsed *)d;
@@ -28,7 +29,9 @@ static void diff_parsed_free(git_diff *d)
 	git__memzero(diff, sizeof(*diff));
 	git__free(diff);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_diff_parsed *diff_parsed_alloc(void)
 {
 	git_diff_parsed *diff;
@@ -64,7 +67,9 @@ static git_diff_parsed *diff_parsed_alloc(void)
 
 	return diff;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_from_buffer(
 	git_diff **out,
 	const char *content,
@@ -105,4 +110,5 @@ int git_diff_from_buffer(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 

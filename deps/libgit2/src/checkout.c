@@ -91,6 +91,7 @@ typedef struct {
 		submodule:1;
 } checkout_conflictdata;
 
+#ifdef DISABLED_FUNCTION
 static int checkout_notify(
 	checkout_data *data,
 	git_checkout_notify_t why,
@@ -150,7 +151,9 @@ static int checkout_notify(
 			error, "git_checkout notification");
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) is_workdir_base_or_new(
 	const git_oid *workdir_id,
 	const git_diff_file *baseitem,
@@ -159,7 +162,9 @@ GIT_INLINE(bool) is_workdir_base_or_new(
 	return (git_oid__cmp(&baseitem->id, workdir_id) == 0 ||
 		git_oid__cmp(&newitem->id, workdir_id) == 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) is_filemode_changed(git_filemode_t a, git_filemode_t b, int respect_filemode)
 {
 	/* If core.filemode = false, ignore links in the repository and executable bit changes */
@@ -175,7 +180,9 @@ GIT_INLINE(bool) is_filemode_changed(git_filemode_t a, git_filemode_t b, int res
 
 	return (a != b);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool checkout_is_workdir_modified(
 	checkout_data *data,
 	const git_diff_file *baseitem,
@@ -249,10 +256,12 @@ static bool checkout_is_workdir_modified(
 	 */
 	return !is_workdir_base_or_new(&oid, baseitem, newitem);
 }
+#endif // DISABLED_FUNCTION
 
 #define CHECKOUT_ACTION_IF(FLAG,YES,NO) \
 	((data->strategy & GIT_CHECKOUT_##FLAG) ? CHECKOUT_ACTION__##YES : CHECKOUT_ACTION__##NO)
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action_common(
 	int *action,
 	checkout_data *data,
@@ -287,7 +296,9 @@ static int checkout_action_common(
 
 	return checkout_notify(data, notify, delta, wd);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action_no_wd(
 	int *action,
 	checkout_data *data,
@@ -323,7 +334,9 @@ static int checkout_action_no_wd(
 
 	return checkout_action_common(action, data, delta, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_target_fullpath(
 	git_buf **out, checkout_data *data, const char *path)
 {
@@ -336,7 +349,9 @@ static int checkout_target_fullpath(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool wd_item_is_removable(
 	checkout_data *data, const git_index_entry *wd)
 {
@@ -350,15 +365,19 @@ static bool wd_item_is_removable(
 
 	return !full || !git_path_contains(full, DOT_GIT);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_queue_remove(checkout_data *data, const char *path)
 {
 	char *copy = git_pool_strdup(&data->pool, path);
 	GITERR_CHECK_ALLOC(copy);
 	return git_vector_insert(&data->removes, copy);
 }
+#endif // DISABLED_FUNCTION
 
 /* note that this advances the iterator over the wd item */
+#ifdef DISABLED_FUNCTION
 static int checkout_action_wd_only(
 	checkout_data *data,
 	git_iterator *workdir,
@@ -449,7 +468,9 @@ static int checkout_action_wd_only(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool submodule_is_config_only(
 	checkout_data *data,
 	const char *path)
@@ -469,7 +490,9 @@ static bool submodule_is_config_only(
 
 	return rval;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool checkout_is_empty_dir(checkout_data *data, const char *path)
 {
 	git_buf *fullpath;
@@ -479,7 +502,9 @@ static bool checkout_is_empty_dir(checkout_data *data, const char *path)
 
 	return git_path_is_empty_dir(fullpath->ptr);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action_with_wd(
 	int *action,
 	checkout_data *data,
@@ -549,7 +574,9 @@ static int checkout_action_with_wd(
 
 	return checkout_action_common(action, data, delta, wd);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action_with_wd_blocker(
 	int *action,
 	checkout_data *data,
@@ -582,7 +609,9 @@ static int checkout_action_with_wd_blocker(
 
 	return checkout_action_common(action, data, delta, wd);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action_with_wd_dir(
 	int *action,
 	checkout_data *data,
@@ -634,7 +663,9 @@ static int checkout_action_with_wd_dir(
 
 	return checkout_action_common(action, data, delta, wd);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action_with_wd_dir_empty(
 	int *action,
 	checkout_data *data,
@@ -648,7 +679,9 @@ static int checkout_action_with_wd_dir_empty(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_action(
 	int *action,
 	checkout_data *data,
@@ -757,7 +790,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_remaining_wd_items(
 	checkout_data *data,
 	git_iterator *workdir,
@@ -774,7 +809,9 @@ static int checkout_remaining_wd_items(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) checkout_idxentry_cmp(
 	const git_index_entry *a,
 	const git_index_entry *b)
@@ -788,7 +825,9 @@ GIT_INLINE(int) checkout_idxentry_cmp(
 	else
 		return strcmp(a->path, b->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflictdata_cmp(const void *a, const void *b)
 {
 	const checkout_conflictdata *ca = a;
@@ -801,7 +840,9 @@ static int checkout_conflictdata_cmp(const void *a, const void *b)
 
 	return diff;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int checkout_conflictdata_empty(
 	const git_vector *conflicts, size_t idx, void *payload)
 {
@@ -818,7 +859,9 @@ int checkout_conflictdata_empty(
 	git__free(conflict);
 	return 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) conflict_pathspec_match(
 	checkout_data *data,
 	git_iterator *workdir,
@@ -845,7 +888,9 @@ GIT_INLINE(bool) conflict_pathspec_match(
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) checkout_conflict_detect_submodule(checkout_conflictdata *conflict)
 {
 	conflict->submodule = ((conflict->ancestor && S_ISGITLINK(conflict->ancestor->mode)) ||
@@ -853,7 +898,9 @@ GIT_INLINE(int) checkout_conflict_detect_submodule(checkout_conflictdata *confli
 		(conflict->theirs && S_ISGITLINK(conflict->theirs->mode)));
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) checkout_conflict_detect_binary(git_repository *repo, checkout_conflictdata *conflict)
 {
 	git_blob *ancestor_blob = NULL, *our_blob = NULL, *their_blob = NULL;
@@ -890,7 +937,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflict_append_update(
 	const git_index_entry *ancestor,
 	const git_index_entry *ours,
@@ -920,7 +969,9 @@ static int checkout_conflict_append_update(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflicts_foreach(
 	checkout_data *data,
 	git_index *index,
@@ -953,7 +1004,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflicts_load(checkout_data *data, git_iterator *workdir, git_vector *pathspec)
 {
 	git_index *index;
@@ -973,14 +1026,18 @@ static int checkout_conflicts_load(checkout_data *data, git_iterator *workdir, g
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) checkout_conflicts_cmp_entry(
 	const char *path,
 	const git_index_entry *entry)
 {
 	return strcmp((const char *)path, entry->path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflicts_cmp_ancestor(const void *p, const void *c)
 {
 	const char *path = p;
@@ -991,7 +1048,9 @@ static int checkout_conflicts_cmp_ancestor(const void *p, const void *c)
 
 	return checkout_conflicts_cmp_entry(path, conflict->ancestor);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static checkout_conflictdata *checkout_conflicts_search_ancestor(
 	checkout_data *data,
 	const char *path)
@@ -1003,7 +1062,9 @@ static checkout_conflictdata *checkout_conflicts_search_ancestor(
 
 	return git_vector_get(&data->update_conflicts, pos);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static checkout_conflictdata *checkout_conflicts_search_branch(
 	checkout_data *data,
 	const char *path)
@@ -1028,7 +1089,9 @@ static checkout_conflictdata *checkout_conflicts_search_branch(
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflicts_load_byname_entry(
 	checkout_conflictdata **ancestor_out,
 	checkout_conflictdata **ours_out,
@@ -1099,7 +1162,9 @@ static int checkout_conflicts_load_byname_entry(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflicts_coalesce_renames(
 	checkout_data *data)
 {
@@ -1156,7 +1221,9 @@ static int checkout_conflicts_coalesce_renames(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflicts_mark_directoryfile(
 	checkout_data *data)
 {
@@ -1212,7 +1279,9 @@ static int checkout_conflicts_mark_directoryfile(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_get_update_conflicts(
 	checkout_data *data,
 	git_iterator *workdir,
@@ -1231,7 +1300,9 @@ static int checkout_get_update_conflicts(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflict_append_remove(
 	const git_index_entry *ancestor,
 	const git_index_entry *ours,
@@ -1256,7 +1327,9 @@ static int checkout_conflict_append_remove(
 
 	return git_vector_insert(&data->remove_conflicts, (char *)name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_get_remove_conflicts(
 	checkout_data *data,
 	git_iterator *workdir,
@@ -1267,7 +1340,9 @@ static int checkout_get_remove_conflicts(
 
 	return checkout_conflicts_foreach(data, data->index, workdir, pathspec, checkout_conflict_append_remove, data);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_verify_paths(
 	git_repository *repo,
 	int action,
@@ -1291,7 +1366,9 @@ static int checkout_verify_paths(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_get_actions(
 	uint32_t **actions_ptr,
 	size_t **counts_ptr,
@@ -1386,7 +1463,9 @@ fail:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool should_remove_existing(checkout_data *data)
 {
 	int ignorecase;
@@ -1398,12 +1477,14 @@ static bool should_remove_existing(checkout_data *data)
 	return (ignorecase &&
 		(data->strategy & GIT_CHECKOUT_DONT_REMOVE_EXISTING) == 0);
 }
+#endif // DISABLED_FUNCTION
 
 #define MKDIR_NORMAL \
 	GIT_MKDIR_PATH | GIT_MKDIR_VERIFY_DIR
 #define MKDIR_REMOVE_EXISTING \
 	MKDIR_NORMAL | GIT_MKDIR_REMOVE_FILES | GIT_MKDIR_REMOVE_SYMLINKS
 
+#ifdef DISABLED_FUNCTION
 static int checkout_mkdir(
 	checkout_data *data,
 	const char *path,
@@ -1426,7 +1507,9 @@ static int checkout_mkdir(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mkpath2file(
 	checkout_data *data, const char *path, unsigned int mode)
 {
@@ -1462,6 +1545,7 @@ static int mkpath2file(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct checkout_stream {
 	git_writestream base;
@@ -1470,6 +1554,7 @@ struct checkout_stream {
 	int open;
 };
 
+#ifdef DISABLED_FUNCTION
 static int checkout_stream_write(
 	git_writestream *s, const char *buffer, size_t len)
 {
@@ -1481,7 +1566,9 @@ static int checkout_stream_write(
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_stream_close(git_writestream *s)
 {
 	struct checkout_stream *stream = (struct checkout_stream *)s;
@@ -1490,12 +1577,16 @@ static int checkout_stream_close(git_writestream *s)
 	stream->open = 0;
 	return p_close(stream->fd);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void checkout_stream_free(git_writestream *s)
 {
 	GIT_UNUSED(s);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int blob_content_to_file(
 	checkout_data *data,
 	struct stat *st,
@@ -1572,7 +1663,9 @@ static int blob_content_to_file(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int blob_content_to_link(
 	checkout_data *data,
 	struct stat *st,
@@ -1608,7 +1701,9 @@ static int blob_content_to_link(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_update_index(
 	checkout_data *data,
 	const git_diff_file *file,
@@ -1626,7 +1721,9 @@ static int checkout_update_index(
 
 	return git_index_add(data->index, &entry);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_submodule_update_index(
 	checkout_data *data,
 	const git_diff_file *file)
@@ -1652,7 +1749,9 @@ static int checkout_submodule_update_index(
 
 	return checkout_update_index(data, file, &st);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_submodule(
 	checkout_data *data,
 	const git_diff_file *file)
@@ -1693,7 +1792,9 @@ static int checkout_submodule(
 
 	return checkout_submodule_update_index(data, file);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void report_progress(
 	checkout_data *data,
 	const char *path)
@@ -1703,7 +1804,9 @@ static void report_progress(
 			path, data->completed_steps, data->total_steps,
 			data->opts.progress_payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_safe_for_update_only(
 	checkout_data *data, const char *path, mode_t expected_mode)
 {
@@ -1727,7 +1830,9 @@ static int checkout_safe_for_update_only(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_write_content(
 	checkout_data *data,
 	const git_oid *oid,
@@ -1762,7 +1867,9 @@ static int checkout_write_content(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_blob(
 	checkout_data *data,
 	const git_diff_file *file)
@@ -1795,7 +1902,9 @@ static int checkout_blob(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_remove_the_old(
 	unsigned int *actions,
 	checkout_data *data)
@@ -1854,7 +1963,9 @@ static int checkout_remove_the_old(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_deferred_remove(git_repository *repo, const char *path)
 {
 #if 0
@@ -1874,7 +1985,9 @@ static int checkout_deferred_remove(git_repository *repo, const char *path)
 	return 0;
 #endif
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_create_the_new(
 	unsigned int *actions,
 	checkout_data *data)
@@ -1905,7 +2018,9 @@ static int checkout_create_the_new(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_create_submodules(
 	unsigned int *actions,
 	checkout_data *data)
@@ -1936,7 +2051,9 @@ static int checkout_create_submodules(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_lookup_head_tree(git_tree **out, git_repository *repo)
 {
 	int error = 0;
@@ -1951,8 +2068,10 @@ static int checkout_lookup_head_tree(git_tree **out, git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 static int conflict_entry_name(
 	git_buf *out,
 	const char *side_name,
@@ -1965,7 +2084,9 @@ static int conflict_entry_name(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_path_suffixed(git_buf *path, const char *suffix)
 {
 	size_t path_len;
@@ -1995,7 +2116,9 @@ static int checkout_path_suffixed(git_buf *path, const char *suffix)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_write_entry(
 	checkout_data *data,
 	checkout_conflictdata *conflict,
@@ -2038,7 +2161,9 @@ static int checkout_write_entry(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_write_entries(
 	checkout_data *data,
 	checkout_conflictdata *conflict)
@@ -2050,7 +2175,9 @@ static int checkout_write_entries(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_merge_path(
 	git_buf *out,
 	checkout_data *data,
@@ -2077,7 +2204,9 @@ static int checkout_merge_path(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_write_merge(
 	checkout_data *data,
 	checkout_conflictdata *conflict)
@@ -2171,7 +2300,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflict_add(
 	checkout_data *data,
 	const git_index_entry *conflict)
@@ -2185,7 +2316,9 @@ static int checkout_conflict_add(
 
 	return git_index_add(data->index, conflict);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_conflict_update_index(
 	checkout_data *data,
 	checkout_conflictdata *conflict)
@@ -2203,7 +2336,9 @@ static int checkout_conflict_update_index(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_create_conflicts(checkout_data *data)
 {
 	checkout_conflictdata *conflict;
@@ -2283,7 +2418,9 @@ static int checkout_create_conflicts(checkout_data *data)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_remove_conflicts(checkout_data *data)
 {
 	const char *conflict;
@@ -2298,7 +2435,9 @@ static int checkout_remove_conflicts(checkout_data *data)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_extensions_update_index(checkout_data *data)
 {
 	const git_index_reuc_entry *reuc_entry;
@@ -2330,7 +2469,9 @@ static int checkout_extensions_update_index(checkout_data *data)
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void checkout_data_clear(checkout_data *data)
 {
 	if (data->opts_free_baseline) {
@@ -2358,7 +2499,9 @@ static void checkout_data_clear(checkout_data *data)
 
 	git_attr_session__free(&data->attr_session);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_data_init(
 	checkout_data *data,
 	git_iterator *target,
@@ -2535,10 +2678,12 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 #define CHECKOUT_INDEX_DONT_WRITE_MASK \
 	(GIT_CHECKOUT_DONT_UPDATE_INDEX | GIT_CHECKOUT_DONT_WRITE_INDEX)
 
+#ifdef DISABLED_FUNCTION
 int git_checkout_iterator(
 	git_iterator *target,
 	git_index *index,
@@ -2678,7 +2823,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_checkout_index(
 	git_repository *repo,
 	git_index *index,
@@ -2722,7 +2869,9 @@ int git_checkout_index(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_checkout_tree(
 	git_repository *repo,
 	const git_object *treeish,
@@ -2782,7 +2931,9 @@ int git_checkout_tree(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_checkout_head(
 	git_repository *repo,
 	const git_checkout_options *opts)
@@ -2790,10 +2941,13 @@ int git_checkout_head(
 	assert(repo);
 	return git_checkout_tree(repo, NULL, opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_checkout_init_options(git_checkout_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_checkout_options, GIT_CHECKOUT_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

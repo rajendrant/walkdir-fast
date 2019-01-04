@@ -30,38 +30,51 @@ typedef struct {
 
 static struct merge_driver_registry merge_driver_registry;
 
+#ifdef DISABLED_FUNCTION
 static void git_merge_driver_global_shutdown(void);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_repository* git_merge_driver_source_repo(const git_merge_driver_source *src)
 {
 	assert(src);
 	return src->repo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_index_entry* git_merge_driver_source_ancestor(const git_merge_driver_source *src)
 {
 	assert(src);
 	return src->ancestor;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_index_entry* git_merge_driver_source_ours(const git_merge_driver_source *src)
 {
 	assert(src);
 	return src->ours;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_index_entry* git_merge_driver_source_theirs(const git_merge_driver_source *src)
 {
 	assert(src);
 	return src->theirs;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_merge_file_options* git_merge_driver_source_file_options(const git_merge_driver_source *src)
 {
 	assert(src);
 	return src->file_opts;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_driver__builtin_apply(
 	git_merge_driver *self,
 	const char **path_out,
@@ -112,7 +125,9 @@ done:
 	git_merge_file_result_free(&result);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_driver_binary_apply(
 	git_merge_driver *self,
 	const char **path_out,
@@ -130,7 +145,9 @@ static int merge_driver_binary_apply(
 
 	return GIT_EMERGECONFLICT;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_driver_entry_cmp(const void *a, const void *b)
 {
 	const git_merge_driver_entry *entry_a = a;
@@ -138,7 +155,9 @@ static int merge_driver_entry_cmp(const void *a, const void *b)
 
 	return strcmp(entry_a->name, entry_b->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_driver_entry_search(const void *a, const void *b)
 {
 	const char *name_a = a;
@@ -146,7 +165,9 @@ static int merge_driver_entry_search(const void *a, const void *b)
 
 	return strcmp(name_a, entry_b->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_merge_driver__builtin git_merge_driver__text = {
 	{
 		GIT_MERGE_DRIVER_VERSION,
@@ -173,8 +194,10 @@ git_merge_driver git_merge_driver__binary = {
 	NULL,
 	merge_driver_binary_apply
 };
+#endif // DISABLED_FUNCTION
 
 /* Note: callers must lock the registry before calling this function */
+#ifdef DISABLED_FUNCTION
 static int merge_driver_registry_insert(
 	const char *name, git_merge_driver *driver)
 {
@@ -189,7 +212,9 @@ static int merge_driver_registry_insert(
 	return git_vector_insert_sorted(
 		&merge_driver_registry.drivers, entry, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_driver_global_init(void)
 {
 	int error;
@@ -217,6 +242,7 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static void git_merge_driver_global_shutdown(void)
 {
@@ -240,13 +266,16 @@ static void git_merge_driver_global_shutdown(void)
 }
 
 /* Note: callers must lock the registry before calling this function */
+#ifdef DISABLED_FUNCTION
 static int merge_driver_registry_find(size_t *pos, const char *name)
 {
 	return git_vector_search2(pos, &merge_driver_registry.drivers,
 		merge_driver_entry_search, name);
 }
+#endif // DISABLED_FUNCTION
 
 /* Note: callers must lock the registry before calling this function */
+#ifdef DISABLED_FUNCTION
 static git_merge_driver_entry *merge_driver_registry_lookup(
 	size_t *pos, const char *name)
 {
@@ -257,7 +286,9 @@ static git_merge_driver_entry *merge_driver_registry_lookup(
 
 	return entry;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_driver_register(const char *name, git_merge_driver *driver)
 {
 	int error;
@@ -282,7 +313,9 @@ done:
 	git_rwlock_wrunlock(&merge_driver_registry.lock);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_driver_unregister(const char *name)
 {
 	git_merge_driver_entry *entry;
@@ -314,7 +347,9 @@ done:
 	git_rwlock_wrunlock(&merge_driver_registry.lock);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_merge_driver *git_merge_driver_lookup(const char *name)
 {
 	git_merge_driver_entry *entry;
@@ -355,7 +390,9 @@ git_merge_driver *git_merge_driver_lookup(const char *name)
 
 	return entry->driver;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int merge_driver_name_for_path(
 	const char **out,
 	git_repository *repo,
@@ -389,8 +426,10 @@ static int merge_driver_name_for_path(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(git_merge_driver *) merge_driver_lookup_with_wildcard(
 	const char *name)
 {
@@ -401,7 +440,9 @@ GIT_INLINE(git_merge_driver *) merge_driver_lookup_with_wildcard(
 
 	return driver;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_merge_driver_for_source(
 	const char **name_out,
 	git_merge_driver **driver_out,
@@ -423,4 +464,4 @@ int git_merge_driver_for_source(
 	*driver_out = merge_driver_lookup_with_wildcard(driver_name);
 	return error;
 }
-
+#endif // DISABLED_FUNCTION

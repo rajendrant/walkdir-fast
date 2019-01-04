@@ -92,6 +92,7 @@ static unsigned name_hash(const char *name)
 	return hash;
 }
 
+#ifdef DISABLED_FUNCTION
 static int packbuilder_config(git_packbuilder *pb)
 {
 	git_config *config;
@@ -131,7 +132,9 @@ out:
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_new(git_packbuilder **out, git_repository *repo)
 {
 	git_packbuilder *pb;
@@ -179,7 +182,9 @@ on_error:
 	git_packbuilder_free(pb);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 unsigned int git_packbuilder_set_threads(git_packbuilder *pb, unsigned int n)
 {
 	assert(pb);
@@ -193,7 +198,9 @@ unsigned int git_packbuilder_set_threads(git_packbuilder *pb, unsigned int n)
 
 	return pb->nr_threads;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void rehash(git_packbuilder *pb)
 {
 	git_pobject *po;
@@ -206,7 +213,9 @@ static void rehash(git_packbuilder *pb)
 		git_oidmap_set_value_at(pb->object_ix, pos, po);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_insert(git_packbuilder *pb, const git_oid *oid,
 			   const char *name)
 {
@@ -276,7 +285,9 @@ int git_packbuilder_insert(git_packbuilder *pb, const git_oid *oid,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int get_delta(void **out, git_odb *odb, git_pobject *po)
 {
 	git_odb_object *src = NULL, *trg = NULL;
@@ -314,7 +325,9 @@ on_error:
 	git_odb_object_free(trg);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_object(
 	git_packbuilder *pb,
 	git_pobject *po,
@@ -406,6 +419,7 @@ done:
 	git_odb_object_free(obj);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 enum write_one_status {
 	WRITE_ONE_SKIP = -1, /* already written */
@@ -414,6 +428,7 @@ enum write_one_status {
 	WRITE_ONE_RECURSIVE = 2 /* already scheduled to be written */
 };
 
+#ifdef DISABLED_FUNCTION
 static int write_one(
 	enum write_one_status *status,
 	git_packbuilder *pb,
@@ -448,7 +463,9 @@ static int write_one(
 
 	return write_object(pb, po, write_cb, cb_data);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(void) add_to_write_order(git_pobject **wo, size_t *endp,
 	git_pobject *po)
 {
@@ -457,7 +474,9 @@ GIT_INLINE(void) add_to_write_order(git_pobject **wo, size_t *endp,
 	wo[(*endp)++] = po;
 	po->filled = 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void add_descendants_to_write_order(git_pobject **wo, size_t *endp,
 	git_pobject *po)
 {
@@ -499,7 +518,9 @@ static void add_descendants_to_write_order(git_pobject **wo, size_t *endp,
 		}
 	};
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void add_family_to_write_order(git_pobject **wo, size_t *endp,
 	git_pobject *po)
 {
@@ -509,7 +530,9 @@ static void add_family_to_write_order(git_pobject **wo, size_t *endp,
 		; /* nothing */
 	add_descendants_to_write_order(wo, endp, root);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int cb_tag_foreach(const char *name, git_oid *oid, void *data)
 {
 	git_packbuilder *pb = data;
@@ -529,7 +552,9 @@ static int cb_tag_foreach(const char *name, git_oid *oid, void *data)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_pobject **compute_write_order(git_packbuilder *pb)
 {
 	size_t i, wo_end, last_untagged;
@@ -627,7 +652,9 @@ static git_pobject **compute_write_order(git_packbuilder *pb)
 
 	return wo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_pack(git_packbuilder *pb,
 	int (*write_cb)(void *buf, size_t size, void *cb_data),
 	void *cb_data)
@@ -689,13 +716,17 @@ done:
 	git__free(write_order);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_pack_buf(void *buf, size_t size, void *data)
 {
 	git_buf *b = (git_buf *)data;
 	return git_buf_put(b, buf, size);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int type_size_sort(const void *_a, const void *_b)
 {
 	const git_pobject *a = (git_pobject *)_a;
@@ -723,7 +754,9 @@ static int type_size_sort(const void *_a, const void *_b)
 		return 1;
 	return a < b ? -1 : (a > b); /* newest first */
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int delta_cacheable(
 	git_packbuilder *pb,
 	size_t src_size,
@@ -747,7 +780,9 @@ static int delta_cacheable(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int try_delta(git_packbuilder *pb, struct unpacked *trg,
 		     struct unpacked *src, size_t max_depth,
 			 size_t *mem_usage, int *ret)
@@ -890,7 +925,9 @@ static int try_delta(git_packbuilder *pb, struct unpacked *trg,
 	*ret = 1;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static size_t check_delta_limit(git_pobject *me, size_t n)
 {
 	git_pobject *child = me->delta_child;
@@ -904,7 +941,9 @@ static size_t check_delta_limit(git_pobject *me, size_t n)
 	}
 	return m;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static size_t free_unpacked(struct unpacked *n)
 {
 	size_t freed_mem = 0;
@@ -924,7 +963,9 @@ static size_t free_unpacked(struct unpacked *n)
 	n->depth = 0;
 	return freed_mem;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int report_delta_progress(
 	git_packbuilder *pb, uint32_t count, bool force)
 {
@@ -948,7 +989,9 @@ static int report_delta_progress(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_deltas(git_packbuilder *pb, git_pobject **list,
 	size_t *list_size, size_t window, size_t depth)
 {
@@ -1103,6 +1146,7 @@ on_error:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 #ifdef GIT_THREADS
 
@@ -1124,6 +1168,7 @@ struct thread_params {
 	size_t data_ready;
 };
 
+#ifdef DISABLED_FUNCTION
 static void *threaded_find_deltas(void *arg)
 {
 	struct thread_params *me = arg;
@@ -1161,7 +1206,9 @@ static void *threaded_find_deltas(void *arg)
 	/* leave ->working 1 so that this doesn't get more work assigned */
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ll_find_deltas(git_packbuilder *pb, git_pobject **list,
 			  size_t list_size, size_t window, size_t depth)
 {
@@ -1308,11 +1355,13 @@ static int ll_find_deltas(git_packbuilder *pb, git_pobject **list,
 	git__free(p);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #else
 #define ll_find_deltas(pb, l, ls, w, d) find_deltas(pb, l, &ls, w, d)
 #endif
 
+#ifdef DISABLED_FUNCTION
 static int prepare_pack(git_packbuilder *pb)
 {
 	git_pobject **delta_list;
@@ -1357,28 +1406,36 @@ static int prepare_pack(git_packbuilder *pb)
 	git__free(delta_list);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define PREPARE_PACK if (prepare_pack(pb) < 0) { return -1; }
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_foreach(git_packbuilder *pb, int (*cb)(void *buf, size_t size, void *payload), void *payload)
 {
 	PREPARE_PACK;
 	return write_pack(pb, cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_write_buf(git_buf *buf, git_packbuilder *pb)
 {
 	PREPARE_PACK;
 	git_buf_sanitize(buf);
 	return write_pack(pb, &write_pack_buf, buf);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_cb(void *buf, size_t len, void *payload)
 {
 	struct pack_write_context *ctx = payload;
 	return git_indexer_append(ctx->indexer, buf, len, ctx->stats);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_write(
 	git_packbuilder *pb,
 	const char *path,
@@ -1418,15 +1475,19 @@ int git_packbuilder_write(
 	git_indexer_free(indexer);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #undef PREPARE_PACK
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_packbuilder_hash(git_packbuilder *pb)
 {
 	return &pb->pack_oid;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 static int cb_tree_walk(
 	const char *root, const git_tree_entry *entry, void *payload)
 {
@@ -1444,7 +1505,9 @@ static int cb_tree_walk(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_insert_commit(git_packbuilder *pb, const git_oid *oid)
 {
 	git_commit *commit;
@@ -1459,7 +1522,9 @@ int git_packbuilder_insert_commit(git_packbuilder *pb, const git_oid *oid)
 	git_commit_free(commit);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_insert_tree(git_packbuilder *pb, const git_oid *oid)
 {
 	int error;
@@ -1474,7 +1539,9 @@ int git_packbuilder_insert_tree(git_packbuilder *pb, const git_oid *oid)
 	git_buf_dispose(&context.buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_insert_recur(git_packbuilder *pb, const git_oid *id, const char *name)
 {
 	git_object *obj;
@@ -1510,17 +1577,23 @@ cleanup:
 	git_object_free(obj);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_packbuilder_object_count(git_packbuilder *pb)
 {
 	return pb->nr_objects;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_packbuilder_written(git_packbuilder *pb)
 {
 	return pb->nr_written;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int lookup_walk_object(struct walk_object **out, git_packbuilder *pb, const git_oid *id)
 {
 	struct walk_object *obj;
@@ -1536,7 +1609,9 @@ static int lookup_walk_object(struct walk_object **out, git_packbuilder *pb, con
 	*out = obj;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_object(struct walk_object **out, git_packbuilder *pb, const git_oid *id)
 {
 	int error;
@@ -1556,7 +1631,9 @@ static int retrieve_object(struct walk_object **out, git_packbuilder *pb, const 
 	*out = obj;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mark_blob_uninteresting(git_packbuilder *pb, const git_oid *id)
 {
 	int error;
@@ -1569,7 +1646,9 @@ static int mark_blob_uninteresting(git_packbuilder *pb, const git_oid *id)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mark_tree_uninteresting(git_packbuilder *pb, const git_oid *id)
 {
 	struct walk_object *obj;
@@ -1610,12 +1689,14 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Mark the edges of the graph uninteresting. Since we start from a
  * git_revwalk, the commits are already uninteresting, but we need to
  * mark the trees and blobs.
  */
+#ifdef DISABLED_FUNCTION
 static int mark_edges_uninteresting(git_packbuilder *pb, git_commit_list *commits)
 {
 	int error;
@@ -1638,7 +1719,9 @@ static int mark_edges_uninteresting(git_packbuilder *pb, git_commit_list *commit
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int insert_tree(git_packbuilder *pb, git_tree *tree)
 {
 	size_t i;
@@ -1691,7 +1774,9 @@ int insert_tree(git_packbuilder *pb, git_tree *tree)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int insert_commit(git_packbuilder *pb, struct walk_object *obj)
 {
 	int error;
@@ -1717,7 +1802,9 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_insert_walk(git_packbuilder *pb, git_revwalk *walk)
 {
 	int error;
@@ -1753,7 +1840,9 @@ int git_packbuilder_insert_walk(git_packbuilder *pb, git_revwalk *walk)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_packbuilder_set_callbacks(git_packbuilder *pb, git_packbuilder_progress progress_cb, void *progress_cb_payload)
 {
 	if (!pb)
@@ -1764,7 +1853,9 @@ int git_packbuilder_set_callbacks(git_packbuilder *pb, git_packbuilder_progress 
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_packbuilder_free(git_packbuilder *pb)
 {
 	if (pb == NULL)
@@ -1795,3 +1886,4 @@ void git_packbuilder_free(git_packbuilder *pb)
 
 	git__free(pb);
 }
+#endif // DISABLED_FUNCTION

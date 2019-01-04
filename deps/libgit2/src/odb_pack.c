@@ -597,6 +597,7 @@ static int pack_backend__alloc(struct pack_backend **out, size_t initial_size)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_odb_backend_one_pack(git_odb_backend **backend_out, const char *idx)
 {
 	struct pack_backend *backend = NULL;
@@ -615,6 +616,7 @@ int git_odb_backend_one_pack(git_odb_backend **backend_out, const char *idx)
 	*backend_out = (git_odb_backend *)backend;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_odb_backend_pack(git_odb_backend **backend_out, const char *objects_dir)
 {

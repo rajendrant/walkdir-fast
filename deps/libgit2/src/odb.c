@@ -51,7 +51,9 @@ static git_cache *odb_cache(git_odb *odb)
 	return &odb->own_cache;
 }
 
+#ifdef DISABLED_FUNCTION
 static int odb_otype_fast(git_object_t *type_p, git_odb *db, const git_oid *id);
+#endif // DISABLED_FUNCTION
 static int load_alternates(git_odb *odb, const char *objects_dir, int alternate_depth);
 static int error_null_oid(int error, const char *message);
 
@@ -160,10 +162,12 @@ void git_odb_object__free(void *object)
 	}
 }
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_odb_object_id(git_odb_object *object)
 {
 	return &object->cached.oid;
 }
+#endif // DISABLED_FUNCTION
 
 const void *git_odb_object_data(git_odb_object *object)
 {
@@ -195,6 +199,7 @@ void git_odb_object_free(git_odb_object *object)
 	git_cached_obj_decref(object);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_odb__hashfd(git_oid *out, git_file fd, size_t size, git_object_t type)
 {
 	size_t hdr_len;
@@ -241,7 +246,9 @@ done:
 	git_hash_ctx_cleanup(&ctx);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb__hashfd_filtered(
 	git_oid *out, git_file fd, size_t size, git_object_t type, git_filter_list *fl)
 {
@@ -270,7 +277,9 @@ int git_odb__hashfd_filtered(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb__hashlink(git_oid *out, const char *path)
 {
 	struct stat st;
@@ -316,7 +325,9 @@ int git_odb__hashlink(git_oid *out, const char *path)
 
 	return result;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_hashfile(git_oid *out, const char *path, git_object_t type)
 {
 	git_off_t size;
@@ -334,6 +345,7 @@ int git_odb_hashfile(git_oid *out, const char *path, git_object_t type)
 	p_close(fd);
 	return result;
 }
+#endif // DISABLED_FUNCTION
 
 int git_odb_hash(git_oid *id, const void *data, size_t len, git_object_t type)
 {
@@ -359,12 +371,15 @@ typedef struct {
 	git_object_t type;
 } fake_wstream;
 
+#ifdef DISABLED_FUNCTION
 static int fake_wstream__fwrite(git_odb_stream *_stream, const git_oid *oid)
 {
 	fake_wstream *stream = (fake_wstream *)_stream;
 	return _stream->backend->write(_stream->backend, oid, stream->buffer, stream->size, stream->type);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int fake_wstream__write(git_odb_stream *_stream, const char *data, size_t len)
 {
 	fake_wstream *stream = (fake_wstream *)_stream;
@@ -375,7 +390,9 @@ static int fake_wstream__write(git_odb_stream *_stream, const char *data, size_t
 	stream->written += len;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void fake_wstream__free(git_odb_stream *_stream)
 {
 	fake_wstream *stream = (fake_wstream *)_stream;
@@ -383,7 +400,9 @@ static void fake_wstream__free(git_odb_stream *_stream)
 	git__free(stream->buffer);
 	git__free(stream);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int init_fake_wstream(git_odb_stream **stream_p, git_odb_backend *backend, git_off_t size, git_object_t type)
 {
 	fake_wstream *stream;
@@ -414,6 +433,7 @@ static int init_fake_wstream(git_odb_stream **stream_p, git_odb_backend *backend
 	*stream_p = (git_odb_stream *)stream;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /***********************************************************
  *
@@ -485,30 +505,39 @@ static int add_backend_internal(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_odb_add_backend(git_odb *odb, git_odb_backend *backend, int priority)
 {
 	return add_backend_internal(odb, backend, priority, false, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_add_alternate(git_odb *odb, git_odb_backend *backend, int priority)
 {
 	return add_backend_internal(odb, backend, priority, true, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_odb_num_backends(git_odb *odb)
 {
 	assert(odb);
 	return odb->backends.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_odb__error_unsupported_in_backend(const char *action)
 {
 	giterr_set(GITERR_ODB,
 		"cannot %s - unsupported in the loaded odb backends", action);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_odb_get_backend(git_odb_backend **out, git_odb *odb, size_t pos)
 {
 	backend_internal *internal;
@@ -524,6 +553,7 @@ int git_odb_get_backend(git_odb_backend **out, git_odb *odb, size_t pos)
 	giterr_set(GITERR_ODB, "no ODB backend loaded at index %" PRIuZ, pos);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
 int git_odb__add_default_backends(
 	git_odb *db, const char *objects_dir,
@@ -718,6 +748,7 @@ static int odb_exists_1(
 	return (int)found;
 }
 
+#ifdef DISABLED_FUNCTION
 static int odb_freshen_1(
 	git_odb *db,
 	const git_oid *id,
@@ -741,7 +772,9 @@ static int odb_freshen_1(
 
 	return (int)found;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb__freshen(git_odb *db, const git_oid *id)
 {
 	assert(db && id);
@@ -755,6 +788,7 @@ int git_odb__freshen(git_odb *db, const git_oid *id)
 	/* Failed to refresh, hence not found */
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_odb_exists(git_odb *db, const git_oid *id)
 {
@@ -780,6 +814,7 @@ int git_odb_exists(git_odb *db, const git_oid *id)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static int odb_exists_prefix_1(git_oid *out, git_odb *db,
 	const git_oid *key, size_t len, bool only_refreshed)
 {
@@ -821,7 +856,9 @@ static int odb_exists_prefix_1(git_oid *out, git_odb *db,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_exists_prefix(
 	git_oid *out, git_odb *db, const git_oid *short_id, size_t len)
 {
@@ -856,7 +893,9 @@ int git_odb_exists_prefix(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_expand_ids(
 	git_odb *db,
 	git_odb_expand_id *ids,
@@ -922,7 +961,9 @@ int git_odb_expand_ids(
 	giterr_clear();
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_read_header(size_t *len_p, git_object_t *type_p, git_odb *db, const git_oid *id)
 {
 	int error;
@@ -935,7 +976,9 @@ int git_odb_read_header(size_t *len_p, git_object_t *type_p, git_odb *db, const 
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int odb_read_header_1(
 	size_t *len_p, git_object_t *type_p, git_odb *db,
 	const git_oid *id, bool only_refreshed)
@@ -978,7 +1021,9 @@ static int odb_read_header_1(
 
 	return passthrough ? GIT_PASSTHROUGH : GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb__read_header_or_object(
 	git_odb_object **out, size_t *len_p, git_object_t *type_p,
 	git_odb *db, const git_oid *id)
@@ -1027,6 +1072,7 @@ int git_odb__read_header_or_object(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int odb_read_1(git_odb_object **out, git_odb *db, const git_oid *id,
 		bool only_refreshed)
@@ -1252,6 +1298,7 @@ int git_odb_read_prefix(
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_odb_foreach(git_odb *db, git_odb_foreach_cb cb, void *payload)
 {
 	unsigned int i;
@@ -1266,7 +1313,9 @@ int git_odb_foreach(git_odb *db, git_odb_foreach_cb cb, void *payload)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_write(
 	git_oid *oid, git_odb *db, const void *data, size_t len, git_object_t type)
 {
@@ -1312,6 +1361,7 @@ int git_odb_write(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static int hash_header(git_hash_ctx *ctx, git_off_t size, git_object_t type)
 {
@@ -1326,6 +1376,7 @@ static int hash_header(git_hash_ctx *ctx, git_off_t size, git_object_t type)
 	return git_hash_update(ctx, header, hdrlen);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_odb_open_wstream(
 	git_odb_stream **stream, git_odb *db, git_off_t size, git_object_t type)
 {
@@ -1377,7 +1428,9 @@ done:
 		git__free(ctx);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_odb_stream__invalid_length(
 	const git_odb_stream *stream,
 	const char *action)
@@ -1390,7 +1443,9 @@ static int git_odb_stream__invalid_length(
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_stream_write(git_odb_stream *stream, const char *buffer, size_t len)
 {
 	git_hash_update(stream->hash_ctx, buffer, len);
@@ -1403,7 +1458,9 @@ int git_odb_stream_write(git_odb_stream *stream, const char *buffer, size_t len)
 
 	return stream->write(stream, buffer, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_stream_finalize_write(git_oid *out, git_odb_stream *stream)
 {
 	if (stream->received_bytes != stream->declared_size)
@@ -1417,12 +1474,16 @@ int git_odb_stream_finalize_write(git_oid *out, git_odb_stream *stream)
 
 	return stream->finalize_write(stream, out);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_stream_read(git_odb_stream *stream, char *buffer, size_t len)
 {
 	return stream->read(stream, buffer, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_odb_stream_free(git_odb_stream *stream)
 {
 	if (stream == NULL)
@@ -1432,7 +1493,9 @@ void git_odb_stream_free(git_odb_stream *stream)
 	git__free(stream->hash_ctx);
 	stream->free(stream);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_open_rstream(
 	git_odb_stream **stream,
 	size_t *len,
@@ -1462,7 +1525,9 @@ int git_odb_open_rstream(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_odb_write_pack(struct git_odb_writepack **out, git_odb *db, git_transfer_progress_cb progress_cb, void *progress_payload)
 {
 	size_t i, writes = 0;
@@ -1491,12 +1556,15 @@ int git_odb_write_pack(struct git_odb_writepack **out, git_odb *db, git_transfer
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void *git_odb_backend_malloc(git_odb_backend *backend, size_t len)
 {
 	GIT_UNUSED(backend);
 	return git__malloc(len);
 }
+#endif // DISABLED_FUNCTION
 
 int git_odb_refresh(struct git_odb *db)
 {
@@ -1556,9 +1624,11 @@ int git_odb__error_ambiguous(const char *message)
 	return GIT_EAMBIGUOUS;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_odb_init_backend(git_odb_backend *backend, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		backend, version, git_odb_backend, GIT_ODB_BACKEND_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

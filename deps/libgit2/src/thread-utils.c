@@ -30,6 +30,7 @@
 #	endif
 #endif
 
+#ifdef DISABLED_FUNCTION
 int git_online_cpus(void)
 {
 #ifdef _SC_NPROCESSORS_ONLN
@@ -56,3 +57,4 @@ int git_online_cpus(void)
 
 	return 1;
 }
+#endif // DISABLED_FUNCTION

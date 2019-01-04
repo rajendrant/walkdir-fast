@@ -15,20 +15,25 @@
 #include "vector.h"
 #include "tree.h"
 
+#ifdef DISABLED_FUNCTION
 static int push_spec_rref_cmp(const void *a, const void *b)
 {
 	const push_spec *push_spec_a = a, *push_spec_b = b;
 
 	return strcmp(push_spec_a->refspec.dst, push_spec_b->refspec.dst);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int push_status_ref_cmp(const void *a, const void *b)
 {
 	const push_status *push_status_a = a, *push_status_b = b;
 
 	return strcmp(push_status_a->ref, push_status_b->ref);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_new(git_push **out, git_remote *remote)
 {
 	git_push *p;
@@ -64,7 +69,9 @@ int git_push_new(git_push **out, git_remote *remote)
 	*out = p;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_set_options(git_push *push, const git_push_options *opts)
 {
 	if (!push || !opts)
@@ -78,7 +85,9 @@ int git_push_set_options(git_push *push, const git_push_options *opts)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void free_refspec(push_spec *spec)
 {
 	if (spec == NULL)
@@ -87,7 +96,9 @@ static void free_refspec(push_spec *spec)
 	git_refspec__dispose(&spec->refspec);
 	git__free(spec);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_rref(char *ref)
 {
 	if (git__prefixcmp(ref, "refs/")) {
@@ -97,7 +108,9 @@ static int check_rref(char *ref)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_lref(git_push *push, char *ref)
 {
 	/* lref must be resolvable to an existing object */
@@ -115,7 +128,9 @@ static int check_lref(git_push *push, char *ref)
 		giterr_set(GITERR_INVALID, "not a valid reference '%s'", ref);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_refspec(git_push *push, push_spec **spec, const char *str)
 {
 	push_spec *s;
@@ -145,7 +160,9 @@ on_error:
 	free_refspec(s);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_add_refspec(git_push *push, const char *refspec)
 {
 	push_spec *spec;
@@ -156,7 +173,9 @@ int git_push_add_refspec(git_push *push, const char *refspec)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_update_tips(git_push *push, const git_remote_callbacks *callbacks)
 {
 	git_buf remote_ref_name = GIT_BUF_INIT;
@@ -232,11 +251,13 @@ on_error:
 	git_buf_dispose(&remote_ref_name);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Insert all tags until we find a non-tag object, which is returned
  * in `out`.
  */
+#ifdef DISABLED_FUNCTION
 static int enqueue_tag(git_object **out, git_push *push, git_oid *id)
 {
 	git_object *obj = NULL, *target = NULL;
@@ -263,7 +284,9 @@ static int enqueue_tag(git_object **out, git_push *push, git_oid *id)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int queue_objects(git_push *push)
 {
 	git_remote_head *head;
@@ -359,7 +382,9 @@ on_error:
 	git_revwalk_free(rw);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int add_update(git_push *push, push_spec *spec)
 {
 	git_push_update *u = git__calloc(1, sizeof(git_push_update));
@@ -376,7 +401,9 @@ static int add_update(git_push *push, push_spec *spec)
 
 	return git_vector_insert(&push->updates, u);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int calculate_work(git_push *push)
 {
 	git_remote_head *head;
@@ -409,7 +436,9 @@ static int calculate_work(git_push *push)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int do_push(git_push *push, const git_remote_callbacks *callbacks)
 {
 	int error = 0;
@@ -452,7 +481,9 @@ on_error:
 	git_packbuilder_free(push->pb);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int filter_refs(git_remote *remote)
 {
 	const git_remote_head **heads;
@@ -470,7 +501,9 @@ static int filter_refs(git_remote *remote)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_finish(git_push *push, const git_remote_callbacks *callbacks)
 {
 	int error;
@@ -490,7 +523,9 @@ int git_push_finish(git_push *push, const git_remote_callbacks *callbacks)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_status_foreach(git_push *push,
 		int (*cb)(const char *ref, const char *msg, void *data),
 		void *data)
@@ -506,7 +541,9 @@ int git_push_status_foreach(git_push *push,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_push_status_free(push_status *status)
 {
 	if (status == NULL)
@@ -516,7 +553,9 @@ void git_push_status_free(push_status *status)
 	git__free(status->ref);
 	git__free(status);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_push_free(git_push *push)
 {
 	push_spec *spec;
@@ -546,10 +585,13 @@ void git_push_free(git_push *push)
 
 	git__free(push);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_push_init_options(git_push_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_push_options, GIT_PUSH_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

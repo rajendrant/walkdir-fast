@@ -11,6 +11,7 @@
 #include "pool.h"
 #include "odb.h"
 
+#ifdef DISABLED_FUNCTION
 int git_commit_list_time_cmp(const void *a, const void *b)
 {
 	int64_t time_a = ((git_commit_list_node *) a)->time;
@@ -23,7 +24,9 @@ int git_commit_list_time_cmp(const void *a, const void *b)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_commit_list *git_commit_list_insert(git_commit_list_node *item, git_commit_list **list_p)
 {
 	git_commit_list *new_list = git__malloc(sizeof(git_commit_list));
@@ -34,7 +37,9 @@ git_commit_list *git_commit_list_insert(git_commit_list_node *item, git_commit_l
 	*list_p = new_list;
 	return new_list;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_commit_list *git_commit_list_insert_by_date(git_commit_list_node *item, git_commit_list **list_p)
 {
 	git_commit_list **pp = list_p;
@@ -49,12 +54,16 @@ git_commit_list *git_commit_list_insert_by_date(git_commit_list_node *item, git_
 
 	return git_commit_list_insert(item, pp);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_commit_list_node *git_commit_list_alloc_node(git_revwalk *walk)
 {
 	return (git_commit_list_node *)git_pool_mallocz(&walk->commit_pool, 1);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int commit_error(git_commit_list_node *commit, const char *msg)
 {
 	char commit_oid[GIT_OID_HEXSZ + 1];
@@ -65,7 +74,9 @@ static int commit_error(git_commit_list_node *commit, const char *msg)
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_commit_list_node **alloc_parents(
 	git_revwalk *walk, git_commit_list_node *commit, size_t n_parents)
 {
@@ -75,8 +86,10 @@ static git_commit_list_node **alloc_parents(
 	return (git_commit_list_node **)git_pool_malloc(
 		&walk->commit_pool, (uint32_t)(n_parents * sizeof(git_commit_list_node *)));
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 void git_commit_list_free(git_commit_list **list_p)
 {
 	git_commit_list *list = *list_p;
@@ -92,7 +105,9 @@ void git_commit_list_free(git_commit_list **list_p)
 
 	*list_p = NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_commit_list_node *git_commit_list_pop(git_commit_list **stack)
 {
 	git_commit_list *top = *stack;
@@ -104,7 +119,9 @@ git_commit_list_node *git_commit_list_pop(git_commit_list **stack)
 	}
 	return item;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int commit_quick_parse(
 	git_revwalk *walk,
 	git_commit_list_node *commit,
@@ -180,7 +197,9 @@ static int commit_quick_parse(
 	commit->parsed = 1;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_commit_list_parse(git_revwalk *walk, git_commit_list_node *commit)
 {
 	git_odb_object *obj;
@@ -204,4 +223,5 @@ int git_commit_list_parse(git_revwalk *walk, git_commit_list_node *commit)
 	git_odb_object_free(obj);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 

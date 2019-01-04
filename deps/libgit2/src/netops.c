@@ -15,11 +15,14 @@
 #include "http_parser.h"
 #include "global.h"
 
+#ifdef DISABLED_FUNCTION
 int gitno_recv(gitno_buffer *buf)
 {
 	return buf->recv(buf);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void gitno_buffer_setup_callback(
 	gitno_buffer *buf,
 	char *data,
@@ -33,7 +36,9 @@ void gitno_buffer_setup_callback(
 	buf->recv = recv;
 	buf->cb_data = cb_data;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int recv_stream(gitno_buffer *buf)
 {
 	git_stream *io = (git_stream *) buf->cb_data;
@@ -46,7 +51,9 @@ static int recv_stream(gitno_buffer *buf)
 	buf->offset += ret;
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void gitno_buffer_setup_fromstream(git_stream *st, gitno_buffer *buf, char *data, size_t len)
 {
 	memset(data, 0x0, len);
@@ -56,8 +63,10 @@ void gitno_buffer_setup_fromstream(git_stream *st, gitno_buffer *buf, char *data
 	buf->recv = recv_stream;
 	buf->cb_data = st;
 }
+#endif // DISABLED_FUNCTION
 
 /* Consume up to ptr and move the rest of the buffer to the beginning */
+#ifdef DISABLED_FUNCTION
 void gitno_consume(gitno_buffer *buf, const char *ptr)
 {
 	size_t consumed;
@@ -71,16 +80,20 @@ void gitno_consume(gitno_buffer *buf, const char *ptr)
 	memset(buf->data + buf->offset, 0x0, buf->len - buf->offset);
 	buf->offset -= consumed;
 }
+#endif // DISABLED_FUNCTION
 
 /* Consume const bytes and move the rest of the buffer to the beginning */
+#ifdef DISABLED_FUNCTION
 void gitno_consume_n(gitno_buffer *buf, size_t cons)
 {
 	memmove(buf->data, buf->data + cons, buf->len - buf->offset);
 	memset(buf->data + cons, 0x0, buf->len - buf->offset);
 	buf->offset -= cons;
 }
+#endif // DISABLED_FUNCTION
 
 /* Match host names according to RFC 2818 rules */
+#ifdef DISABLED_FUNCTION
 int gitno__match_host(const char *pattern, const char *host)
 {
 	for (;;) {
@@ -118,19 +131,23 @@ int gitno__match_host(const char *pattern, const char *host)
 
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 static const char *default_port_http = "80";
 static const char *default_port_https = "443";
 
+#ifdef DISABLED_FUNCTION
 const char *gitno__default_port(
 	gitno_connection_data *data)
 {
 	return data->use_ssl ? default_port_https : default_port_http;
 }
+#endif // DISABLED_FUNCTION
 
 static const char *prefix_http = "http://";
 static const char *prefix_https = "https://";
 
+#ifdef DISABLED_FUNCTION
 int gitno_connection_data_from_url(
 		gitno_connection_data *data,
 		const char *url,
@@ -205,7 +222,9 @@ cleanup:
 	if (original_host) git__free(original_host);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void gitno_connection_data_free_ptrs(gitno_connection_data *d)
 {
 	git__free(d->host); d->host = NULL;
@@ -214,7 +233,9 @@ void gitno_connection_data_free_ptrs(gitno_connection_data *d)
 	git__free(d->user); d->user = NULL;
 	git__free(d->pass); d->pass = NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int gitno_extract_url_parts(
 	char **host_out,
 	char **port_out,
@@ -308,3 +329,4 @@ done:
 	git_buf_dispose(&password);
 	return error;
 }
+#endif // DISABLED_FUNCTION

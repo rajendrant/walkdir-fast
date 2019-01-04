@@ -140,10 +140,12 @@ GIT_INLINE(int) flush_buffer(git_filebuf *file)
 	return result;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_filebuf_flush(git_filebuf *file)
 {
 	return flush_buffer(file);
 }
+#endif // DISABLED_FUNCTION
 
 static int write_normal(git_filebuf *file, void *source, size_t len)
 {
@@ -492,6 +494,7 @@ int git_filebuf_write(git_filebuf *file, const void *buff, size_t len)
 	}
 }
 
+#ifdef DISABLED_FUNCTION
 int git_filebuf_reserve(git_filebuf *file, void **buffer, size_t len)
 {
 	size_t space_left = file->buf_size - file->buf_pos;
@@ -515,7 +518,9 @@ int git_filebuf_reserve(git_filebuf *file, void **buffer, size_t len)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filebuf_printf(git_filebuf *file, const char *format, ...)
 {
 	va_list arglist;
@@ -571,7 +576,9 @@ int git_filebuf_printf(git_filebuf *file, const char *format, ...)
 
 	return res;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_filebuf_stats(time_t *mtime, size_t *size, git_filebuf *file)
 {
 	int res;
@@ -595,3 +602,4 @@ int git_filebuf_stats(time_t *mtime, size_t *size, git_filebuf *file)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION

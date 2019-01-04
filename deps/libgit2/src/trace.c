@@ -17,6 +17,7 @@ struct git_trace_data git_trace__data = {0};
 
 #endif
 
+#ifdef DISABLED_FUNCTION
 int git_trace_set(git_trace_level_t level, git_trace_callback callback)
 {
 #ifdef GIT_TRACE
@@ -36,3 +37,4 @@ int git_trace_set(git_trace_level_t level, git_trace_callback callback)
 	return -1;
 #endif
 }
+#endif // DISABLED_FUNCTION

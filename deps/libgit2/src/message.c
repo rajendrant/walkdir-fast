@@ -7,6 +7,7 @@
 
 #include "message.h"
 
+#ifdef DISABLED_FUNCTION
 static size_t line_length_without_trailing_spaces(const char *line, size_t len)
 {
 	while (len) {
@@ -18,9 +19,11 @@ static size_t line_length_without_trailing_spaces(const char *line, size_t len)
 
 	return len;
 }
+#endif // DISABLED_FUNCTION
 
 /* Greatly inspired from git.git "stripspace" */
 /* see https://github.com/git/git/blob/497215d8811ac7b8955693ceaad0899ecd894ed2/builtin/stripspace.c#L4-67 */
+#ifdef DISABLED_FUNCTION
 int git_message_prettify(git_buf *message_out, const char *message, int strip_comments, char comment_char)
 {
 	const size_t message_len = strlen(message);
@@ -60,3 +63,4 @@ int git_message_prettify(git_buf *message_out, const char *message, int strip_co
 
 	return git_buf_oom(message_out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION

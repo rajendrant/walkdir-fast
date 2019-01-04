@@ -10,6 +10,7 @@
 #include "git2/patch.h"
 #include "diff.h"
 
+#ifdef DISABLED_FUNCTION
 int git_patch__invoke_callbacks(
 	git_patch *patch,
 	git_diff_file_cb file_cb,
@@ -56,7 +57,9 @@ int git_patch__invoke_callbacks(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_patch_size(
 	git_patch *patch,
 	int include_context,
@@ -89,7 +92,9 @@ size_t git_patch_size(
 
 	return out;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_line_stats(
 	size_t *total_ctxt,
 	size_t *total_adds,
@@ -126,25 +131,33 @@ int git_patch_line_stats(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_diff_delta *git_patch_get_delta(const git_patch *patch)
 {
 	assert(patch);
 	return patch->delta;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_patch_num_hunks(const git_patch *patch)
 {
 	assert(patch);
 	return git_array_size(patch->hunks);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int patch_error_outofrange(const char *thing)
 {
 	giterr_set(GITERR_INVALID, "patch %s index out of range", thing);
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_get_hunk(
 	const git_diff_hunk **out,
 	size_t *lines_in_hunk,
@@ -166,7 +179,9 @@ int git_patch_get_hunk(
 	if (lines_in_hunk) *lines_in_hunk = hunk->line_count;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_num_lines_in_hunk(const git_patch *patch, size_t hunk_idx)
 {
 	git_patch_hunk *hunk;
@@ -176,7 +191,9 @@ int git_patch_num_lines_in_hunk(const git_patch *patch, size_t hunk_idx)
 		return patch_error_outofrange("hunk");
 	return (int)hunk->line_count;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_get_line_in_hunk(
 	const git_diff_line **out,
 	git_patch *patch,
@@ -203,21 +220,28 @@ int git_patch_get_line_in_hunk(
 	if (out) *out = line;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_from_diff(git_patch **out, git_diff *diff, size_t idx)
 {
 	assert(out && diff && diff->patch_fn);
 	return diff->patch_fn(out, diff, idx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void git_patch__free(git_patch *patch)
 {
 	if (patch->free_fn)
 		patch->free_fn(patch);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_patch_free(git_patch *patch)
 {
 	if (patch)
 		GIT_REFCOUNT_DEC(patch, git_patch__free);
 }
+#endif // DISABLED_FUNCTION

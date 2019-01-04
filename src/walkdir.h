@@ -27,8 +27,6 @@
 
 extern "C"
 {
-#include "git2/global.h"
-#include "git2/ignore.h"
 #include "repository.h"
 
 extern int git_libgit2_init();

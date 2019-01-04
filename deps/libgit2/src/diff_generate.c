@@ -35,6 +35,7 @@ typedef struct {
 	bool index_updated;
 } git_diff_generated;
 
+#ifdef DISABLED_FUNCTION
 static git_diff_delta *diff_delta__alloc(
 	git_diff_generated *diff,
 	git_delta_t status,
@@ -63,7 +64,9 @@ static git_diff_delta *diff_delta__alloc(
 
 	return delta;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_insert_delta(
 	git_diff_generated *diff,
 	git_diff_delta *delta,
@@ -90,7 +93,9 @@ static int diff_insert_delta(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool diff_pathspec_match(
 	const char **matched_pathspec,
 	git_diff_generated *diff,
@@ -116,7 +121,9 @@ static bool diff_pathspec_match(
 		DIFF_FLAG_IS_SET(diff, GIT_DIFF_IGNORE_CASE),
 		matched_pathspec, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_delta__from_one(
 	git_diff_generated *diff,
 	git_delta_t status,
@@ -184,7 +191,9 @@ static int diff_delta__from_one(
 
 	return diff_insert_delta(diff, delta, matched_pathspec);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_delta__from_two(
 	git_diff_generated *diff,
 	git_delta_t status,
@@ -246,7 +255,9 @@ static int diff_delta__from_two(
 
 	return diff_insert_delta(diff, delta, matched_pathspec);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_diff_delta *diff_delta__last_for_item(
 	git_diff_generated *diff,
 	const git_index_entry *item)
@@ -283,7 +294,9 @@ static git_diff_delta *diff_delta__last_for_item(
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static char *diff_strdup_prefix(git_pool *pool, const char *prefix)
 {
 	size_t len = strlen(prefix);
@@ -294,27 +307,35 @@ static char *diff_strdup_prefix(git_pool *pool, const char *prefix)
 	else
 		return git_pool_strndup(pool, prefix, len + 1);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(const char *) diff_delta__i2w_path(const git_diff_delta *delta)
 {
 	return delta->old_file.path ?
 		delta->old_file.path : delta->new_file.path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_delta__i2w_cmp(const void *a, const void *b)
 {
 	const git_diff_delta *da = a, *db = b;
 	int val = strcmp(diff_delta__i2w_path(da), diff_delta__i2w_path(db));
 	return val ? val : ((int)da->status - (int)db->status);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_delta__i2w_casecmp(const void *a, const void *b)
 {
 	const git_diff_delta *da = a, *db = b;
 	int val = strcasecmp(diff_delta__i2w_path(da), diff_delta__i2w_path(db));
 	return val ? val : ((int)da->status - (int)db->status);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 bool git_diff_delta__should_skip(
 	const git_diff_options *opts, const git_diff_delta *delta)
 {
@@ -338,8 +359,10 @@ bool git_diff_delta__should_skip(
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 static const char *diff_mnemonic_prefix(
 	git_iterator_type_t type, bool left_side)
 {
@@ -360,7 +383,9 @@ static const char *diff_mnemonic_prefix(
 
 	return pfx;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_diff__set_ignore_case(git_diff *diff, bool ignore_case)
 {
 	if (!ignore_case) {
@@ -385,7 +410,9 @@ void git_diff__set_ignore_case(git_diff *diff, bool ignore_case)
 
 	git_vector_sort(&diff->deltas);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void diff_generated_free(git_diff *d)
 {
 	git_diff_generated *diff = (git_diff_generated *)d;
@@ -399,7 +426,9 @@ static void diff_generated_free(git_diff *d)
 	git__memzero(diff, sizeof(*diff));
 	git__free(diff);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_diff_generated *diff_generated_alloc(
 	git_repository *repo,
 	git_iterator *old_iter,
@@ -439,7 +468,9 @@ static git_diff_generated *diff_generated_alloc(
 
 	return diff;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_generated_apply_options(
 	git_diff_generated *diff,
 	const git_diff_options *opts)
@@ -554,7 +585,9 @@ static int diff_generated_apply_options(
 	/* check strdup results for error */
 	return (!diff->base.opts.old_prefix || !diff->base.opts.new_prefix) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__oid_for_file(
 	git_oid *out,
 	git_diff *diff,
@@ -571,7 +604,9 @@ int git_diff__oid_for_file(
 
 	return git_diff__oid_for_entry(out, diff, &entry, mode, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__oid_for_entry(
 	git_oid *out,
 	git_diff *d,
@@ -667,6 +702,7 @@ int git_diff__oid_for_entry(
 	git_buf_dispose(&full_path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_repository *repo;
@@ -678,6 +714,7 @@ typedef struct {
 
 #define MODE_BITS_MASK 0000777
 
+#ifdef DISABLED_FUNCTION
 static int maybe_modified_submodule(
 	git_delta_t *status,
 	git_oid *found_oid,
@@ -726,7 +763,9 @@ static int maybe_modified_submodule(
 	git_submodule_free(sub);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int maybe_modified(
 	git_diff_generated *diff,
 	diff_in_progress *info)
@@ -874,7 +913,9 @@ static int maybe_modified(
 		diff, status, oitem, omode, nitem, nmode,
 		git_oid_iszero(&noid) ? NULL : &noid, matched_pathspec);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool entry_is_prefixed(
 	git_diff_generated *diff,
 	const git_index_entry *item,
@@ -891,7 +932,9 @@ static bool entry_is_prefixed(
 			item->path[pathlen] == '\0' ||
 			item->path[pathlen] == '/');
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_current(
 	const git_index_entry **entry,
 	git_iterator *iterator)
@@ -905,7 +948,9 @@ static int iterator_current(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_advance(
 	const git_index_entry **entry,
 	git_iterator *iterator)
@@ -939,7 +984,9 @@ static int iterator_advance(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_advance_into(
 	const git_index_entry **entry,
 	git_iterator *iterator)
@@ -953,7 +1000,9 @@ static int iterator_advance_into(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int iterator_advance_over(
 	const git_index_entry **entry,
 	git_iterator_status_t *status,
@@ -968,7 +1017,9 @@ static int iterator_advance_over(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_unmatched_new_item(
 	git_diff_generated *diff, diff_in_progress *info)
 {
@@ -1125,7 +1176,9 @@ static int handle_unmatched_new_item(
 
 	return iterator_advance(&info->nitem, info->new_iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_unmatched_old_item(
 	git_diff_generated *diff, diff_in_progress *info)
 {
@@ -1163,7 +1216,9 @@ static int handle_unmatched_old_item(
 
 	return iterator_advance(&info->oitem, info->old_iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int handle_matched_item(
 	git_diff_generated *diff, diff_in_progress *info)
 {
@@ -1177,7 +1232,9 @@ static int handle_matched_item(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__from_iterators(
 	git_diff **out,
 	git_repository *repo,
@@ -1256,6 +1313,7 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 #define DIFF_FROM_ITERATORS(MAKE_FIRST, FLAGS_FIRST, MAKE_SECOND, FLAGS_SECOND) do { \
 	git_iterator *a = NULL, *b = NULL; \
@@ -1281,6 +1339,7 @@ cleanup:
 	git__free(pfx); git_iterator_free(a); git_iterator_free(b); \
 } while (0)
 
+#ifdef DISABLED_FUNCTION
 int git_diff_tree_to_tree(
 	git_diff **out,
 	git_repository *repo,
@@ -1313,7 +1372,9 @@ int git_diff_tree_to_tree(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_load_index(git_index **index, git_repository *repo)
 {
 	int error = git_repository_index__weakptr(index, repo);
@@ -1324,7 +1385,9 @@ static int diff_load_index(git_index **index, git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_tree_to_index(
 	git_diff **out,
 	git_repository *repo,
@@ -1361,7 +1424,9 @@ int git_diff_tree_to_index(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_index_to_workdir(
 	git_diff **out,
 	git_repository *repo,
@@ -1395,7 +1460,9 @@ int git_diff_index_to_workdir(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_tree_to_workdir(
 	git_diff **out,
 	git_repository *repo,
@@ -1423,7 +1490,9 @@ int git_diff_tree_to_workdir(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_tree_to_workdir_with_index(
 	git_diff **out,
 	git_repository *repo,
@@ -1455,7 +1524,9 @@ int git_diff_tree_to_workdir_with_index(
 	*out = d1;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_index_to_index(
 	git_diff **out,
 	git_repository *repo,
@@ -1484,7 +1555,9 @@ int git_diff_index_to_index(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__paired_foreach(
 	git_diff *head2idx,
 	git_diff *idx2wd,
@@ -1572,7 +1645,9 @@ int git_diff__paired_foreach(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff__commit(
 	git_diff **out,
 	git_repository *repo,
@@ -1614,4 +1689,5 @@ on_error:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 

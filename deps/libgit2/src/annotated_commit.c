@@ -18,6 +18,7 @@
 #include "git2/tree.h"
 #include "git2/index.h"
 
+#ifdef DISABLED_FUNCTION
 static int annotated_commit_init(
 	git_annotated_commit **out,
 	git_commit *commit,
@@ -53,7 +54,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int annotated_commit_init_from_id(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -76,7 +79,9 @@ done:
 	git_commit_free(commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_annotated_commit_lookup(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -84,14 +89,18 @@ int git_annotated_commit_lookup(
 {
 	return annotated_commit_init_from_id(out, repo, id, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_annotated_commit_from_commit(
 	git_annotated_commit **out,
 	git_commit *commit)
 {
 	return annotated_commit_init(out, commit, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_annotated_commit_from_revspec(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -117,7 +126,9 @@ int git_annotated_commit_from_revspec(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_annotated_commit_from_ref(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -146,7 +157,9 @@ int git_annotated_commit_from_ref(
 	git_object_free(peeled);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_annotated_commit_from_head(
 	git_annotated_commit **out,
 	git_repository *repo)
@@ -166,7 +179,9 @@ int git_annotated_commit_from_head(
 	git_reference_free(head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_annotated_commit_from_fetchhead(
 	git_annotated_commit **out,
 	git_repository *repo,
@@ -187,22 +202,28 @@ int git_annotated_commit_from_fetchhead(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_annotated_commit_id(
 	const git_annotated_commit *annotated_commit)
 {
 	assert(annotated_commit);
 	return git_commit_id(annotated_commit->commit);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_annotated_commit_ref(
 	const git_annotated_commit *annotated_commit)
 {
 	assert(annotated_commit);
 	return annotated_commit->ref_name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_annotated_commit_free(git_annotated_commit *annotated_commit)
 {
 	if (annotated_commit == NULL)
@@ -226,3 +247,4 @@ void git_annotated_commit_free(git_annotated_commit *annotated_commit)
 
 	git__free(annotated_commit);
 }
+#endif // DISABLED_FUNCTION

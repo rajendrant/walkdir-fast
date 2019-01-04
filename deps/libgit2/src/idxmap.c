@@ -18,6 +18,7 @@ __KHASH_TYPE(idx, const git_index_entry *, git_index_entry *)
 __KHASH_TYPE(idxicase, const git_index_entry *, git_index_entry *)
 
 /* This is __ac_X31_hash_string but with tolower and it takes the entry's stage into account */
+#ifdef DISABLED_FUNCTION
 static kh_inline khint_t idxentry_hash(const git_index_entry *e)
 {
 	const char *s = e->path;
@@ -25,6 +26,7 @@ static kh_inline khint_t idxentry_hash(const git_index_entry *e)
 	if (h) for (++s ; *s; ++s) h = (h << 5) - h + (khint_t)git__tolower(*s);
 	return h + GIT_INDEX_ENTRY_STAGE(e);
 }
+#endif // DISABLED_FUNCTION
 
 #define idxentry_equal(a, b) (GIT_INDEX_ENTRY_STAGE(a) == GIT_INDEX_ENTRY_STAGE(b) && strcmp(a->path, b->path) == 0)
 #define idxentry_icase_equal(a, b) (GIT_INDEX_ENTRY_STAGE(a) == GIT_INDEX_ENTRY_STAGE(b) && strcasecmp(a->path, b->path) == 0)
@@ -42,6 +44,7 @@ int git_idxmap_alloc(git_idxmap **map)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_idxmap_icase_alloc(git_idxmap_icase **map)
 {
 	if ((*map = kh_init(idxicase)) == NULL) {
@@ -51,6 +54,7 @@ int git_idxmap_icase_alloc(git_idxmap_icase **map)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_idxmap_insert(git_idxmap *map, const git_index_entry *key, void *value, int *rval)
 {
@@ -84,20 +88,24 @@ size_t git_idxmap_icase_lookup_index(git_idxmap_icase *map, const git_index_entr
 	return kh_get(idxicase, map, key);
 }
 
+#ifdef DISABLED_FUNCTION
 void *git_idxmap_value_at(git_idxmap *map, size_t idx)
 {
 	return kh_val(map, idx);
 }
+#endif // DISABLED_FUNCTION
 
 int git_idxmap_valid_index(git_idxmap *map, size_t idx)
 {
 	return idx != kh_end(map);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_idxmap_has_data(git_idxmap *map, size_t idx)
 {
 	return kh_exist(map, idx);
 }
+#endif // DISABLED_FUNCTION
 
 void git_idxmap_resize(git_idxmap *map, size_t size)
 {
@@ -114,20 +122,24 @@ void git_idxmap_free(git_idxmap *map)
 	kh_destroy(idx, map);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_idxmap_icase_free(git_idxmap_icase *map)
 {
 	kh_destroy(idxicase, map);
 }
+#endif // DISABLED_FUNCTION
 
 void git_idxmap_clear(git_idxmap *map)
 {
 	kh_clear(idx, map);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_idxmap_icase_clear(git_idxmap_icase *map)
 {
 	kh_clear(idxicase, map);
 }
+#endif // DISABLED_FUNCTION
 
 void git_idxmap_delete_at(git_idxmap *map, size_t idx)
 {

@@ -32,6 +32,7 @@ typedef struct {
 	int (*strcomp)(const char *, const char *);
 } diff_print_info;
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_info_init__common(
 	diff_print_info *pi,
 	git_buf *out,
@@ -62,7 +63,9 @@ static int diff_print_info_init__common(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_info_init_fromdiff(
 	diff_print_info *pi,
 	git_buf *out,
@@ -86,7 +89,9 @@ static int diff_print_info_init_fromdiff(
 
 	return diff_print_info_init__common(pi, out, repo, format, cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_info_init_frompatch(
 	diff_print_info *pi,
 	git_buf *out,
@@ -106,7 +111,9 @@ static int diff_print_info_init_frompatch(
 
 	return diff_print_info_init__common(pi, out, patch->repo, format, cb, payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static char diff_pick_suffix(int mode)
 {
 	if (S_ISDIR(mode))
@@ -117,7 +124,9 @@ static char diff_pick_suffix(int mode)
 	else
 		return ' ';
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 char git_diff_status_char(git_delta_t status)
 {
 	char code;
@@ -137,7 +146,9 @@ char git_diff_status_char(git_delta_t status)
 
 	return code;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_one_name_only(
 	const git_diff_delta *delta, float progress, void *data)
 {
@@ -162,7 +173,9 @@ static int diff_print_one_name_only(
 
 	return pi->print_cb(delta, NULL, &pi->line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_one_name_status(
 	const git_diff_delta *delta, float progress, void *data)
 {
@@ -203,7 +216,9 @@ static int diff_print_one_name_status(
 
 	return pi->print_cb(delta, NULL, &pi->line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_one_raw(
 	const git_diff_delta *delta, float progress, void *data)
 {
@@ -258,7 +273,9 @@ static int diff_print_one_raw(
 
 	return pi->print_cb(delta, NULL, &pi->line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_modes(
 	git_buf *out, const git_diff_delta *delta)
 {
@@ -267,7 +284,9 @@ static int diff_print_modes(
 
 	return git_buf_oom(out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_oid_range(
 	git_buf *out, const git_diff_delta *delta, int id_strlen)
 {
@@ -308,7 +327,9 @@ static int diff_print_oid_range(
 
 	return git_buf_oom(out) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_delta_format_path(
 	git_buf *out, const char *prefix, const char *filename)
 {
@@ -317,7 +338,9 @@ static int diff_delta_format_path(
 
 	return git_buf_quote(out);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_delta_format_with_paths(
 	git_buf *out,
 	const git_diff_delta *delta,
@@ -333,7 +356,9 @@ static int diff_delta_format_with_paths(
 
 	return git_buf_printf(out, template, oldpath, newpath);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int diff_delta_format_similarity_header(
 	git_buf *out,
 	const git_diff_delta *delta)
@@ -378,7 +403,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool delta_is_unchanged(const git_diff_delta *delta)
 {
 	if (git_oid_iszero(&delta->old_file.id) &&
@@ -394,7 +421,9 @@ static bool delta_is_unchanged(const git_diff_delta *delta)
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_delta__format_file_header(
 	git_buf *out,
 	const git_diff_delta *delta,
@@ -451,7 +480,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int format_binary(
 	diff_print_info *pi,
 	git_diff_binary_t type,
@@ -489,7 +520,9 @@ static int format_binary(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_patch_file_binary_noshow(
 	diff_print_info *pi, git_diff_delta *delta,
 	const char *old_pfx, const char *new_pfx)
@@ -514,7 +547,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_patch_file_binary(
 	diff_print_info *pi, git_diff_delta *delta,
 	const char *old_pfx, const char *new_pfx,
@@ -551,7 +586,9 @@ static int diff_print_patch_file_binary(
 	pi->line.num_lines++;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_patch_file(
 	const git_diff_delta *delta, float progress, void *data)
 {
@@ -591,7 +628,9 @@ static int diff_print_patch_file(
 
 	return pi->print_cb(delta, NULL, &pi->line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_patch_binary(
 	const git_diff_delta *delta,
 	const git_diff_binary *binary,
@@ -616,7 +655,9 @@ static int diff_print_patch_binary(
 
 	return pi->print_cb(delta, NULL, &pi->line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_patch_hunk(
 	const git_diff_delta *d,
 	const git_diff_hunk *h,
@@ -633,7 +674,9 @@ static int diff_print_patch_hunk(
 
 	return pi->print_cb(d, h, &pi->line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int diff_print_patch_line(
 	const git_diff_delta *delta,
 	const git_diff_hunk *hunk,
@@ -647,8 +690,10 @@ static int diff_print_patch_line(
 
 	return pi->print_cb(delta, hunk, line, pi->payload);
 }
+#endif // DISABLED_FUNCTION
 
 /* print a git_diff to an output callback */
+#ifdef DISABLED_FUNCTION
 int git_diff_print(
 	git_diff *diff,
 	git_diff_format_t format,
@@ -700,7 +745,9 @@ int git_diff_print(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_print_callback__to_buf(
 	const git_diff_delta *delta,
 	const git_diff_hunk *hunk,
@@ -722,7 +769,9 @@ int git_diff_print_callback__to_buf(
 
 	return git_buf_put(output, line->content, line->content_len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_diff_print_callback__to_file_handle(
 	const git_diff_delta *delta,
 	const git_diff_hunk *hunk,
@@ -740,8 +789,10 @@ int git_diff_print_callback__to_file_handle(
 	fwrite(line->content, 1, line->content_len, fp);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /* print a git_diff to a git_buf */
+#ifdef DISABLED_FUNCTION
 int git_diff_to_buf(git_buf *out, git_diff *diff, git_diff_format_t format)
 {
 	assert(out && diff);
@@ -749,8 +800,10 @@ int git_diff_to_buf(git_buf *out, git_diff *diff, git_diff_format_t format)
 	return git_diff_print(
 		diff, format, git_diff_print_callback__to_buf, out);
 }
+#endif // DISABLED_FUNCTION
 
 /* print a git_patch to an output callback */
+#ifdef DISABLED_FUNCTION
 int git_patch_print(
 	git_patch *patch,
 	git_diff_line_cb print_cb,
@@ -780,11 +833,14 @@ int git_patch_print(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* print a git_patch to a git_buf */
+#ifdef DISABLED_FUNCTION
 int git_patch_to_buf(git_buf *out, git_patch *patch)
 {
 	assert(out && patch);
 	git_buf_sanitize(out);
 	return git_patch_print(patch, git_diff_print_callback__to_buf, out);
 }
+#endif // DISABLED_FUNCTION

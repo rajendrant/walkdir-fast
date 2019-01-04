@@ -45,6 +45,7 @@ static git_vector custom_transports = GIT_VECTOR_INIT;
 
 #define GIT_TRANSPORT_COUNT (sizeof(transports)/sizeof(transports[0])) - 1
 
+#ifdef DISABLED_FUNCTION
 static transport_definition * transport_find_by_url(const char *url)
 {
 	size_t i = 0;
@@ -68,7 +69,9 @@ static transport_definition * transport_find_by_url(const char *url)
 
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int transport_find_fn(
 	git_transport_cb *out,
 	const char *url,
@@ -110,11 +113,13 @@ static int transport_find_fn(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /**************
  * Public API *
  **************/
 
+#ifdef DISABLED_FUNCTION
 int git_transport_new(git_transport **out, git_remote *owner, const char *url)
 {
 	git_transport_cb fn;
@@ -137,7 +142,9 @@ int git_transport_new(git_transport **out, git_remote *owner, const char *url)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transport_register(
 	const char *scheme,
 	git_transport_cb cb,
@@ -178,7 +185,9 @@ on_error:
 	git__free(definition);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transport_unregister(const char *scheme)
 {
 	git_buf prefix = GIT_BUF_INIT;
@@ -213,10 +222,13 @@ done:
 	git_buf_dispose(&prefix);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_transport_init(git_transport *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_transport, GIT_TRANSPORT_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION

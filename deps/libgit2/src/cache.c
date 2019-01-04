@@ -30,6 +30,7 @@ static size_t git_cache__max_object_size[8] = {
 	0      /* GIT_OBJECT_REF_DELTA */
 };
 
+#ifdef DISABLED_FUNCTION
 int git_cache_set_max_object_size(git_object_t type, size_t size)
 {
 	if (type < 0 || (size_t)type >= ARRAY_SIZE(git_cache__max_object_size)) {
@@ -40,7 +41,9 @@ int git_cache_set_max_object_size(git_object_t type, size_t size)
 	git_cache__max_object_size[type] = size;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_cache_dump_stats(git_cache *cache)
 {
 	git_cached_obj *object;
@@ -61,6 +64,7 @@ void git_cache_dump_stats(git_cache *cache)
 		);
 	});
 }
+#endif // DISABLED_FUNCTION
 
 int git_cache_init(git_cache *cache)
 {
@@ -245,10 +249,12 @@ git_odb_object *git_cache_get_raw(git_cache *cache, const git_oid *oid)
 	return cache_get(cache, oid, GIT_CACHE_STORE_RAW);
 }
 
+#ifdef DISABLED_FUNCTION
 git_object *git_cache_get_parsed(git_cache *cache, const git_oid *oid)
 {
 	return cache_get(cache, oid, GIT_CACHE_STORE_PARSED);
 }
+#endif // DISABLED_FUNCTION
 
 void *git_cache_get_any(git_cache *cache, const git_oid *oid)
 {

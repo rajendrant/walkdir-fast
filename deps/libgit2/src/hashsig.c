@@ -45,27 +45,34 @@ struct git_hashsig {
 #define HEAP_RCHILD_OF(I) (((I)<<1)+2)
 #define HEAP_PARENT_OF(I) (((I)-1)>>1)
 
+#ifdef DISABLED_FUNCTION
 static void hashsig_heap_init(hashsig_heap *h, hashsig_cmp cmp)
 {
 	h->size  = 0;
 	h->asize = HASHSIG_HEAP_SIZE;
 	h->cmp   = cmp;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int hashsig_cmp_max(const void *a, const void *b, void *payload)
 {
 	hashsig_t av = *(const hashsig_t *)a, bv = *(const hashsig_t *)b;
 	GIT_UNUSED(payload);
 	return (av < bv) ? -1 : (av > bv) ? 1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int hashsig_cmp_min(const void *a, const void *b, void *payload)
 {
 	hashsig_t av = *(const hashsig_t *)a, bv = *(const hashsig_t *)b;
 	GIT_UNUSED(payload);
 	return (av > bv) ? -1 : (av < bv) ? 1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void hashsig_heap_up(hashsig_heap *h, int el)
 {
 	int parent_el = HEAP_PARENT_OF(el);
@@ -79,7 +86,9 @@ static void hashsig_heap_up(hashsig_heap *h, int el)
 		parent_el = HEAP_PARENT_OF(el);
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void hashsig_heap_down(hashsig_heap *h, int el)
 {
 	hashsig_t v, lv, rv;
@@ -104,13 +113,17 @@ static void hashsig_heap_down(hashsig_heap *h, int el)
 		el = swapel;
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void hashsig_heap_sort(hashsig_heap *h)
 {
 	/* only need to do this at the end for signature comparison */
 	git__qsort_r(h->values, h->size, sizeof(hashsig_t), h->cmp, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void hashsig_heap_insert(hashsig_heap *h, hashsig_t val)
 {
 	/* if heap is not full, insert new element */
@@ -127,12 +140,14 @@ static void hashsig_heap_insert(hashsig_heap *h, hashsig_t val)
 	}
 
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	int use_ignores;
 	uint8_t ignore_ch[256];
 } hashsig_in_progress;
 
+#ifdef DISABLED_FUNCTION
 static void hashsig_in_progress_init(
 	hashsig_in_progress *prog, git_hashsig *sig)
 {
@@ -154,7 +169,9 @@ static void hashsig_in_progress_init(
 		memset(prog, 0, sizeof(*prog));
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int hashsig_add_hashes(
 	git_hashsig *sig,
 	const uint8_t *data,
@@ -211,7 +228,9 @@ static int hashsig_add_hashes(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int hashsig_finalize_hashes(git_hashsig *sig)
 {
 	if (sig->mins.size < HASHSIG_HEAP_MIN_SIZE &&
@@ -226,7 +245,9 @@ static int hashsig_finalize_hashes(git_hashsig *sig)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_hashsig *hashsig_alloc(git_hashsig_option_t opts)
 {
 	git_hashsig *sig = git__calloc(1, sizeof(git_hashsig));
@@ -239,7 +260,9 @@ static git_hashsig *hashsig_alloc(git_hashsig_option_t opts)
 
 	return sig;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_hashsig_create(
 	git_hashsig **out,
 	const char *buf,
@@ -265,7 +288,9 @@ int git_hashsig_create(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_hashsig_create_fromfile(
 	git_hashsig **out,
 	const char *path,
@@ -308,12 +333,16 @@ int git_hashsig_create_fromfile(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_hashsig_free(git_hashsig *sig)
 {
 	git__free(sig);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int hashsig_heap_compare(const hashsig_heap *a, const hashsig_heap *b)
 {
 	int matches = 0, i, j, cmp;
@@ -336,7 +365,9 @@ static int hashsig_heap_compare(const hashsig_heap *a, const hashsig_heap *b)
 
 	return HASHSIG_SCALE * (matches * 2) / (a->size + b->size);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_hashsig_compare(const git_hashsig *a, const git_hashsig *b)
 {
 	/* if we have no elements in either file then each file is either
@@ -360,3 +391,4 @@ int git_hashsig_compare(const git_hashsig *a, const git_hashsig *b)
 		return (hashsig_heap_compare(&a->mins, &b->mins) +
 				hashsig_heap_compare(&a->maxs, &b->maxs)) / 2;
 }
+#endif // DISABLED_FUNCTION

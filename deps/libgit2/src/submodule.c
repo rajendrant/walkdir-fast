@@ -60,36 +60,67 @@ enum {
 	GITMODULES_CREATE = 1,
 };
 
+#ifdef DISABLED_FUNCTION
 static int submodule_alloc(git_submodule **out, git_repository *repo, const char *name);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static git_config_backend *open_gitmodules(git_repository *repo, int gitmod);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int gitmodules_snapshot(git_config **snap, git_repository *repo);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int get_url_base(git_buf *url, git_repository *repo);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int lookup_head_remote_key(git_buf *remote_key, git_repository *repo);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int lookup_default_remote(git_remote **remote, git_repository *repo);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int submodule_load_each(const git_config_entry *entry, void *payload);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int submodule_read_config(git_submodule *sm, git_config *cfg);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int submodule_load_from_wd_lite(git_submodule *);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static void submodule_get_index_status(unsigned int *, git_submodule *);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static void submodule_get_wd_status(unsigned int *, git_submodule *, git_repository *, git_submodule_ignore_t);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static void submodule_update_from_index_entry(git_submodule *sm, const git_index_entry *ie);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static void submodule_update_from_head_data(git_submodule *sm, mode_t mode, const git_oid *id);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodule_cmp(const void *a, const void *b)
 {
 	return strcmp(((git_submodule *)a)->name, ((git_submodule *)b)->name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodule_config_key_trunc_puts(git_buf *key, const char *suffix)
 {
 	ssize_t idx = git_buf_rfind(key, '.');
 	git_buf_truncate(key, (size_t)(idx + 1));
 	return git_buf_puts(key, suffix);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * PUBLIC APIS
  */
 
+#ifdef DISABLED_FUNCTION
 static void submodule_set_lookup_error(int error, const char *name)
 {
 	if (!error)
@@ -99,12 +130,14 @@ static void submodule_set_lookup_error(int error, const char *name)
 		"no submodule named '%s'" :
 		"submodule '%s' has not been added yet", name);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	const char *path;
 	char *name;
 } fbp_data;
 
+#ifdef DISABLED_FUNCTION
 static int find_by_path(const git_config_entry *entry, void *payload)
 {
 	fbp_data *data = payload;
@@ -119,11 +152,13 @@ static int find_by_path(const git_config_entry *entry, void *payload)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Checks to see if the submodule shares its name with a file or directory that
  * already exists on the index. If so, the submodule cannot be added.
  */
+#ifdef DISABLED_FUNCTION
 static int is_path_occupied(bool *occupied, git_repository *repo, const char *path)
 {
 	int error = 0;
@@ -164,10 +199,12 @@ out:
 	git_buf_dispose(&dir);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Release the name map returned by 'load_submodule_names'.
  */
+#ifdef DISABLED_FUNCTION
 static void free_submodule_names(git_strmap *names)
 {
 	const char *key;
@@ -184,12 +221,14 @@ static void free_submodule_names(git_strmap *names)
 
 	return;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Map submodule paths to names.
  * TODO: for some use-cases, this might need case-folding on a
  * case-insensitive filesystem
  */
+#ifdef DISABLED_FUNCTION
 static int load_submodule_names(git_strmap **out, git_repository *repo, git_config *cfg)
 {
 	const char *key = "submodule\\..*\\.path";
@@ -249,7 +288,9 @@ out:
 	git_config_iterator_free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_lookup(
 	git_submodule **out, /* NULL if user only wants to test existence */
 	git_repository *repo,
@@ -365,7 +406,9 @@ int git_submodule_lookup(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_name_is_valid(git_repository *repo, const char *name, int flags)
 {
 	git_buf buf = GIT_BUF_INIT;
@@ -387,12 +430,16 @@ int git_submodule_name_is_valid(git_repository *repo, const char *name, int flag
 
 	return isvalid;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void submodule_free_dup(void *sm)
 {
 	git_submodule_free(sm);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodule_get_or_create(git_submodule **out, git_repository *repo, git_strmap *map, const char *name)
 {
 	int error = 0;
@@ -424,7 +471,9 @@ done:
 	*out = sm;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodules_from_index(git_strmap *map, git_index *idx, git_config *cfg)
 {
 	int error;
@@ -476,7 +525,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodules_from_head(git_strmap *map, git_tree *head, git_config *cfg)
 {
 	int error;
@@ -529,6 +580,7 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* If have_sm is true, sm is populated, otherwise map an repo are. */
 typedef struct {
@@ -537,6 +589,7 @@ typedef struct {
 	git_repository *repo;
 } lfc_data;
 
+#ifdef DISABLED_FUNCTION
 int git_submodule__map(git_repository *repo, git_strmap *map)
 {
 	int error = 0;
@@ -601,7 +654,9 @@ cleanup:
 	git_buf_dispose(&path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_foreach(
 	git_repository *repo,
 	git_submodule_cb callback,
@@ -658,7 +713,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodule_repo_init(
 	git_repository **out,
 	git_repository *parent_repo,
@@ -710,7 +767,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_add_setup(
 	git_submodule **out,
 	git_repository *repo,
@@ -814,7 +873,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_repo_init(
 	git_repository **out,
 	const git_submodule *sm,
@@ -842,7 +903,9 @@ done:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_add_finalize(git_submodule *sm)
 {
 	int error;
@@ -856,7 +919,9 @@ int git_submodule_add_finalize(git_submodule *sm)
 
 	return git_submodule_add_to_index(sm, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_add_to_index(git_submodule *sm, int write_index)
 {
 	int error;
@@ -926,7 +991,9 @@ cleanup:
 	git_buf_dispose(&path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_submodule_update_to_str(git_submodule_update_t update)
 {
 	int i;
@@ -935,31 +1002,41 @@ const char *git_submodule_update_to_str(git_submodule_update_t update)
 			return _sm_update_map[i].str_match;
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_submodule_owner(git_submodule *submodule)
 {
 	assert(submodule);
 	return submodule->repo;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_submodule_name(git_submodule *submodule)
 {
 	assert(submodule);
 	return submodule->name;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_submodule_path(git_submodule *submodule)
 {
 	assert(submodule);
 	return submodule->path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_submodule_url(git_submodule *submodule)
 {
 	assert(submodule);
 	return submodule->url;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_resolve_url(git_buf *out, git_repository *repo, const char *url)
 {
 	int error = 0;
@@ -991,7 +1068,9 @@ int git_submodule_resolve_url(git_buf *out, git_repository *repo, const char *ur
 	git_buf_dispose(&normalized);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_var(git_repository *repo, const char *name, const char *var, const char *val)
 {
 	git_buf key = GIT_BUF_INIT;
@@ -1016,7 +1095,9 @@ cleanup:
 	git_config_backend_free(mods);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_mapped_var(git_repository *repo, const char *name, git_cvar_map *maps, size_t nmaps, const char *var, int ival)
 {
 	git_cvar_t type;
@@ -1032,13 +1113,17 @@ static int write_mapped_var(git_repository *repo, const char *name, git_cvar_map
 
 	return write_var(repo, name, var, val);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char *git_submodule_branch(git_submodule *submodule)
 {
 	assert(submodule);
 	return submodule->branch;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_set_branch(git_repository *repo, const char *name, const char *branch)
 {
 
@@ -1046,14 +1131,18 @@ int git_submodule_set_branch(git_repository *repo, const char *name, const char 
 
 	return write_var(repo, name, "branch", branch);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_set_url(git_repository *repo, const char *name, const char *url)
 {
 	assert(repo && name && url);
 
 	return write_var(repo, name, "url", url);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_submodule_index_id(git_submodule *submodule)
 {
 	assert(submodule);
@@ -1063,7 +1152,9 @@ const git_oid *git_submodule_index_id(git_submodule *submodule)
 	else
 		return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_submodule_head_id(git_submodule *submodule)
 {
 	assert(submodule);
@@ -1073,7 +1164,9 @@ const git_oid *git_submodule_head_id(git_submodule *submodule)
 	else
 		return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_submodule_wd_id(git_submodule *submodule)
 {
 	assert(submodule);
@@ -1094,49 +1187,63 @@ const git_oid *git_submodule_wd_id(git_submodule *submodule)
 	else
 		return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_submodule_ignore_t git_submodule_ignore(git_submodule *submodule)
 {
 	assert(submodule);
 	return (submodule->ignore < GIT_SUBMODULE_IGNORE_NONE) ?
 		GIT_SUBMODULE_IGNORE_NONE : submodule->ignore;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_set_ignore(git_repository *repo, const char *name, git_submodule_ignore_t ignore)
 {
 	assert(repo && name);
 
 	return write_mapped_var(repo, name, _sm_ignore_map, ARRAY_SIZE(_sm_ignore_map), "ignore", ignore);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_submodule_update_t git_submodule_update_strategy(git_submodule *submodule)
 {
 	assert(submodule);
 	return (submodule->update < GIT_SUBMODULE_UPDATE_CHECKOUT) ?
 		GIT_SUBMODULE_UPDATE_CHECKOUT : submodule->update;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_set_update(git_repository *repo, const char *name, git_submodule_update_t update)
 {
 	assert(repo && name);
 
 	return write_mapped_var(repo, name, _sm_update_map, ARRAY_SIZE(_sm_update_map), "update", update);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_submodule_recurse_t git_submodule_fetch_recurse_submodules(
 	git_submodule *submodule)
 {
 	assert(submodule);
 	return submodule->fetch_recurse;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_set_fetch_recurse_submodules(git_repository *repo, const char *name, git_submodule_recurse_t recurse)
 {
 	assert(repo && name);
 
 	return write_mapped_var(repo, name, _sm_recurse_map, ARRAY_SIZE(_sm_recurse_map), "fetchRecurseSubmodules", recurse);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int submodule_repo_create(
 	git_repository **out,
 	git_repository *parent_repo,
@@ -1182,11 +1289,13 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Callback to override sub-repository creation when
  * cloning a sub-repository.
  */
+#ifdef DISABLED_FUNCTION
 static int git_submodule_update_repo_init_cb(
 	git_repository **out,
 	const char *path,
@@ -1201,14 +1310,18 @@ static int git_submodule_update_repo_init_cb(
 
 	return submodule_repo_create(out, sm->repo, path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_update_init_options(git_submodule_update_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_submodule_update_options, GIT_SUBMODULE_UPDATE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_update(git_submodule *sm, int init, git_submodule_update_options *_update_options)
 {
 	int error;
@@ -1337,7 +1450,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_init(git_submodule *sm, int overwrite)
 {
 	int error;
@@ -1381,7 +1496,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_sync(git_submodule *sm)
 {
 	int error = 0;
@@ -1430,7 +1547,9 @@ int git_submodule_sync(git_submodule *sm)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_submodule__open(
 	git_repository **subrepo, git_submodule *sm, bool bare)
 {
@@ -1484,16 +1603,21 @@ static int git_submodule__open(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_open_bare(git_repository **subrepo, git_submodule *sm)
 {
 	return git_submodule__open(subrepo, sm, true);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_open(git_repository **subrepo, git_submodule *sm)
 {
 	return git_submodule__open(subrepo, sm, false);
 }
+#endif // DISABLED_FUNCTION
 
 static void submodule_update_from_index_entry(
 	git_submodule *sm, const git_index_entry *ie)
@@ -1514,6 +1638,7 @@ static void submodule_update_from_index_entry(
 	}
 }
 
+#ifdef DISABLED_FUNCTION
 static int submodule_update_index(git_submodule *sm)
 {
 	git_index *index;
@@ -1533,6 +1658,7 @@ static int submodule_update_index(git_submodule *sm)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static void submodule_update_from_head_data(
 	git_submodule *sm, mode_t mode, const git_oid *id)
@@ -1547,6 +1673,7 @@ static void submodule_update_from_head_data(
 	}
 }
 
+#ifdef DISABLED_FUNCTION
 static int submodule_update_head(git_submodule *submodule)
 {
 	git_tree *head = NULL;
@@ -1567,7 +1694,9 @@ static int submodule_update_head(git_submodule *submodule)
 	git_tree_free(head);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_reload(git_submodule *sm, int force)
 {
 	int error = 0, isvalid;
@@ -1609,7 +1738,9 @@ int git_submodule_reload(git_submodule *sm, int force)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void submodule_copy_oid_maybe(
 	git_oid *tgt, const git_oid *src, bool valid)
 {
@@ -1620,7 +1751,9 @@ static void submodule_copy_oid_maybe(
 			memset(tgt, 0, sizeof(*tgt));
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule__status(
 	unsigned int *out_status,
 	git_oid *out_head_id,
@@ -1689,7 +1822,9 @@ int git_submodule__status(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_status(unsigned int *status, git_repository *repo, const char *name, git_submodule_ignore_t ignore)
 {
 	git_submodule *sm;
@@ -1705,7 +1840,9 @@ int git_submodule_status(unsigned int *status, git_repository *repo, const char 
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_location(unsigned int *location, git_submodule *sm)
 {
 	assert(location && sm);
@@ -1713,6 +1850,7 @@ int git_submodule_location(unsigned int *location, git_submodule *sm)
 	return git_submodule__status(
 		location, NULL, NULL, NULL, sm, GIT_SUBMODULE_IGNORE_ALL);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * INTERNAL FUNCTIONS
@@ -1774,13 +1912,16 @@ void git_submodule_free(git_submodule *sm)
 	GIT_REFCOUNT_DEC(sm, submodule_release);
 }
 
+#ifdef DISABLED_FUNCTION
 static int submodule_config_error(const char *property, const char *value)
 {
 	giterr_set(GITERR_INVALID,
 		"invalid value for submodule '%s' property: '%s'", property, value);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_parse_ignore(git_submodule_ignore_t *out, const char *value)
 {
 	int val;
@@ -1794,7 +1935,9 @@ int git_submodule_parse_ignore(git_submodule_ignore_t *out, const char *value)
 	*out = (git_submodule_ignore_t)val;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_parse_update(git_submodule_update_t *out, const char *value)
 {
 	int val;
@@ -1808,7 +1951,9 @@ int git_submodule_parse_update(git_submodule_update_t *out, const char *value)
 	*out = (git_submodule_update_t)val;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_submodule_parse_recurse(git_submodule_recurse_t *out, const char *value)
 {
 	int val;
@@ -1822,7 +1967,9 @@ int git_submodule_parse_recurse(git_submodule_recurse_t *out, const char *value)
 	*out = (git_submodule_recurse_t)val;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int get_value(const char **out, git_config *cfg, git_buf *buf, const char *name, const char *field)
 {
 	int error;
@@ -1835,7 +1982,9 @@ static int get_value(const char **out, git_config *cfg, git_buf *buf, const char
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool looks_like_command_line_option(const char *s)
 {
 	if (s && s[0] == '-')
@@ -1843,6 +1992,7 @@ static bool looks_like_command_line_option(const char *s)
 
 	return false;
 }
+#endif // DISABLED_FUNCTION
 
 static int submodule_read_config(git_submodule *sm, git_config *cfg)
 {
@@ -2116,6 +2266,7 @@ done:
 }
 
 /* Lookup the remote of the local tracking branch HEAD points to */
+#ifdef DISABLED_FUNCTION
 static int lookup_head_remote(git_remote **remote, git_repository *repo)
 {
 	int error;
@@ -2129,6 +2280,7 @@ static int lookup_head_remote(git_remote **remote, git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /* Lookup remote, either from HEAD or fall back on origin */
 static int lookup_default_remote(git_remote **remote, git_repository *repo)

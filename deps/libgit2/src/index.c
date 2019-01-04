@@ -50,9 +50,11 @@
 			git_idxmap_delete((idx)->entries_map, (e));	\
 	} while (0)
 
+#ifdef DISABLED_FUNCTION
 static int index_apply_to_wd_diff(git_index *index, int action, const git_strarray *paths,
 				  unsigned int flags,
 				  git_index_matched_path_cb cb, void *payload);
+#endif // DISABLED_FUNCTION
 
 #define minimal_entry_size (offsetof(struct entry_short, path))
 
@@ -142,8 +144,12 @@ static size_t read_extension(git_index *index, const char *buffer, size_t buffer
 static int read_header(struct index_header *dest, const void *buffer);
 
 static int parse_index(git_index *index, const char *buffer, size_t buffer_size);
+#ifdef DISABLED_FUNCTION
 static bool is_index_extended(git_index *index);
+#endif // DISABLED_FUNCTION
+#ifdef DISABLED_FUNCTION
 static int write_index(git_oid *checksum, git_index *index, git_filebuf *file);
+#endif // DISABLED_FUNCTION
 
 static void index_entry_free(git_index_entry *entry);
 static void index_entry_reuc_free(git_index_reuc_entry *reuc);
@@ -330,6 +336,7 @@ static void index_entry_free(git_index_entry *entry)
 	git__free(entry);
 }
 
+#ifdef DISABLED_FUNCTION
 unsigned int git_index__create_mode(unsigned int mode)
 {
 	if (S_ISLNK(mode))
@@ -340,7 +347,9 @@ unsigned int git_index__create_mode(unsigned int mode)
 
 	return S_IFREG | GIT_PERMS_CANONICAL(mode);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static unsigned int index_merge_mode(
 	git_index *index, git_index_entry *existing, unsigned int mode)
 {
@@ -354,6 +363,7 @@ static unsigned int index_merge_mode(
 
 	return git_index__create_mode(mode);
 }
+#endif // DISABLED_FUNCTION
 
 GIT_INLINE(int) index_find_in_entries(
 	size_t *out, git_vector *entries, git_vector_cmp entry_srch,
@@ -449,10 +459,12 @@ fail:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index_new(git_index **out)
 {
 	return git_index_open(out, NULL);
 }
+#endif // DISABLED_FUNCTION
 
 static void index_free(git_index *index)
 {
@@ -590,17 +602,21 @@ int git_index_set_caps(git_index *index, int caps)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index_caps(const git_index *index)
 {
 	return ((index->ignore_case ? GIT_INDEX_CAPABILITY_IGNORE_CASE : 0) |
 			(index->distrust_filemode ? GIT_INDEX_CAPABILITY_NO_FILEMODE : 0) |
 			(index->no_symlinks ? GIT_INDEX_CAPABILITY_NO_SYMLINKS : 0));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid *git_index_checksum(git_index *index)
 {
 	return &index->checksum;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Returns 1 for changed, 0 for not changed and <0 for errors
@@ -682,6 +698,7 @@ int git_index_read(git_index *index, int force)
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index_read_safely(git_index *index)
 {
 	if (git_index__enforce_unsaved_safety && index->dirty) {
@@ -692,7 +709,9 @@ int git_index_read_safely(git_index *index)
 
 	return git_index_read(index, false);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index__changed_relative_to(
 	git_index *index, const git_oid *checksum)
 {
@@ -702,7 +721,9 @@ int git_index__changed_relative_to(
 
 	return !!git_oid_cmp(&index->checksum, checksum);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool is_racy_entry(git_index *index, const git_index_entry *entry)
 {
 	/* Git special-cases submodules in the check */
@@ -711,11 +732,13 @@ static bool is_racy_entry(git_index *index, const git_index_entry *entry)
 
 	return git_index_entry_newer_than_index(entry, index);
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Force the next diff to take a look at those entries which have the
  * same timestamp as the current index.
  */
+#ifdef DISABLED_FUNCTION
 static int truncate_racily_clean(git_index *index)
 {
 	size_t i;
@@ -767,14 +790,18 @@ done:
 	git_vector_free(&paths);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 unsigned git_index_version(git_index *index)
 {
 	assert(index);
 
 	return index->version;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_set_version(git_index *index, unsigned int version)
 {
 	assert(index);
@@ -789,7 +816,9 @@ int git_index_set_version(git_index *index, unsigned int version)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_write(git_index *index)
 {
 	git_indexwriter writer = GIT_INDEXWRITER_INIT;
@@ -805,13 +834,17 @@ int git_index_write(git_index *index)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char * git_index_path(const git_index *index)
 {
 	assert(index);
 	return index->index_file_path;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_write_tree(git_oid *oid, git_index *index)
 {
 	git_repository *repo;
@@ -826,19 +859,24 @@ int git_index_write_tree(git_oid *oid, git_index *index)
 
 	return git_tree__write_index(oid, index, repo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_write_tree_to(
 	git_oid *oid, git_index *index, git_repository *repo)
 {
 	assert(oid && index && repo);
 	return git_tree__write_index(oid, index, repo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_index_entrycount(const git_index *index)
 {
 	assert(index);
 	return index->entries.length;
 }
+#endif // DISABLED_FUNCTION
 
 const git_index_entry *git_index_get_byindex(
 	git_index *index, size_t n)
@@ -848,6 +886,7 @@ const git_index_entry *git_index_get_byindex(
 	return git_vector_get(&index->entries, n);
 }
 
+#ifdef DISABLED_FUNCTION
 const git_index_entry *git_index_get_bypath(
 	git_index *index, const char *path, int stage)
 {
@@ -867,7 +906,9 @@ const git_index_entry *git_index_get_bypath(
 	giterr_set(GITERR_INDEX, "index does not contain '%s'", path);
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_index_entry__init_from_stat(
 	git_index_entry *entry, struct stat *st, bool trust_mode)
 {
@@ -885,7 +926,9 @@ void git_index_entry__init_from_stat(
 	entry->gid  = st->st_gid;
 	entry->file_size = (uint32_t)st->st_size;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void index_entry_adjust_namemask(
 		git_index_entry *entry,
 		size_t path_length)
@@ -897,6 +940,7 @@ static void index_entry_adjust_namemask(
 	else
 		entry->flags |= GIT_INDEX_ENTRY_NAMEMASK;
 }
+#endif // DISABLED_FUNCTION
 
 /* When `from_workdir` is true, we will validate the paths to avoid placing
  * paths that are invalid for the working directory on the current filesystem
@@ -943,6 +987,7 @@ static int index_entry_create(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static int index_entry_init(
 	git_index_entry **entry_out,
 	git_index *index,
@@ -996,6 +1041,7 @@ static int index_entry_init(
 	*entry_out = (git_index_entry *)entry;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static git_index_reuc_entry *reuc_entry_alloc(const char *path)
 {
@@ -1019,6 +1065,7 @@ static git_index_reuc_entry *reuc_entry_alloc(const char *path)
 	return (git_index_reuc_entry *)entry;
 }
 
+#ifdef DISABLED_FUNCTION
 static int index_entry_reuc_init(git_index_reuc_entry **reuc_out,
 	const char *path,
 	int ancestor_mode, const git_oid *ancestor_oid,
@@ -1049,6 +1096,7 @@ static int index_entry_reuc_init(git_index_reuc_entry **reuc_out,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static void index_entry_cpy(
 	git_index_entry *tgt,
@@ -1071,6 +1119,7 @@ static int index_entry_dup(
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 static void index_entry_cpy_nocache(
 	git_index_entry *tgt,
 	const git_index_entry *src)
@@ -1080,7 +1129,9 @@ static void index_entry_cpy_nocache(
 	tgt->flags = src->flags;
 	tgt->flags_extended = (src->flags_extended & GIT_INDEX_ENTRY_EXTENDED_FLAGS);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_entry_dup_nocache(
 	git_index_entry **out,
 	git_index *index,
@@ -1092,7 +1143,9 @@ static int index_entry_dup_nocache(
 	index_entry_cpy_nocache(*out, src);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int has_file_name(git_index *index,
 	 const git_index_entry *entry, size_t pos, int ok_to_replace)
 {
@@ -1119,11 +1172,13 @@ static int has_file_name(git_index *index,
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Do we have another file with a pathname that is a proper
  * subset of the name we're trying to add?
  */
+#ifdef DISABLED_FUNCTION
 static int has_dir_name(git_index *index,
 		const git_index_entry *entry, int ok_to_replace)
 {
@@ -1171,7 +1226,9 @@ static int has_dir_name(git_index *index,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_file_directory_collision(git_index *index,
 		git_index_entry *entry, size_t pos, int ok_to_replace)
 {
@@ -1184,7 +1241,9 @@ static int check_file_directory_collision(git_index *index,
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int canonicalize_directory_path(
 	git_index *index,
 	git_index_entry *entry,
@@ -1254,7 +1313,9 @@ static int canonicalize_directory_path(
 	git__free(search);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_no_dups(void **old, void *new)
 {
 	const git_index_entry *entry = new;
@@ -1263,7 +1324,9 @@ static int index_no_dups(void **old, void *new)
 		entry->path, GIT_INDEX_ENTRY_STAGE(entry));
 	return GIT_EEXISTS;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void index_existing_and_best(
 	git_index_entry **existing,
 	size_t *existing_position,
@@ -1309,6 +1372,7 @@ static void index_existing_and_best(
 		}
 	}
 }
+#endif // DISABLED_FUNCTION
 
 /* index_insert takes ownership of the new entry - if it can't insert
  * it, then it will return an error **and also free the entry**.  When
@@ -1323,6 +1387,7 @@ static void index_existing_and_best(
  *
  * trust_id is whether we trust the id or it should be validated.
  */
+#ifdef DISABLED_FUNCTION
 static int index_insert(
 	git_index *index,
 	git_index_entry **entry_ptr,
@@ -1414,7 +1479,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_conflict_to_reuc(git_index *index, const char *path)
 {
 	const git_index_entry *conflict_entries[3];
@@ -1440,19 +1507,25 @@ static int index_conflict_to_reuc(git_index *index, const char *path)
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) is_file_or_link(const int filemode)
 {
 	return (filemode == GIT_FILEMODE_BLOB ||
 		filemode == GIT_FILEMODE_BLOB_EXECUTABLE ||
 		filemode == GIT_FILEMODE_LINK);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(bool) valid_filemode(const int filemode)
 {
 	return (is_file_or_link(filemode) || filemode == GIT_FILEMODE_COMMIT);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_add_frombuffer(
     git_index *index, const git_index_entry *source_entry,
     const void *buffer, size_t len)
@@ -1495,7 +1568,9 @@ int git_index_add_frombuffer(
 	git_tree_cache_invalidate_path(index->tree, entry->path);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int add_repo_as_submodule(git_index_entry **out, git_index *index, const char *path)
 {
 	git_repository *sub;
@@ -1535,6 +1610,7 @@ static int add_repo_as_submodule(git_index_entry **out, git_index *index, const 
 	*out = entry;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_index_add_bypath(git_index *index, const char *path)
 {
@@ -1607,6 +1683,7 @@ int git_index_remove_bypath(git_index *index, const char *path)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index__fill(git_index *index, const git_vector *source_entries)
 {
 	const git_index_entry *source_entry = NULL;
@@ -1646,8 +1723,10 @@ int git_index__fill(git_index *index, const git_vector *source_entries)
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
 
+#ifdef DISABLED_FUNCTION
 int git_index_add(git_index *index, const git_index_entry *source_entry)
 {
 	git_index_entry *entry = NULL;
@@ -1667,7 +1746,9 @@ int git_index_add(git_index *index, const git_index_entry *source_entry)
 	git_tree_cache_invalidate_path(index->tree, entry->path);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_remove(git_index *index, const char *path, int stage)
 {
 	int error;
@@ -1689,7 +1770,9 @@ int git_index_remove(git_index *index, const char *path, int stage)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_remove_directory(git_index *index, const char *dir, int stage)
 {
 	git_buf pfx = GIT_BUF_INIT;
@@ -1720,7 +1803,9 @@ int git_index_remove_directory(git_index *index, const char *dir, int stage)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_find_prefix(size_t *at_pos, git_index *index, const char *prefix)
 {
 	int error = 0;
@@ -1737,6 +1822,7 @@ int git_index_find_prefix(size_t *at_pos, git_index *index, const char *prefix)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_index__find_pos(
 	size_t *out, git_index *index, const char *path, size_t path_len, int stage)
@@ -1745,6 +1831,7 @@ int git_index__find_pos(
 	return index_find(out, index, path, path_len, stage);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index_find(size_t *at_pos, git_index *index, const char *path)
 {
 	size_t pos;
@@ -1772,7 +1859,9 @@ int git_index_find(size_t *at_pos, git_index *index, const char *path)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_conflict_add(git_index *index,
 	const git_index_entry *ancestor_entry,
 	const git_index_entry *our_entry,
@@ -1840,7 +1929,9 @@ on_error:
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_conflict__get_byindex(
 	const git_index_entry **ancestor_out,
 	const git_index_entry **our_out,
@@ -1888,7 +1979,9 @@ static int index_conflict__get_byindex(
 
 	return len;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_conflict_get(
 	const git_index_entry **ancestor_out,
 	const git_index_entry **our_out,
@@ -1916,7 +2009,9 @@ int git_index_conflict_get(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_conflict_remove(git_index *index, const char *path)
 {
 	size_t pos = 0;
@@ -1943,19 +2038,25 @@ static int index_conflict_remove(git_index *index, const char *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_conflict_remove(git_index *index, const char *path)
 {
 	assert(index && path);
 	return index_conflict_remove(index, path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_conflict_cleanup(git_index *index)
 {
 	assert(index);
 	return index_conflict_remove(index, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_has_conflicts(const git_index *index)
 {
 	size_t i;
@@ -1970,7 +2071,9 @@ int git_index_has_conflicts(const git_index *index)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_iterator_new(
 	git_index_iterator **iterator_out,
 	git_index *index)
@@ -1993,7 +2096,9 @@ int git_index_iterator_new(
 	*iterator_out = it;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_iterator_next(
 	const git_index_entry **out,
 	git_index_iterator *it)
@@ -2006,7 +2111,9 @@ int git_index_iterator_next(
 	*out = (git_index_entry *)git_vector_get(&it->snap, it->cur++);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_index_iterator_free(git_index_iterator *it)
 {
 	if (it == NULL)
@@ -2015,7 +2122,9 @@ void git_index_iterator_free(git_index_iterator *it)
 	git_index_snapshot_release(&it->snap, it->index);
 	git__free(it);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_conflict_iterator_new(
 	git_index_conflict_iterator **iterator_out,
 	git_index *index)
@@ -2032,7 +2141,9 @@ int git_index_conflict_iterator_new(
 	*iterator_out = it;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_conflict_next(
 	const git_index_entry **ancestor_out,
 	const git_index_entry **our_out,
@@ -2069,7 +2180,9 @@ int git_index_conflict_next(
 
 	return GIT_ITEROVER;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_index_conflict_iterator_free(git_index_conflict_iterator *iterator)
 {
 	if (iterator == NULL)
@@ -2077,13 +2190,17 @@ void git_index_conflict_iterator_free(git_index_conflict_iterator *iterator)
 
 	git__free(iterator);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_index_name_entrycount(git_index *index)
 {
 	assert(index);
 	return index->names.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_index_name_entry *git_index_name_get_byindex(
 	git_index *index, size_t n)
 {
@@ -2092,6 +2209,7 @@ const git_index_name_entry *git_index_name_get_byindex(
 	git_vector_sort(&index->names);
 	return git_vector_get(&index->names, n);
 }
+#endif // DISABLED_FUNCTION
 
 static void index_name_entry_free(git_index_name_entry *ne)
 {
@@ -2103,6 +2221,7 @@ static void index_name_entry_free(git_index_name_entry *ne)
 	git__free(ne);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index_name_add(git_index *index,
 	const char *ancestor, const char *ours, const char *theirs)
 {
@@ -2125,6 +2244,7 @@ int git_index_name_add(git_index *index,
 	index->dirty = 1;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_index_name_clear(git_index *index)
 {
@@ -2141,19 +2261,24 @@ void git_index_name_clear(git_index *index)
 	index->dirty = 1;
 }
 
+#ifdef DISABLED_FUNCTION
 size_t git_index_reuc_entrycount(git_index *index)
 {
 	assert(index);
 	return index->reuc.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_reuc_on_dup(void **old, void *new)
 {
 	index_entry_reuc_free(*old);
 	*old = new;
 	return GIT_EEXISTS;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int index_reuc_insert(
 	git_index *index,
 	git_index_reuc_entry *reuc)
@@ -2168,7 +2293,9 @@ static int index_reuc_insert(
 
 	return res == GIT_EEXISTS ? 0 : res;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_reuc_add(git_index *index, const char *path,
 	int ancestor_mode, const git_oid *ancestor_oid,
 	int our_mode, const git_oid *our_oid,
@@ -2186,12 +2313,16 @@ int git_index_reuc_add(git_index *index, const char *path,
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_reuc_find(size_t *at_pos, git_index *index, const char *path)
 {
 	return git_vector_bsearch2(at_pos, &index->reuc, index->reuc_search, path);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_index_reuc_entry *git_index_reuc_get_bypath(
 	git_index *index, const char *path)
 {
@@ -2208,7 +2339,9 @@ const git_index_reuc_entry *git_index_reuc_get_bypath(
 
 	return git_vector_get(&index->reuc, pos);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_index_reuc_entry *git_index_reuc_get_byindex(
 	git_index *index, size_t n)
 {
@@ -2217,7 +2350,9 @@ const git_index_reuc_entry *git_index_reuc_get_byindex(
 
 	return git_vector_get(&index->reuc, n);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_reuc_remove(git_index *index, size_t position)
 {
 	int error;
@@ -2234,6 +2369,7 @@ int git_index_reuc_remove(git_index *index, size_t position)
 	index->dirty = 1;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 void git_index_reuc_clear(git_index *index)
 {
@@ -2704,6 +2840,7 @@ static bool is_index_extended(git_index *index)
 	return (extended > 0);
 }
 
+#ifdef DISABLED_FUNCTION
 static int write_disk_entry(git_filebuf *file, git_index_entry *entry, const char *last)
 {
 	void *mem = NULL;
@@ -2801,7 +2938,9 @@ static int write_disk_entry(git_filebuf *file, git_index_entry *entry, const cha
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_entries(git_index *index, git_filebuf *file)
 {
 	int error = 0;
@@ -2835,7 +2974,9 @@ static int write_entries(git_index *index, git_filebuf *file)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_extension(git_filebuf *file, struct index_extension *header, git_buf *data)
 {
 	struct index_extension ondisk;
@@ -2847,7 +2988,9 @@ static int write_extension(git_filebuf *file, struct index_extension *header, gi
 	git_filebuf_write(file, &ondisk, sizeof(struct index_extension));
 	return git_filebuf_write(file, data->ptr, data->size);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_name_extension_data(git_buf *name_buf, git_index_name_entry *conflict_name)
 {
 	int error = 0;
@@ -2876,7 +3019,9 @@ static int create_name_extension_data(git_buf *name_buf, git_index_name_entry *c
 on_error:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_name_extension(git_index *index, git_filebuf *file)
 {
 	git_buf name_buf = GIT_BUF_INIT;
@@ -2902,7 +3047,9 @@ static int write_name_extension(git_index *index, git_filebuf *file)
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_reuc_extension_data(git_buf *reuc_buf, git_index_reuc_entry *reuc)
 {
 	int i;
@@ -2924,7 +3071,9 @@ static int create_reuc_extension_data(git_buf *reuc_buf, git_index_reuc_entry *r
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_reuc_extension(git_index *index, git_filebuf *file)
 {
 	git_buf reuc_buf = GIT_BUF_INIT;
@@ -2950,7 +3099,9 @@ static int write_reuc_extension(git_index *index, git_filebuf *file)
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int write_tree_extension(git_index *index, git_filebuf *file)
 {
 	struct index_extension extension;
@@ -2973,7 +3124,9 @@ static int write_tree_extension(git_index *index, git_filebuf *file)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void clear_uptodate(git_index *index)
 {
 	git_index_entry *entry;
@@ -2982,6 +3135,7 @@ static void clear_uptodate(git_index *index)
 	git_vector_foreach(&index->entries, i, entry)
 		entry->flags_extended &= ~GIT_INDEX_ENTRY_UPTODATE;
 }
+#endif // DISABLED_FUNCTION
 
 static int write_index(git_oid *checksum, git_index *index, git_filebuf *file)
 {
@@ -3035,15 +3189,19 @@ static int write_index(git_oid *checksum, git_index *index, git_filebuf *file)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_index_entry_stage(const git_index_entry *entry)
 {
 	return GIT_INDEX_ENTRY_STAGE(entry);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_entry_is_conflict(const git_index_entry *entry)
 {
 	return (GIT_INDEX_ENTRY_STAGE(entry) > 0);
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct read_tree_data {
 	git_index *index;
@@ -3053,6 +3211,7 @@ typedef struct read_tree_data {
 	git_tree_cache *tree;
 } read_tree_data;
 
+#ifdef DISABLED_FUNCTION
 static int read_tree_cb(
 	const char *root, const git_tree_entry *tentry, void *payload)
 {
@@ -3095,7 +3254,9 @@ static int read_tree_cb(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_read_tree(git_index *index, const git_tree *tree)
 {
 	int error = 0;
@@ -3160,7 +3321,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_index_read_iterator(
 	git_index *index,
 	git_iterator *new_iterator,
@@ -3299,7 +3462,9 @@ done:
 	git_iterator_free(index_iterator);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_read_index(
 	git_index *index,
 	const git_index *new_index)
@@ -3321,11 +3486,14 @@ done:
 	git_iterator_free(new_iterator);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_repository *git_index_owner(const git_index *index)
 {
 	return INDEX_OWNER(index);
 }
+#endif // DISABLED_FUNCTION
 
 enum {
 	INDEX_ACTION_NONE = 0,
@@ -3334,6 +3502,7 @@ enum {
 	INDEX_ACTION_ADDALL = 3,
 };
 
+#ifdef DISABLED_FUNCTION
 int git_index_add_all(
 	git_index *index,
 	const git_strarray *paths,
@@ -3374,6 +3543,7 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 struct foreach_diff_data {
 	git_index *index;
@@ -3475,6 +3645,7 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 static int index_apply_to_all(
 	git_index *index,
 	int action,
@@ -3549,7 +3720,9 @@ static int index_apply_to_all(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_remove_all(
 	git_index *index,
 	const git_strarray *pathspec,
@@ -3564,7 +3737,9 @@ int git_index_remove_all(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_update_all(
 	git_index *index,
 	const git_strarray *pathspec,
@@ -3577,7 +3752,9 @@ int git_index_update_all(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_snapshot_new(git_vector *snap, git_index *index)
 {
 	int error;
@@ -3594,7 +3771,9 @@ int git_index_snapshot_new(git_vector *snap, git_index *index)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_index_snapshot_release(git_vector *snap, git_index *index)
 {
 	git_vector_free(snap);
@@ -3603,14 +3782,18 @@ void git_index_snapshot_release(git_vector *snap, git_index *index)
 
 	git_index_free(index);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_index_snapshot_find(
 	size_t *out, git_vector *entries, git_vector_cmp entry_srch,
 	const char *path, size_t path_len, int stage)
 {
 	return index_find_in_entries(out, entries, entry_srch, path, path_len, stage);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_indexwriter_init(
 	git_indexwriter *writer,
 	git_index *index)
@@ -3638,7 +3821,9 @@ int git_indexwriter_init(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_indexwriter_init_for_operation(
 	git_indexwriter *writer,
 	git_repository *repo,
@@ -3656,7 +3841,9 @@ int git_indexwriter_init_for_operation(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_indexwriter_commit(git_indexwriter *writer)
 {
 	int error;
@@ -3691,7 +3878,9 @@ int git_indexwriter_commit(git_indexwriter *writer)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_indexwriter_cleanup(git_indexwriter *writer)
 {
 	git_filebuf_cleanup(&writer->file);
@@ -3699,3 +3888,4 @@ void git_indexwriter_cleanup(git_indexwriter *writer)
 	git_index_free(writer->index);
 	writer->index = NULL;
 }
+#endif // DISABLED_FUNCTION

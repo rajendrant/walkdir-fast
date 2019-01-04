@@ -44,13 +44,16 @@ GIT_INLINE(int) resize_vector(git_vector *v, size_t new_size)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_vector_size_hint(git_vector *v, size_t size_hint)
 {
 	if (v->_alloc_size >= size_hint)
 		return 0;
 	return resize_vector(v, size_hint);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_vector_dup(git_vector *v, const git_vector *src, git_vector_cmp cmp)
 {
 	assert(v && src);
@@ -74,6 +77,7 @@ int git_vector_dup(git_vector *v, const git_vector *src, git_vector_cmp cmp)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_vector_free(git_vector *v)
 {
@@ -113,6 +117,7 @@ int git_vector_init(git_vector *v, size_t initial_size, git_vector_cmp cmp)
 	return resize_vector(v, max(initial_size, MIN_ALLOCSIZE));
 }
 
+#ifdef DISABLED_FUNCTION
 void **git_vector_detach(size_t *size, size_t *asize, git_vector *v)
 {
 	void **data = v->contents;
@@ -128,6 +133,7 @@ void **git_vector_detach(size_t *size, size_t *asize, git_vector *v)
 
 	return data;
 }
+#endif // DISABLED_FUNCTION
 
 int git_vector_insert(git_vector *v, void *element)
 {
@@ -207,6 +213,7 @@ int git_vector_bsearch2(
 	return git__bsearch(v->contents, v->length, key, key_lookup, at_pos);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_vector_search2(
 	size_t *at_pos, const git_vector *v, git_vector_cmp key_lookup, const void *key)
 {
@@ -225,16 +232,21 @@ int git_vector_search2(
 
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int strict_comparison(const void *a, const void *b)
 {
 	return (a == b) ? 0 : -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_vector_search(size_t *at_pos, const git_vector *v, const void *entry)
 {
 	return git_vector_search2(at_pos, v, v->_cmp ? v->_cmp : strict_comparison, entry);
 }
+#endif // DISABLED_FUNCTION
 
 int git_vector_remove(git_vector *v, size_t idx)
 {
@@ -261,6 +273,7 @@ void git_vector_pop(git_vector *v)
 		v->length--;
 }
 
+#ifdef DISABLED_FUNCTION
 void git_vector_uniq(git_vector *v, void  (*git_free_cb)(void *))
 {
 	git_vector_cmp cmp;
@@ -283,7 +296,9 @@ void git_vector_uniq(git_vector *v, void  (*git_free_cb)(void *))
 
 	v->length -= j - i - 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_vector_remove_matching(
 	git_vector *v,
 	int (*match)(const git_vector *v, size_t idx, void *payload),
@@ -300,6 +315,7 @@ void git_vector_remove_matching(
 
 	v->length = i;
 }
+#endif // DISABLED_FUNCTION
 
 void git_vector_clear(git_vector *v)
 {
@@ -308,6 +324,7 @@ void git_vector_clear(git_vector *v)
 	git_vector_set_sorted(v, 1);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_vector_swap(git_vector *a, git_vector *b)
 {
 	git_vector t;
@@ -320,6 +337,7 @@ void git_vector_swap(git_vector *a, git_vector *b)
 		memcpy(b, &t, sizeof(t));
 	}
 }
+#endif // DISABLED_FUNCTION
 
 int git_vector_resize_to(git_vector *v, size_t new_length)
 {
@@ -336,6 +354,7 @@ int git_vector_resize_to(git_vector *v, size_t new_length)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_vector_insert_null(git_vector *v, size_t idx, size_t insert_len)
 {
 	size_t new_length;
@@ -354,7 +373,9 @@ int git_vector_insert_null(git_vector *v, size_t idx, size_t insert_len)
 	v->length = new_length;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_vector_remove_range(git_vector *v, size_t idx, size_t remove_len)
 {
 	size_t new_length = v->length - remove_len;
@@ -376,6 +397,7 @@ int git_vector_remove_range(git_vector *v, size_t idx, size_t remove_len)
 	v->length = new_length;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_vector_set(void **old, git_vector *v, size_t position, void *value)
 {
@@ -392,6 +414,7 @@ int git_vector_set(void **old, git_vector *v, size_t position, void *value)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_vector_verify_sorted(const git_vector *v)
 {
 	size_t i;
@@ -406,7 +429,9 @@ int git_vector_verify_sorted(const git_vector *v)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_vector_reverse(git_vector *v)
 {
 	size_t a, b;
@@ -425,3 +450,4 @@ void git_vector_reverse(git_vector *v)
 		b--;
 	}
 }
+#endif // DISABLED_FUNCTION

@@ -33,6 +33,7 @@ typedef struct {
 	char *old_prefix, *new_prefix;
 } git_patch_parsed;
 
+#ifdef DISABLED_FUNCTION
 static int header_path_len(git_patch_parse_ctx *ctx)
 {
 	bool inquote = 0;
@@ -52,7 +53,9 @@ static int header_path_len(git_patch_parse_ctx *ctx)
 
 	return len;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_path_buf(git_buf *path, git_patch_parse_ctx *ctx, size_t path_len)
 {
 	int error;
@@ -75,7 +78,9 @@ static int parse_header_path_buf(git_buf *path, git_patch_parse_ctx *ctx, size_t
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_path(char **out, git_patch_parse_ctx *ctx)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -85,7 +90,9 @@ static int parse_header_path(char **out, git_patch_parse_ctx *ctx)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_oldpath(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
@@ -101,7 +108,9 @@ out:
 	git_buf_dispose(&old_path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_newpath(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
@@ -117,7 +126,9 @@ out:
 	git_buf_dispose(&new_path);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_mode(uint16_t *mode, git_patch_parse_ctx *ctx)
 {
 	int64_t m;
@@ -132,7 +143,9 @@ static int parse_header_mode(uint16_t *mode, git_patch_parse_ctx *ctx)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_oid(
 	git_oid *oid,
 	uint16_t *oid_len,
@@ -156,7 +169,9 @@ static int parse_header_oid(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_index(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
@@ -186,19 +201,25 @@ static int parse_header_git_index(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_oldmode(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	return parse_header_mode(&patch->base.delta->old_file.mode, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_newmode(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	return parse_header_mode(&patch->base.delta->new_file.mode, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_deletedfilemode(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -211,7 +232,9 @@ static int parse_header_git_deletedfilemode(
 
 	return parse_header_mode(&patch->base.delta->old_file.mode, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git_newfilemode(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -224,7 +247,9 @@ static int parse_header_git_newfilemode(
 
 	return parse_header_mode(&patch->base.delta->new_file.mode, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_rename(
 	char **out,
 	git_patch_parse_ctx *ctx)
@@ -240,35 +265,45 @@ static int parse_header_rename(
 	*out = git_buf_detach(&path);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_renamefrom(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	patch->base.delta->status = GIT_DELTA_RENAMED;
 	return parse_header_rename(&patch->rename_old_path, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_renameto(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	patch->base.delta->status = GIT_DELTA_RENAMED;
 	return parse_header_rename(&patch->rename_new_path, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_copyfrom(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	patch->base.delta->status = GIT_DELTA_COPIED;
 	return parse_header_rename(&patch->rename_old_path, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_copyto(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	patch->base.delta->status = GIT_DELTA_COPIED;
 	return parse_header_rename(&patch->rename_new_path, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_percent(uint16_t *out, git_patch_parse_ctx *ctx)
 {
 	int64_t val;
@@ -285,7 +320,9 @@ static int parse_header_percent(uint16_t *out, git_patch_parse_ctx *ctx)
 	*out = val;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_similarity(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
@@ -295,7 +332,9 @@ static int parse_header_similarity(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_dissimilarity(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
@@ -309,7 +348,9 @@ static int parse_header_dissimilarity(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_start(git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
 	if (parse_header_path(&patch->header_old_path, ctx) < 0)
@@ -339,7 +380,9 @@ static int parse_header_start(git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 typedef enum {
 	STATE_START,
 
@@ -395,7 +438,9 @@ static const parse_header_transition transitions[] = {
 	{ "@@ -"                , STATE_END,        0,                NULL },
 	{ "-- "                 , STATE_END,        0,                NULL },
 };
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_header_git(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -457,7 +502,9 @@ static int parse_header_git(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_int(int *out, git_patch_parse_ctx *ctx)
 {
 	git_off_t num;
@@ -468,7 +515,9 @@ static int parse_int(int *out, git_patch_parse_ctx *ctx)
 	*out = (int)num;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_hunk_header(
 	git_patch_hunk *hunk,
 	git_patch_parse_ctx *ctx)
@@ -522,7 +571,9 @@ fail:
 		ctx->parse_ctx.line_num);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_hunk_body(
 	git_patch_parsed *patch,
 	git_patch_hunk *hunk,
@@ -628,7 +679,9 @@ static int parse_hunk_body(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_patch_header(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -679,7 +732,9 @@ static int parse_patch_header(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_patch_binary_side(
 	git_diff_binary_file *binary,
 	git_patch_parse_ctx *ctx)
@@ -761,7 +816,9 @@ done:
 	git_buf_dispose(&decoded);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_patch_binary(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -794,7 +851,9 @@ static int parse_patch_binary(
 	patch->base.delta->flags |= GIT_DIFF_FLAG_BINARY;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_patch_binary_nodata(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -811,7 +870,9 @@ static int parse_patch_binary_nodata(
 	patch->base.delta->flags |= GIT_DIFF_FLAG_BINARY;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_patch_hunks(
 	git_patch_parsed *patch,
 	git_patch_parse_ctx *ctx)
@@ -838,7 +899,9 @@ static int parse_patch_hunks(
 done:
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int parse_patch_body(
 	git_patch_parsed *patch, git_patch_parse_ctx *ctx)
 {
@@ -849,7 +912,9 @@ static int parse_patch_body(
 	else
 		return parse_patch_hunks(patch, ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int check_header_names(
 	const char *one,
 	const char *two,
@@ -867,7 +932,9 @@ int check_header_names(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_prefix(
 	char **out,
 	size_t *out_len,
@@ -906,7 +973,9 @@ done:
 
 	return (*out == NULL) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_filenames(git_patch_parsed *patch)
 {
 	const char *prefixed_new, *prefixed_old;
@@ -955,7 +1024,9 @@ static int check_filenames(git_patch_parsed *patch)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_patch(git_patch_parsed *patch)
 {
 	git_diff_delta *delta = patch->base.delta;
@@ -986,7 +1057,9 @@ static int check_patch(git_patch_parsed *patch)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_patch_parse_ctx *git_patch_parse_ctx_init(
 	const char *content,
 	size_t content_len,
@@ -1011,7 +1084,9 @@ git_patch_parse_ctx *git_patch_parse_ctx_init(
 	GIT_REFCOUNT_INC(ctx);
 	return ctx;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void patch_parse_ctx_free(git_patch_parse_ctx *ctx)
 {
 	if (!ctx)
@@ -1020,12 +1095,16 @@ static void patch_parse_ctx_free(git_patch_parse_ctx *ctx)
 	git_parse_ctx_clear(&ctx->parse_ctx);
 	git__free(ctx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_patch_parse_ctx_free(git_patch_parse_ctx *ctx)
 {
 	GIT_REFCOUNT_DEC(ctx, patch_parse_ctx_free);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_parsed_from_diff(git_patch **out, git_diff *d, size_t idx)
 {
 	git_diff_parsed *diff = (git_diff_parsed *)d;
@@ -1039,7 +1118,9 @@ int git_patch_parsed_from_diff(git_patch **out, git_diff *d, size_t idx)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void patch_parsed__free(git_patch *p)
 {
 	git_patch_parsed *patch = (git_patch_parsed *)p;
@@ -1065,7 +1146,9 @@ static void patch_parsed__free(git_patch *p)
 	git__free(patch->new_path);
 	git__free(patch);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_parse(
 	git_patch **out,
 	git_patch_parse_ctx *ctx)
@@ -1115,7 +1198,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_patch_from_buffer(
 	git_patch **out,
 	const char *content,
@@ -1133,4 +1218,4 @@ int git_patch_from_buffer(
 	git_patch_parse_ctx_free(ctx);
 	return error;
 }
-
+#endif // DISABLED_FUNCTION

@@ -21,6 +21,7 @@ static const char *const git_generated_prefixes[] = {
 	NULL
 };
 
+#ifdef DISABLED_FUNCTION
 static int is_blank_line(const char *str)
 {
 	const char *s = str;
@@ -28,7 +29,9 @@ static int is_blank_line(const char *str)
 		s++;
 	return !*s || *s == '\n';
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *next_line(const char *str)
 {
 	const char *nl = strchr(str, '\n');
@@ -40,10 +43,12 @@ static const char *next_line(const char *str)
 		return str + strlen(str);
 	}
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Return the position of the start of the last line. If len is 0, return -1.
  */
+#ifdef DISABLED_FUNCTION
 static int last_line(const char *buf, size_t len)
 {
 	int i;
@@ -64,6 +69,7 @@ static int last_line(const char *buf, size_t len)
 	}
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * If the given line is of the form
@@ -76,6 +82,7 @@ static int last_line(const char *buf, size_t len)
  * distinguished from the non-well-formed-line case (in which this function
  * returns -1) because some callers of this function need such a distinction.
  */
+#ifdef DISABLED_FUNCTION
 static int find_separator(const char *line, const char *separators)
 {
 	int whitespace_found = 0;
@@ -93,6 +100,7 @@ static int find_separator(const char *line, const char *separators)
 	}
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Inspect the given string and determine the true "end" of the log message, in
@@ -104,6 +112,7 @@ static int find_separator(const char *line, const char *separators)
  * Returns the number of bytes from the tail to ignore, to be fed as
  * the second parameter to append_signoff().
  */
+#ifdef DISABLED_FUNCTION
 static int ignore_non_trailer(const char *buf, size_t len)
 {
 	int boc = 0;
@@ -139,11 +148,13 @@ static int ignore_non_trailer(const char *buf, size_t len)
 	}
 	return boc ? len - boc : len - cutoff;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Return the position of the start of the patch or the length of str if there
  * is no patch in the message.
  */
+#ifdef DISABLED_FUNCTION
 static int find_patch_start(const char *str)
 {
 	const char *s;
@@ -155,11 +166,13 @@ static int find_patch_start(const char *str)
 
 	return s - str;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Return the position of the first trailer line or len if there are no
  * trailers.
  */
+#ifdef DISABLED_FUNCTION
 static int find_trailer_start(const char *buf, size_t len)
 {
 	const char *s;
@@ -242,13 +255,17 @@ continue_outer_loop:
 
 	return len;
 }
+#endif // DISABLED_FUNCTION
 
 /* Return the position of the end of the trailers. */
+#ifdef DISABLED_FUNCTION
 static int find_trailer_end(const char *buf, size_t len)
 {
 	return len - ignore_non_trailer(buf, len);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static char *extract_trailer_block(const char *message, size_t* len)
 {
 	size_t patch_start = find_patch_start(message);
@@ -265,6 +282,7 @@ static char *extract_trailer_block(const char *message, size_t* len)
 
 	return buffer;
 }
+#endif // DISABLED_FUNCTION
 
 enum trailer_state {
 	S_START = 0,
@@ -282,6 +300,7 @@ enum trailer_state {
 
 typedef git_array_t(git_message_trailer) git_array_trailer_t;
 
+#ifdef DISABLED_FUNCTION
 int git_message_trailers(git_message_trailer_array *trailer_arr, const char *message)
 {
 	enum trailer_state state = S_START;
@@ -408,9 +427,12 @@ ret:
 
 	return rc;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_message_trailer_array_free(git_message_trailer_array *arr)
 {
 	git__free(arr->_trailer_block);
 	git__free(arr->trailers);
 }
+#endif // DISABLED_FUNCTION

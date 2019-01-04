@@ -14,11 +14,14 @@
 
 #include <git2/sys/refdb_backend.h>
 
+#ifdef DISABLED_FUNCTION
 git_reflog_entry *git_reflog_entry__alloc(void)
 {
 	return git__calloc(1, sizeof(git_reflog_entry));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_reflog_entry__free(git_reflog_entry *entry)
 {
 	git_signature_free(entry->committer);
@@ -26,7 +29,9 @@ void git_reflog_entry__free(git_reflog_entry *entry)
 	git__free(entry->msg);
 	git__free(entry);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_reflog_free(git_reflog *reflog)
 {
 	size_t i;
@@ -48,7 +53,9 @@ void git_reflog_free(git_reflog *reflog)
 	git__free(reflog->ref_name);
 	git__free(reflog);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reflog_read(git_reflog **reflog, git_repository *repo,  const char *name)
 {
 	git_refdb *refdb;
@@ -61,7 +68,9 @@ int git_reflog_read(git_reflog **reflog, git_repository *repo,  const char *name
 
 	return git_refdb_reflog_read(reflog, refdb, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reflog_write(git_reflog *reflog)
 {
 	git_refdb *db;
@@ -71,7 +80,9 @@ int git_reflog_write(git_reflog *reflog)
 	db = reflog->db;
 	return db->backend->reflog_write(db->backend, reflog);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reflog_append(git_reflog *reflog, const git_oid *new_oid, const git_signature *committer, const char *msg)
 {
 	git_reflog_entry *entry;
@@ -120,7 +131,9 @@ cleanup:
 	git_reflog_entry__free(entry);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reflog_rename(git_repository *repo, const char *old_name, const char *new_name)
 {
 	git_refdb *refdb;
@@ -131,7 +144,9 @@ int git_reflog_rename(git_repository *repo, const char *old_name, const char *ne
 
 	return refdb->backend->reflog_rename(refdb->backend, old_name, new_name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reflog_delete(git_repository *repo, const char *name)
 {
 	git_refdb *refdb;
@@ -142,13 +157,17 @@ int git_reflog_delete(git_repository *repo, const char *name)
 
 	return refdb->backend->reflog_delete(refdb->backend, name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_reflog_entrycount(git_reflog *reflog)
 {
 	assert(reflog);
 	return reflog->entries.length;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_reflog_entry * git_reflog_entry_byindex(const git_reflog *reflog, size_t idx)
 {
 	assert(reflog);
@@ -159,31 +178,41 @@ const git_reflog_entry * git_reflog_entry_byindex(const git_reflog *reflog, size
 	return git_vector_get(
 		&reflog->entries, reflog_inverse_index(idx, reflog->entries.length));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid * git_reflog_entry_id_old(const git_reflog_entry *entry)
 {
 	assert(entry);
 	return &entry->oid_old;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid * git_reflog_entry_id_new(const git_reflog_entry *entry)
 {
 	assert(entry);
 	return &entry->oid_cur;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_signature * git_reflog_entry_committer(const git_reflog_entry *entry)
 {
 	assert(entry);
 	return entry->committer;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char * git_reflog_entry_message(const git_reflog_entry *entry)
 {
 	assert(entry);
 	return entry->msg;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_reflog_drop(git_reflog *reflog, size_t idx, int rewrite_previous_entry)
 {
 	size_t entrycount;
@@ -231,3 +260,4 @@ int git_reflog_drop(git_reflog *reflog, size_t idx, int rewrite_previous_entry)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION

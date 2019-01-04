@@ -16,12 +16,14 @@
 
 __KHASH_TYPE(oid, const git_oid *, void *)
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(khint_t) git_oidmap_hash(const git_oid *oid)
 {
 	khint_t h;
 	memcpy(&h, oid, sizeof(khint_t));
 	return h;
 }
+#endif // DISABLED_FUNCTION
 
 __KHASH_IMPL(oid, static kh_inline, const git_oid *, void *, 1, git_oidmap_hash, git_oid_equal)
 
@@ -106,12 +108,14 @@ void git_oidmap_insert(git_oidmap *map, const git_oid *key, void *value, int *rv
 	}
 }
 
+#ifdef DISABLED_FUNCTION
 void git_oidmap_delete(git_oidmap *map, const git_oid *key)
 {
 	khiter_t idx = git_oidmap_lookup_index(map, key);
 	if (git_oidmap_valid_index(map, idx))
 		git_oidmap_delete_at(map, idx);
 }
+#endif // DISABLED_FUNCTION
 
 size_t git_oidmap_begin(git_oidmap *map)
 {

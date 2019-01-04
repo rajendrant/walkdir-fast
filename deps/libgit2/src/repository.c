@@ -251,6 +251,7 @@ on_error:
 	return NULL;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_new(git_repository **out)
 {
 	git_repository *repo;
@@ -263,6 +264,7 @@ int git_repository_new(git_repository **out)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static int load_config_data(git_repository *repo, const git_config *config)
 {
@@ -562,6 +564,7 @@ static int find_repo(
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_open_bare(
 	git_repository **repo_ptr,
 	const char *bare_path)
@@ -596,6 +599,7 @@ int git_repository_open_bare(
 	*repo_ptr = repo;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static int _git_repository_open_ext_from_env(
 	git_repository **out,
@@ -868,12 +872,15 @@ cleanup:
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_open(git_repository **repo_out, const char *path)
 {
 	return git_repository_open_ext(
 		repo_out, path, GIT_REPOSITORY_OPEN_NO_SEARCH, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_open_from_worktree(git_repository **repo_out, git_worktree *wt)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -903,7 +910,9 @@ out:
 
 	return err;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_wrap_odb(git_repository **repo_out, git_odb *odb)
 {
 	git_repository *repo;
@@ -916,7 +925,9 @@ int git_repository_wrap_odb(git_repository **repo_out, git_odb *odb)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_discover(
 	git_buf *out,
 	const char *start_path,
@@ -931,6 +942,7 @@ int git_repository_discover(
 
 	return find_repo(out, NULL, NULL, NULL, start_path, flags, ceiling_dirs);
 }
+#endif // DISABLED_FUNCTION
 
 static int load_config(
 	git_config **out,
@@ -1046,6 +1058,7 @@ int git_repository_config__weakptr(git_config **out, git_repository *repo)
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_config(git_config **out, git_repository *repo)
 {
 	if (git_repository_config__weakptr(out, repo) < 0)
@@ -1054,6 +1067,7 @@ int git_repository_config(git_config **out, git_repository *repo)
 	GIT_REFCOUNT_INC(*out);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_repository_config_snapshot(git_config **out, git_repository *repo)
 {
@@ -1066,11 +1080,13 @@ int git_repository_config_snapshot(git_config **out, git_repository *repo)
 	return git_config_snapshot(out, weak);
 }
 
+#ifdef DISABLED_FUNCTION
 void git_repository_set_config(git_repository *repo, git_config *config)
 {
 	assert(repo && config);
 	set_config(repo, config);
 }
+#endif // DISABLED_FUNCTION
 
 int git_repository_odb__weakptr(git_odb **out, git_repository *repo)
 {
@@ -1123,6 +1139,7 @@ void git_repository_set_odb(git_repository *repo, git_odb *odb)
 	set_odb(repo, odb);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_refdb__weakptr(git_refdb **out, git_repository *repo)
 {
 	int error = 0;
@@ -1147,7 +1164,9 @@ int git_repository_refdb__weakptr(git_refdb **out, git_repository *repo)
 	*out = repo->_refdb;
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_refdb(git_refdb **out, git_repository *repo)
 {
 	if (git_repository_refdb__weakptr(out, repo) < 0)
@@ -1156,12 +1175,15 @@ int git_repository_refdb(git_refdb **out, git_repository *repo)
 	GIT_REFCOUNT_INC(*out);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_repository_set_refdb(git_repository *repo, git_refdb *refdb)
 {
 	assert(repo && refdb);
 	set_refdb(repo, refdb);
 }
+#endif // DISABLED_FUNCTION
 
 int git_repository_index__weakptr(git_index **out, git_repository *repo)
 {
@@ -1197,6 +1219,7 @@ int git_repository_index__weakptr(git_index **out, git_repository *repo)
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_index(git_index **out, git_repository *repo)
 {
 	if (git_repository_index__weakptr(out, repo) < 0)
@@ -1205,6 +1228,7 @@ int git_repository_index(git_index **out, git_repository *repo)
 	GIT_REFCOUNT_INC(*out);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_repository_set_index(git_repository *repo, git_index *index)
 {
@@ -1224,10 +1248,12 @@ int git_repository_set_namespace(git_repository *repo, const char *namespace_)
 	return (repo->namespace_ = git__strdup(namespace_)) ? 0 : -1;
 }
 
+#ifdef DISABLED_FUNCTION
 const char *git_repository_get_namespace(git_repository *repo)
 {
 	return repo->namespace_;
 }
+#endif // DISABLED_FUNCTION
 
 #ifdef GIT_WIN32
 static int reserved_names_add8dot3(git_repository *repo, const char *path)
@@ -1353,6 +1379,7 @@ static int check_repositoryformatversion(git_config *config)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_create_head(const char *git_dir, const char *ref_name)
 {
 	git_buf ref_path = GIT_BUF_INIT;
@@ -1383,7 +1410,9 @@ fail:
 	git_filebuf_cleanup(&ref);
 	return -1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool is_chmod_supported(const char *file_path)
 {
 	struct stat st1, st2;
@@ -1399,7 +1428,9 @@ static bool is_chmod_supported(const char *file_path)
 
 	return (st1.st_mode != st2.st_mode);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool is_filesystem_case_insensitive(const char *gitdir_path)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -1411,7 +1442,9 @@ static bool is_filesystem_case_insensitive(const char *gitdir_path)
 	git_buf_dispose(&path);
 	return is_insensitive;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool are_symlinks_supported(const char *wd_path)
 {
 	git_config *config = NULL;
@@ -1465,7 +1498,9 @@ done:
 	git_config_free(config);
 	return symlinks != 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int create_empty_file(const char *path, mode_t mode)
 {
 	int fd;
@@ -1482,7 +1517,9 @@ static int create_empty_file(const char *path, mode_t mode)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_local_config(
 	git_config **out,
 	git_buf *config_dir,
@@ -1522,7 +1559,9 @@ static int repo_local_config(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_init_fs_configs(
 	git_config *cfg,
 	const char *cfg_path,
@@ -1563,7 +1602,9 @@ static int repo_init_fs_configs(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_init_config(
 	const char *repo_dir,
 	const char *work_dir,
@@ -1627,7 +1668,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_reinit_submodule_fs(git_submodule *sm, const char *n, void *p)
 {
 	git_repository *smrepo = NULL;
@@ -1640,7 +1683,9 @@ static int repo_reinit_submodule_fs(git_submodule *sm, const char *n, void *p)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_reinit_filesystem(git_repository *repo, int recurse)
 {
 	int error = 0;
@@ -1662,7 +1707,9 @@ int git_repository_reinit_filesystem(git_repository *repo, int recurse)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_write_template(
 	const char *git_dir,
 	bool allow_overwrite,
@@ -1709,7 +1756,9 @@ static int repo_write_template(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_write_gitlink(
 	const char *in_dir, const char *to_repo, bool use_relative_path)
 {
@@ -1759,7 +1808,9 @@ cleanup:
 	git_buf_dispose(&path_to_repo);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static mode_t pick_dir_mode(git_repository_init_options *opts)
 {
 	if (opts->mode == GIT_REPOSITORY_INIT_SHARED_UMASK)
@@ -1770,9 +1821,11 @@ static mode_t pick_dir_mode(git_repository_init_options *opts)
 		return (0777 | S_ISGID);
 	return opts->mode;
 }
+#endif // DISABLED_FUNCTION
 
 #include "repo_template.h"
 
+#ifdef DISABLED_FUNCTION
 static int repo_init_structure(
 	const char *repo_dir,
 	const char *work_dir,
@@ -1880,7 +1933,9 @@ static int repo_init_structure(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int mkdir_parent(git_buf *buf, uint32_t mode, bool skip2)
 {
 	/* When making parent directories during repository initialization
@@ -1891,7 +1946,9 @@ static int mkdir_parent(git_buf *buf, uint32_t mode, bool skip2)
 		GIT_MKDIR_PATH | GIT_MKDIR_VERIFY_DIR |
 		(skip2 ? GIT_MKDIR_SKIP_LAST2 : GIT_MKDIR_SKIP_LAST));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_init_directories(
 	git_buf *repo_path,
 	git_buf *wd_path,
@@ -2023,7 +2080,9 @@ static int repo_init_directories(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_init_create_origin(git_repository *repo, const char *url)
 {
 	int error;
@@ -2035,7 +2094,9 @@ static int repo_init_create_origin(git_repository *repo, const char *url)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_init(
 	git_repository **repo_out, const char *path, unsigned is_bare)
 {
@@ -2047,7 +2108,9 @@ int git_repository_init(
 
 	return git_repository_init_ext(repo_out, path, &opts);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_init_ext(
 	git_repository **out,
 	const char *given_repo,
@@ -2106,7 +2169,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_head_detached(git_repository *repo)
 {
 	git_reference *ref;
@@ -2129,13 +2194,17 @@ int git_repository_head_detached(git_repository *repo)
 	git_reference_free(ref);
 	return exists;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int get_worktree_file_path(git_buf *out, git_repository *repo, const char *worktree, const char *file)
 {
 	git_buf_clear(out);
 	return git_buf_printf(out, "%s/worktrees/%s/%s", repo->commondir, worktree, file);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_head_detached_for_worktree(git_repository *repo, const char *name)
 {
 	git_reference *ref = NULL;
@@ -2152,7 +2221,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_head(git_reference **head_out, git_repository *repo)
 {
 	git_reference *head;
@@ -2173,7 +2244,9 @@ int git_repository_head(git_reference **head_out, git_repository *repo)
 
 	return error == GIT_ENOTFOUND ? GIT_EUNBORNBRANCH : error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_head_for_worktree(git_reference **out, git_repository *repo, const char *name)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -2206,7 +2279,9 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_foreach_head(git_repository *repo, git_repository_foreach_head_cb cb, void *payload)
 {
 	git_strarray worktrees = GIT_VECTOR_INIT;
@@ -2238,7 +2313,9 @@ out:
 	git_strarray_free(&worktrees);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_head_unborn(git_repository *repo)
 {
 	git_reference *ref = NULL;
@@ -2257,14 +2334,18 @@ int git_repository_head_unborn(git_repository *repo)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int at_least_one_cb(const char *refname, void *payload)
 {
 	GIT_UNUSED(refname);
 	GIT_UNUSED(payload);
 	return GIT_PASSTHROUGH;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int repo_contains_no_reference(git_repository *repo)
 {
 	int error = git_reference_foreach_name(repo, &at_least_one_cb, NULL);
@@ -2277,7 +2358,9 @@ static int repo_contains_no_reference(git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_is_empty(git_repository *repo)
 {
 	git_reference *head = NULL;
@@ -2296,6 +2379,7 @@ int git_repository_is_empty(git_repository *repo)
 
 	return is_empty;
 }
+#endif // DISABLED_FUNCTION
 
 int git_repository_item_path(git_buf *out, const git_repository *repo, git_repository_item_t item)
 {
@@ -2359,6 +2443,7 @@ const char *git_repository_commondir(const git_repository *repo)
 	return repo->commondir;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_set_workdir(
 	git_repository *repo, const char *workdir, int update_gitlink)
 {
@@ -2402,6 +2487,7 @@ int git_repository_set_workdir(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_repository_is_bare(const git_repository *repo)
 {
@@ -2409,12 +2495,15 @@ int git_repository_is_bare(const git_repository *repo)
 	return repo->is_bare;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_repository_is_worktree(const git_repository *repo)
 {
 	assert(repo);
 	return repo->is_worktree;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_set_bare(git_repository *repo)
 {
 	int error;
@@ -2440,7 +2529,9 @@ int git_repository_set_bare(git_repository *repo)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_head_tree(git_tree **tree, git_repository *repo)
 {
 	git_reference *head;
@@ -2459,7 +2550,9 @@ cleanup:
 	git_reference_free(head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository__set_orig_head(git_repository *repo, const git_oid *orig_head)
 {
 	git_filebuf file = GIT_FILEBUF_INIT;
@@ -2481,7 +2574,9 @@ int git_repository__set_orig_head(git_repository *repo, const git_oid *orig_head
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_message(git_buf *out, git_repository *repo)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -2505,7 +2600,9 @@ int git_repository_message(git_buf *out, git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_message_remove(git_repository *repo)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -2519,7 +2616,9 @@ int git_repository_message_remove(git_repository *repo)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_hashfile(
 	git_oid *out,
 	git_repository *repo,
@@ -2589,7 +2688,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int checkout_message(git_buf *out, git_reference *old, const char *new)
 {
 	git_buf_puts(out, "checkout: moving from ");
@@ -2613,7 +2714,9 @@ static int checkout_message(git_buf *out, git_reference *old, const char *new)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int detach(git_repository *repo, const git_oid *id, const char *new)
 {
 	int error;
@@ -2648,7 +2751,9 @@ cleanup:
 	git_reference_free(new_head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_set_head(
 	git_repository* repo,
 	const char* refname)
@@ -2697,14 +2802,18 @@ cleanup:
 	git_reference_free(new_head);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_set_head_detached(
 	git_repository* repo,
 	const git_oid* commitish)
 {
 	return detach(repo, commitish, NULL);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_set_head_detached_from_annotated(
 	git_repository *repo,
 	const git_annotated_commit *commitish)
@@ -2713,7 +2822,9 @@ int git_repository_set_head_detached_from_annotated(
 
 	return detach(repo, git_annotated_commit_id(commitish), commitish->description);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_detach_head(git_repository* repo)
 {
 	git_reference *old_head = NULL,	*new_head = NULL, *current = NULL;
@@ -2746,11 +2857,13 @@ cleanup:
 	git_reference_free(current);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /**
  * Loosely ported from git.git
  * https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh#L198-289
  */
+#ifdef DISABLED_FUNCTION
 int git_repository_state(git_repository *repo)
 {
 	git_buf repo_path = GIT_BUF_INIT;
@@ -2789,7 +2902,9 @@ int git_repository_state(git_repository *repo)
 	git_buf_dispose(&repo_path);
 	return state;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository__cleanup_files(
 	git_repository *repo, const char *files[], size_t files_len)
 {
@@ -2818,6 +2933,7 @@ int git_repository__cleanup_files(
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 static const char *state_files[] = {
 	GIT_MERGE_HEAD_FILE,
@@ -2831,13 +2947,16 @@ static const char *state_files[] = {
 	GIT_SEQUENCER_DIR,
 };
 
+#ifdef DISABLED_FUNCTION
 int git_repository_state_cleanup(git_repository *repo)
 {
 	assert(repo);
 
 	return git_repository__cleanup_files(repo, state_files, ARRAY_SIZE(state_files));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_is_shallow(git_repository *repo)
 {
 	git_buf path = GIT_BUF_INIT;
@@ -2859,7 +2978,9 @@ int git_repository_is_shallow(git_repository *repo)
 		return error;
 	return st.st_size == 0 ? 0 : 1;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_init_init_options(
 	git_repository_init_options *opts, unsigned int version)
 {
@@ -2868,7 +2989,9 @@ int git_repository_init_init_options(
 		GIT_REPOSITORY_INIT_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_ident(const char **name, const char **email, const git_repository *repo)
 {
 	*name = repo->ident_name;
@@ -2876,7 +2999,9 @@ int git_repository_ident(const char **name, const char **email, const git_reposi
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_set_ident(git_repository *repo, const char *name, const char *email)
 {
 	char *tmp_name = NULL, *tmp_email = NULL;
@@ -2899,7 +3024,9 @@ int git_repository_set_ident(git_repository *repo, const char *name, const char 
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_repository_submodule_cache_all(git_repository *repo)
 {
 	int error;
@@ -2912,6 +3039,7 @@ int git_repository_submodule_cache_all(git_repository *repo)
 	error = git_submodule__map(repo, repo->submodule_cache);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_repository_submodule_cache_clear(git_repository *repo)
 {

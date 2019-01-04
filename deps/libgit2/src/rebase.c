@@ -85,6 +85,7 @@ struct git_rebase {
 
 #define GIT_REBASE_STATE_INIT {0}
 
+#ifdef DISABLED_FUNCTION
 static int rebase_state_type(
 	git_rebase_type_t *type_out,
 	char **path_out,
@@ -120,7 +121,9 @@ done:
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) rebase_readfile(
 	git_buf *out,
 	git_buf *state_path,
@@ -141,7 +144,9 @@ done:
 	git_buf_truncate(state_path, state_path_len);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) rebase_readint(
 	size_t *out, git_buf *asc_out, git_buf *state_path, const char *filename)
 {
@@ -161,7 +166,9 @@ GIT_INLINE(int) rebase_readint(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) rebase_readoid(
 	git_oid *out, git_buf *str_out, git_buf *state_path, const char *filename)
 {
@@ -177,7 +184,9 @@ GIT_INLINE(int) rebase_readoid(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static git_rebase_operation *rebase_operation_alloc(
 	git_rebase *rebase,
 	git_rebase_operation_t type,
@@ -198,7 +207,9 @@ static git_rebase_operation *rebase_operation_alloc(
 
 	return operation;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_open_merge(git_rebase *rebase)
 {
 	git_buf state_path = GIT_BUF_INIT, buf = GIT_BUF_INIT, cmt = GIT_BUF_INIT;
@@ -257,7 +268,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_alloc(git_rebase **out, const git_rebase_options *rebase_opts)
 {
 	git_rebase *rebase = git__calloc(1, sizeof(git_rebase));
@@ -279,7 +292,9 @@ static int rebase_alloc(git_rebase **out, const git_rebase_options *rebase_opts)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_check_versions(const git_rebase_options *given_opts)
 {
 	GITERR_CHECK_VERSION(given_opts, GIT_REBASE_OPTIONS_VERSION, "git_rebase_options");
@@ -289,7 +304,9 @@ static int rebase_check_versions(const git_rebase_options *given_opts)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_open(
 	git_rebase **out,
 	git_repository *repo,
@@ -396,7 +413,9 @@ done:
 	git_buf_dispose(&onto_id);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_cleanup(git_rebase *rebase)
 {
 	if (!rebase || rebase->inmemory)
@@ -406,7 +425,9 @@ static int rebase_cleanup(git_rebase *rebase)
 		git_futils_rmdir_r(rebase->state_path, NULL, GIT_RMDIR_REMOVE_FILES) :
 		0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_setupfile(git_rebase *rebase, const char *filename, int flags, const char *fmt, ...)
 {
 	git_buf path = GIT_BUF_INIT,
@@ -426,7 +447,9 @@ static int rebase_setupfile(git_rebase *rebase, const char *filename, int flags,
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *rebase_onto_name(const git_annotated_commit *onto)
 {
 	if (onto->ref_name && git__strncmp(onto->ref_name, "refs/heads/", 11) == 0)
@@ -436,7 +459,9 @@ static const char *rebase_onto_name(const git_annotated_commit *onto)
 	else
 		return onto->id_str;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_setupfiles_merge(git_rebase *rebase)
 {
 	git_buf commit_filename = GIT_BUF_INIT;
@@ -466,7 +491,9 @@ done:
 	git_buf_dispose(&commit_filename);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_setupfiles(git_rebase *rebase)
 {
 	char onto[GIT_OID_HEXSZ], orig_head[GIT_OID_HEXSZ];
@@ -492,14 +519,18 @@ static int rebase_setupfiles(git_rebase *rebase)
 
 	return rebase_setupfiles_merge(rebase);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_init_options(git_rebase_options *opts, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		opts, version, git_rebase_options, GIT_REBASE_OPTIONS_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_ensure_not_in_progress(git_repository *repo)
 {
 	int error;
@@ -515,7 +546,9 @@ static int rebase_ensure_not_in_progress(git_repository *repo)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_ensure_not_dirty(
 	git_repository *repo,
 	bool check_index,
@@ -563,7 +596,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_init_operations(
 	git_rebase *rebase,
 	git_repository *repo,
@@ -608,7 +643,9 @@ done:
 	git_revwalk_free(revwalk);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_init_merge(
 	git_rebase *rebase,
 	git_repository *repo,
@@ -664,7 +701,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_init_inmemory(
 	git_rebase *rebase,
 	git_repository *repo,
@@ -678,7 +717,9 @@ static int rebase_init_inmemory(
 	return git_commit_lookup(
 		&rebase->last_commit, repo, git_annotated_commit_id(onto));
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_init(
 	git_rebase **out,
 	git_repository *repo,
@@ -747,7 +788,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void normalize_checkout_options_for_apply(
 	git_checkout_options *checkout_opts,
 	git_rebase *rebase,
@@ -768,7 +811,9 @@ static void normalize_checkout_options_for_apply(
 		abort();
 	}
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 GIT_INLINE(int) rebase_movenext(git_rebase *rebase)
 {
 	size_t next = rebase->started ? rebase->current + 1 : 0;
@@ -781,7 +826,9 @@ GIT_INLINE(int) rebase_movenext(git_rebase *rebase)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_next_merge(
 	git_rebase_operation **out,
 	git_rebase *rebase)
@@ -843,7 +890,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_next_inmemory(
 	git_rebase_operation **out,
 	git_rebase *rebase)
@@ -897,7 +946,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_next(
 	git_rebase_operation **out,
 	git_rebase *rebase)
@@ -918,7 +969,9 @@ int git_rebase_next(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_inmemory_index(
 	git_index **out,
 	git_rebase *rebase)
@@ -930,7 +983,9 @@ int git_rebase_inmemory_index(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_commit__create(
 	git_commit **out,
 	git_rebase *rebase,
@@ -993,7 +1048,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_commit_merge(
 	git_oid *commit_id,
 	git_rebase *rebase,
@@ -1038,7 +1095,9 @@ done:
 	git_commit_free(commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_commit_inmemory(
 	git_oid *commit_id,
 	git_rebase *rebase,
@@ -1069,7 +1128,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_commit(
 	git_oid *id,
 	git_rebase *rebase,
@@ -1093,7 +1154,9 @@ int git_rebase_commit(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_abort(git_rebase *rebase)
 {
 	git_reference *orig_head_ref = NULL;
@@ -1129,7 +1192,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int notes_ref_lookup(git_buf *out, git_rebase *rebase)
 {
 	git_config *config = NULL;
@@ -1160,7 +1225,9 @@ done:
 	git_config_free(config);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_copy_note(
 	git_rebase *rebase,
 	const char *notes_ref,
@@ -1203,7 +1270,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int rebase_copy_notes(
 	git_rebase *rebase,
 	const git_signature *committer)
@@ -1269,7 +1338,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int return_to_orig_head(git_rebase *rebase)
 {
 	git_reference *terminal_ref = NULL, *branch_ref = NULL, *head_ref = NULL;
@@ -1306,7 +1377,9 @@ static int return_to_orig_head(git_rebase *rebase)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_rebase_finish(
 	git_rebase *rebase,
 	const git_signature *signature)
@@ -1326,28 +1399,36 @@ int git_rebase_finish(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_rebase_operation_entrycount(git_rebase *rebase)
 {
 	assert(rebase);
 
 	return git_array_size(rebase->operations);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 size_t git_rebase_operation_current(git_rebase *rebase)
 {
 	assert(rebase);
 
 	return rebase->started ? rebase->current : GIT_REBASE_NO_OPERATION;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_rebase_operation *git_rebase_operation_byindex(git_rebase *rebase, size_t idx)
 {
 	assert(rebase);
 
 	return git_array_get(rebase->operations, idx);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_rebase_free(git_rebase *rebase)
 {
 	if (rebase == NULL)
@@ -1362,3 +1443,4 @@ void git_rebase_free(git_rebase *rebase)
 	git__free((char *)rebase->options.rewrite_notes_ref);
 	git__free(rebase);
 }
+#endif // DISABLED_FUNCTION

@@ -13,6 +13,7 @@
 #define PQUEUE_RCHILD_OF(I) (((I)<<1)+2)
 #define PQUEUE_PARENT_OF(I) (((I)-1)>>1)
 
+#ifdef DISABLED_FUNCTION
 int git_pqueue_init(
 	git_pqueue *pq,
 	uint32_t flags,
@@ -32,7 +33,9 @@ int git_pqueue_init(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void pqueue_up(git_pqueue *pq, size_t el)
 {
 	size_t parent_el = PQUEUE_PARENT_OF(el);
@@ -52,7 +55,9 @@ static void pqueue_up(git_pqueue *pq, size_t el)
 
 	pq->contents[el] = kid;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void pqueue_down(git_pqueue *pq, size_t el)
 {
 	void *parent = git_vector_get(pq, el), *kid, *rkid;
@@ -78,7 +83,9 @@ static void pqueue_down(git_pqueue *pq, size_t el)
 
 	pq->contents[el] = parent;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_pqueue_insert(git_pqueue *pq, void *item)
 {
 	int error = 0;
@@ -100,7 +107,9 @@ int git_pqueue_insert(git_pqueue *pq, void *item)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void *git_pqueue_pop(git_pqueue *pq)
 {
 	void *rval;
@@ -123,3 +132,4 @@ void *git_pqueue_pop(git_pqueue *pq)
 
 	return rval;
 }
+#endif // DISABLED_FUNCTION

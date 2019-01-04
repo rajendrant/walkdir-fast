@@ -46,6 +46,7 @@ void git_parse_advance_chars(git_parse_ctx *ctx, size_t char_cnt)
 	ctx->line_len -= char_cnt;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_parse_advance_expected(
 	git_parse_ctx *ctx,
 	const char *expected,
@@ -60,6 +61,7 @@ int git_parse_advance_expected(
 	git_parse_advance_chars(ctx, expected_len);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_parse_advance_ws(git_parse_ctx *ctx)
 {
@@ -77,6 +79,7 @@ int git_parse_advance_ws(git_parse_ctx *ctx)
 	return ret;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_parse_advance_nl(git_parse_ctx *ctx)
 {
 	if (ctx->line_len != 1 || ctx->line[0] != '\n')
@@ -85,7 +88,9 @@ int git_parse_advance_nl(git_parse_ctx *ctx)
 	git_parse_advance_line(ctx);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_parse_advance_digit(int64_t *out, git_parse_ctx *ctx, int base)
 {
 	const char *end;
@@ -100,6 +105,7 @@ int git_parse_advance_digit(int64_t *out, git_parse_ctx *ctx, int base)
 	git_parse_advance_chars(ctx, (end - ctx->line));
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 int git_parse_peek(char *out, git_parse_ctx *ctx, int flags)
 {

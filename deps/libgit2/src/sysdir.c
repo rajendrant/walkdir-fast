@@ -206,6 +206,7 @@ int git_sysdir_get(const git_buf **out, git_sysdir_t which)
 	return 0;
 }
 
+#ifdef DISABLED_FUNCTION
 int git_sysdir_get_str(
 	char *out,
 	size_t outlen,
@@ -224,9 +225,11 @@ int git_sysdir_get_str(
 	git_buf_copy_cstr(out, outlen, path);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 #define PATH_MAGIC "$PATH"
 
+#ifdef DISABLED_FUNCTION
 int git_sysdir_set(git_sysdir_t which, const char *search_path)
 {
 	const char *expand_path = NULL;
@@ -270,6 +273,7 @@ done:
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static int git_sysdir_find_in_dirlist(
 	git_buf *path,
@@ -336,11 +340,13 @@ int git_sysdir_find_programdata_file(git_buf *path, const char *filename)
 		path, filename, GIT_SYSDIR_PROGRAMDATA, "ProgramData");
 }
 
+#ifdef DISABLED_FUNCTION
 int git_sysdir_find_template_dir(git_buf *path)
 {
 	return git_sysdir_find_in_dirlist(
 		path, NULL, GIT_SYSDIR_TEMPLATE, "template");
 }
+#endif // DISABLED_FUNCTION
 
 int git_sysdir_expand_global_file(git_buf *path, const char *filename)
 {

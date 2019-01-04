@@ -17,6 +17,7 @@
 #include "reflog.h"
 #include "posix.h"
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_new(git_refdb **out, git_repository *repo)
 {
 	git_refdb *db;
@@ -32,7 +33,9 @@ int git_refdb_new(git_refdb **out, git_repository *repo)
 	GIT_REFCOUNT_INC(db);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_open(git_refdb **out, git_repository *repo)
 {
 	git_refdb *db;
@@ -57,6 +60,7 @@ int git_refdb_open(git_refdb **out, git_repository *repo)
 	*out = db;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 static void refdb_free_backend(git_refdb *db)
 {
@@ -64,6 +68,7 @@ static void refdb_free_backend(git_refdb *db)
 		db->backend->free(db->backend);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_set_backend(git_refdb *db, git_refdb_backend *backend)
 {
 	refdb_free_backend(db);
@@ -71,7 +76,9 @@ int git_refdb_set_backend(git_refdb *db, git_refdb_backend *backend)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_compress(git_refdb *db)
 {
 	assert(db);
@@ -81,6 +88,7 @@ int git_refdb_compress(git_refdb *db)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 void git_refdb__free(git_refdb *db)
 {
@@ -97,13 +105,16 @@ void git_refdb_free(git_refdb *db)
 	GIT_REFCOUNT_DEC(db, git_refdb__free);
 }
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_exists(int *exists, git_refdb *refdb, const char *ref_name)
 {
 	assert(exists && refdb && refdb->backend);
 
 	return refdb->backend->exists(exists, refdb->backend, ref_name);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_lookup(git_reference **out, git_refdb *db, const char *ref_name)
 {
 	git_reference *ref;
@@ -121,7 +132,9 @@ int git_refdb_lookup(git_reference **out, git_refdb *db, const char *ref_name)
 	*out = ref;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_iterator(git_reference_iterator **out, git_refdb *db, const char *glob)
 {
 	int error;
@@ -139,7 +152,9 @@ int git_refdb_iterator(git_reference_iterator **out, git_refdb *db, const char *
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_iterator_next(git_reference **out, git_reference_iterator *iter)
 {
 	int error;
@@ -152,18 +167,24 @@ int git_refdb_iterator_next(git_reference **out, git_reference_iterator *iter)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_iterator_next_name(const char **out, git_reference_iterator *iter)
 {
 	return iter->next_name(out, iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_refdb_iterator_free(git_reference_iterator *iter)
 {
 	GIT_REFCOUNT_DEC(iter->db, git_refdb__free);
 	iter->free(iter);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_write(git_refdb *db, git_reference *ref, int force, const git_signature *who, const char *message, const git_oid *old_id, const char *old_target)
 {
 	assert(db && db->backend);
@@ -173,7 +194,9 @@ int git_refdb_write(git_refdb *db, git_reference *ref, int force, const git_sign
 
 	return db->backend->write(db->backend, ref, force, who, message, old_id, old_target);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_rename(
 	git_reference **out,
 	git_refdb *db,
@@ -197,13 +220,17 @@ int git_refdb_rename(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_delete(struct git_refdb *db, const char *ref_name, const git_oid *old_id, const char *old_target)
 {
 	assert(db && db->backend);
 	return db->backend->del(db->backend, ref_name, old_id, old_target);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_reflog_read(git_reflog **out, git_refdb *db,  const char *name)
 {
 	int error;
@@ -218,28 +245,36 @@ int git_refdb_reflog_read(git_reflog **out, git_refdb *db,  const char *name)
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_has_log(git_refdb *db, const char *refname)
 {
 	assert(db && refname);
 
 	return db->backend->has_log(db->backend, refname);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_ensure_log(git_refdb *db, const char *refname)
 {
 	assert(db && refname);
 
 	return db->backend->ensure_log(db->backend, refname);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_init_backend(git_refdb_backend *backend, unsigned int version)
 {
 	GIT_INIT_STRUCTURE_FROM_TEMPLATE(
 		backend, version, git_refdb_backend, GIT_REFDB_BACKEND_INIT);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_lock(void **payload, git_refdb *db, const char *refname)
 {
 	assert(payload && db && refname);
@@ -251,10 +286,13 @@ int git_refdb_lock(void **payload, git_refdb *db, const char *refname)
 
 	return db->backend->lock(payload, db->backend, refname);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_refdb_unlock(git_refdb *db, void *payload, int success, int update_reflog, const git_reference *ref, const git_signature *sig, const char *message)
 {
 	assert(db);
 
 	return db->backend->unlock(db->backend, payload, success, update_reflog, ref, sig, message);
 }
+#endif // DISABLED_FUNCTION

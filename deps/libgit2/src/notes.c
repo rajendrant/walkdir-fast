@@ -13,12 +13,15 @@
 #include "iterator.h"
 #include "signature.h"
 
+#ifdef DISABLED_FUNCTION
 static int note_error_notfound(void)
 {
 	giterr_set(GITERR_INVALID, "note could not be found");
 	return GIT_ENOTFOUND;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_subtree_in_current_level(
 	git_tree **out,
 	git_repository *repo,
@@ -52,7 +55,9 @@ static int find_subtree_in_current_level(
 
 	return note_error_notfound();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_subtree_r(git_tree **out, git_tree *root,
 			git_repository *repo, const char *target, int *fanout)
 {
@@ -74,7 +79,9 @@ static int find_subtree_r(git_tree **out, git_tree *root,
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int find_blob(git_oid *blob, git_tree *tree, const char *target)
 {
 	size_t i;
@@ -93,7 +100,9 @@ static int find_blob(git_oid *blob, git_tree *tree, const char *target)
 
 	return note_error_notfound();
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int tree_write(
 	git_tree **out,
 	git_repository *repo,
@@ -128,7 +137,9 @@ cleanup:
 	git_treebuilder_free(tb);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int manipulate_note_in_tree_r(
 	git_tree **out,
 	git_repository *repo,
@@ -195,7 +206,9 @@ cleanup:
 	git_tree_free(subtree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remove_note_in_tree_eexists_cb(
 	git_tree **out,
 	git_repository *repo,
@@ -210,7 +223,9 @@ static int remove_note_in_tree_eexists_cb(
 
 	return tree_write(out, repo, parent, NULL, annotated_object_sha + fanout, 0);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int remove_note_in_tree_enotfound_cb(
 	git_tree **out,
 	git_repository *repo,
@@ -229,7 +244,9 @@ static int remove_note_in_tree_enotfound_cb(
 	giterr_set(GITERR_REPOSITORY, "object '%s' has no note", annotated_object_sha);
 	return current_error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int insert_note_in_tree_eexists_cb(git_tree **out,
 	git_repository *repo,
 	git_tree *parent,
@@ -247,7 +264,9 @@ static int insert_note_in_tree_eexists_cb(git_tree **out,
 	giterr_set(GITERR_REPOSITORY, "note for '%s' exists already", annotated_object_sha);
 	return current_error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int insert_note_in_tree_enotfound_cb(git_tree **out,
 	git_repository *repo,
 	git_tree *parent,
@@ -267,7 +286,9 @@ static int insert_note_in_tree_enotfound_cb(git_tree **out,
 		annotated_object_sha + fanout,
 		GIT_FILEMODE_BLOB);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int note_write(
 	git_oid *notes_commit_out,
 	git_oid *notes_blob_out,
@@ -311,7 +332,9 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int note_new(
 	git_note **out,
 	git_oid *note_oid,
@@ -335,7 +358,9 @@ static int note_new(
 	*out = note;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int note_lookup(
 	git_note **out,
 	git_repository *repo,
@@ -368,7 +393,9 @@ cleanup:
 	git_blob_free(blob);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int note_remove(
 		git_oid *notes_commit_out,
 		git_repository *repo,
@@ -401,7 +428,9 @@ cleanup:
 	git_tree_free(tree_after_removal);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int note_get_default_ref(char **out, git_repository *repo)
 {
 	git_config *cfg;
@@ -412,7 +441,9 @@ static int note_get_default_ref(char **out, git_repository *repo)
 
 	return ret;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int normalize_namespace(char **out, git_repository *repo, const char *notes_ref)
 {
 	if (notes_ref) {
@@ -423,7 +454,9 @@ static int normalize_namespace(char **out, git_repository *repo, const char *not
 
 	return note_get_default_ref(out, repo);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int retrieve_note_commit(
 	git_commit **commit_out,
 	char **notes_ref_out,
@@ -444,7 +477,9 @@ static int retrieve_note_commit(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_commit_read(
 	git_note **out,
 	git_repository *repo,
@@ -466,7 +501,9 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_read(git_note **out, git_repository *repo,
 		  const char *notes_ref_in, const git_oid *oid)
 {
@@ -486,7 +523,9 @@ cleanup:
 	git_commit_free(commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_commit_create(
 	git_oid *notes_commit_out,
 	git_oid *notes_blob_out,
@@ -517,7 +556,9 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_create(
 	git_oid *out,
 	git_repository *repo,
@@ -560,7 +601,9 @@ cleanup:
 	git_reference_free(ref);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_commit_remove(
 		git_oid *notes_commit_out,
 		git_repository *repo,
@@ -585,7 +628,9 @@ cleanup:
 	git_tree_free(tree);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_remove(git_repository *repo, const char *notes_ref_in,
 		const git_signature *author, const git_signature *committer,
 		const git_oid *oid)
@@ -616,7 +661,9 @@ cleanup:
 	git_commit_free(existing_notes_commit);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_default_ref(git_buf *out, git_repository *repo)
 {
 	char *default_ref;
@@ -632,31 +679,41 @@ int git_note_default_ref(git_buf *out, git_repository *repo)
 	git_buf_attach(out, default_ref, strlen(default_ref));
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_signature *git_note_committer(const git_note *note)
 {
 	assert(note);
 	return note->committer;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_signature *git_note_author(const git_note *note)
 {
 	assert(note);
 	return note->author;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const char * git_note_message(const git_note *note)
 {
 	assert(note);
 	return note->message;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 const git_oid * git_note_id(const git_note *note)
 {
 	assert(note);
 	return &note->id;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_note_free(git_note *note)
 {
 	if (note == NULL)
@@ -667,7 +724,9 @@ void git_note_free(git_note *note)
 	git__free(note->message);
 	git__free(note);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int process_entry_path(
 	const char* entry_path,
 	git_oid *annotated_object_id)
@@ -713,7 +772,9 @@ cleanup:
 	git_buf_dispose(&buf);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_foreach(
 	git_repository *repo,
 	const char *notes_ref,
@@ -740,7 +801,9 @@ int git_note_foreach(
 	git_note_iterator_free(iter);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 void git_note_iterator_free(git_note_iterator *it)
 {
 	if (it == NULL)
@@ -748,7 +811,9 @@ void git_note_iterator_free(git_note_iterator *it)
 
 	git_iterator_free(it);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_commit_iterator_new(
 	git_note_iterator **it,
 	git_commit *notes_commit)
@@ -767,7 +832,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_iterator_new(
 	git_note_iterator **it,
 	git_repository *repo,
@@ -789,7 +856,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_note_next(
 	git_oid* note_id,
 	git_oid* annotated_id,
@@ -808,3 +877,4 @@ int git_note_next(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

@@ -259,6 +259,7 @@ int git_attr_cache__get(
 	return error;
 }
 
+#ifdef DISABLED_FUNCTION
 bool git_attr_cache__is_cached(
 	git_repository *repo,
 	git_attr_file_source source,
@@ -280,6 +281,7 @@ bool git_attr_cache__is_cached(
 
 	return entry && (entry->file[source] != NULL);
 }
+#endif // DISABLED_FUNCTION
 
 
 static int attr_cache__lookup_path(

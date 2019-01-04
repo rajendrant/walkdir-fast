@@ -19,6 +19,7 @@ const char *git_attr__true  = "[internal]__TRUE__";
 const char *git_attr__false = "[internal]__FALSE__";
 const char *git_attr__unset = "[internal]__UNSET__";
 
+#ifdef DISABLED_FUNCTION
 git_attr_t git_attr_value(const char *attr)
 {
 	if (attr == NULL || attr == git_attr__unset)
@@ -32,16 +33,22 @@ git_attr_t git_attr_value(const char *attr)
 
 	return GIT_ATTR_VALUE_T;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int collect_attr_files(
 	git_repository *repo,
 	git_attr_session *attr_session,
 	uint32_t flags,
 	const char *path,
 	git_vector *files);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void release_attr_files(git_vector *files);
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_attr_get(
 	const char **value,
 	git_repository *repo,
@@ -94,6 +101,7 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 
 typedef struct {
@@ -101,6 +109,7 @@ typedef struct {
 	git_attr_assignment *found;
 } attr_get_many_info;
 
+#ifdef DISABLED_FUNCTION
 int git_attr_get_many_with_session(
 	const char **values,
 	git_repository *repo,
@@ -176,7 +185,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_attr_get_many(
 	const char **values,
 	git_repository *repo,
@@ -188,7 +199,9 @@ int git_attr_get_many(
 	return git_attr_get_many_with_session(
 		values, repo, NULL, flags, pathname, num_attr, names);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_attr_foreach(
 	git_repository *repo,
 	uint32_t flags,
@@ -247,7 +260,9 @@ cleanup:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int preload_attr_file(
 	git_repository *repo,
 	git_attr_session *attr_session,
@@ -266,7 +281,9 @@ static int preload_attr_file(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int system_attr_file(
 	git_buf *out,
 	git_attr_session *attr_session)
@@ -304,7 +321,9 @@ static int system_attr_file(
 		out, attr_session->sysdir.ptr, attr_session->sysdir.size);
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int attr_setup(git_repository *repo, git_attr_session *attr_session)
 {
 	int error = 0;
@@ -363,6 +382,7 @@ out:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 int git_attr_add_macro(
 	git_repository *repo,
@@ -407,6 +427,7 @@ typedef struct {
 	git_vector *files;
 } attr_walk_up_info;
 
+#ifdef DISABLED_FUNCTION
 static int attr_decide_sources(
 	uint32_t flags, bool has_wd, bool has_index, git_attr_file_source *srcs)
 {
@@ -433,7 +454,9 @@ static int attr_decide_sources(
 
 	return count;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int push_attr_file(
 	git_repository *repo,
 	git_attr_session *attr_session,
@@ -458,7 +481,9 @@ static int push_attr_file(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int push_one_attr(void *ref, const char *path)
 {
 	int error = 0, n_src, i;
@@ -474,7 +499,9 @@ static int push_one_attr(void *ref, const char *path)
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void release_attr_files(git_vector *files)
 {
 	size_t i;
@@ -486,7 +513,9 @@ static void release_attr_files(git_vector *files)
 	}
 	git_vector_free(files);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int collect_attr_files(
 	git_repository *repo,
 	git_attr_session *attr_session,
@@ -570,3 +599,4 @@ static int collect_attr_files(
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

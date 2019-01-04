@@ -12,6 +12,7 @@
 #include "buffer.h"
 #include "buf_text.h"
 
+#ifdef DISABLED_FUNCTION
 static int ident_find_id(
 	const char **id_start, const char **id_end, const char *start, size_t len)
 {
@@ -39,7 +40,9 @@ static int ident_find_id(
 	*id_end = found + 1;
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ident_insert_id(
 	git_buf *to, const git_buf *from, const git_filter_source *src)
 {
@@ -72,7 +75,9 @@ static int ident_insert_id(
 
 	return git_buf_oom(to) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ident_remove_id(
 	git_buf *to, const git_buf *from)
 {
@@ -94,7 +99,9 @@ static int ident_remove_id(
 
 	return git_buf_oom(to) ? -1 : 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int ident_apply(
 	git_filter     *self,
 	void          **payload,
@@ -113,7 +120,9 @@ static int ident_apply(
 	else
 		return ident_remove_id(to, from);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_filter *git_ident_filter_new(void)
 {
 	git_filter *f = git__calloc(1, sizeof(git_filter));
@@ -127,3 +136,4 @@ git_filter *git_ident_filter_new(void)
 
 	return f;
 }
+#endif // DISABLED_FUNCTION

@@ -35,6 +35,7 @@ typedef struct {
 	git_vector lines;
 } patch_image;
 
+#ifdef DISABLED_FUNCTION
 static void patch_line_init(
 	git_diff_line *out,
 	const char *in,
@@ -45,9 +46,11 @@ static void patch_line_init(
 	out->content_len = in_len;
 	out->content_offset = in_offset;
 }
+#endif // DISABLED_FUNCTION
 
 #define PATCH_IMAGE_INIT { GIT_POOL_INIT, GIT_VECTOR_INIT }
 
+#ifdef DISABLED_FUNCTION
 static int patch_image_init_fromstr(
 	patch_image *out, const char *in, size_t in_len)
 {
@@ -78,7 +81,9 @@ static int patch_image_init_fromstr(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void patch_image_free(patch_image *image)
 {
 	if (image == NULL)
@@ -87,7 +92,9 @@ static void patch_image_free(patch_image *image)
 	git_pool_clear(&image->pool);
 	git_vector_free(&image->lines);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool match_hunk(
 	patch_image *image,
 	patch_image *preimage,
@@ -117,7 +124,9 @@ static bool match_hunk(
 
 	return match;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static bool find_hunk_linenum(
 	size_t *out,
 	patch_image *image,
@@ -135,7 +144,9 @@ static bool find_hunk_linenum(
 	*out = linenum;
 	return match;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int update_hunk(
 	patch_image *image,
 	unsigned int linenum,
@@ -166,6 +177,7 @@ static int update_hunk(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
 typedef struct {
 	git_apply_options opts;
@@ -173,6 +185,7 @@ typedef struct {
 	size_t skipped_old_lines;
 } apply_hunks_ctx;
 
+#ifdef DISABLED_FUNCTION
 static int apply_hunk(
 	patch_image *image,
 	git_patch *patch,
@@ -242,7 +255,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int apply_hunks(
 	git_buf *out,
 	const char *source,
@@ -272,7 +287,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int apply_binary_delta(
 	git_buf *out,
 	const char *source,
@@ -320,7 +337,9 @@ done:
 	git_buf_dispose(&inflated);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int apply_binary(
 	git_buf *out,
 	const char *source,
@@ -362,7 +381,9 @@ done:
 	git_buf_dispose(&reverse);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_apply__patch(
 	git_buf *contents_out,
 	char **filename_out,
@@ -418,7 +439,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int apply_one(
 	git_repository *repo,
 	git_reader *preimage_reader,
@@ -563,7 +586,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int apply_deltas(
 	git_repository *repo,
 	git_reader *pre_reader,
@@ -589,7 +614,9 @@ done:
 	git_strmap_free(removed_paths);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 int git_apply_to_tree(
 	git_index **out,
 	git_repository *repo,
@@ -650,7 +677,9 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_apply__to_workdir(
 	git_repository *repo,
 	git_diff *diff,
@@ -703,7 +732,9 @@ done:
 	git_vector_free(&paths);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int git_apply__to_index(
 	git_repository *repo,
 	git_diff *diff,
@@ -746,6 +777,7 @@ done:
 	git_index_free(index);
 	return error;
 }
+#endif // DISABLED_FUNCTION
 
 /*
  * Handle the three application options ("locations"):
@@ -763,6 +795,7 @@ done:
  * items.
  */
 
+#ifdef DISABLED_FUNCTION
 int git_apply(
 	git_repository *repo,
 	git_diff *diff,
@@ -853,3 +886,4 @@ done:
 
 	return error;
 }
+#endif // DISABLED_FUNCTION

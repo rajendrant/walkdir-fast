@@ -29,6 +29,7 @@ struct crlf_filter {
 	git_filter f;
 };
 
+#ifdef DISABLED_FUNCTION
 static int check_crlf(const char *value)
 {
 	if (GIT_ATTR_TRUE(value))
@@ -48,7 +49,9 @@ static int check_crlf(const char *value)
 
 	return GIT_CRLF_GUESS;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int check_eol(const char *value)
 {
 	if (GIT_ATTR_UNSPECIFIED(value))
@@ -62,7 +65,9 @@ static int check_eol(const char *value)
 
 	return GIT_EOL_UNSET;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int crlf_input_action(struct crlf_attrs *ca)
 {
 	if (ca->crlf_action == GIT_CRLF_BINARY)
@@ -79,7 +84,9 @@ static int crlf_input_action(struct crlf_attrs *ca)
 
 	return ca->crlf_action;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int has_cr_in_index(const git_filter_source *src)
 {
 	git_repository *repo = git_filter_source_repo(src);
@@ -121,7 +128,9 @@ static int has_cr_in_index(const git_filter_source *src)
 	git_blob_free(blob);
 	return found_cr;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int crlf_apply_to_odb(
 	struct crlf_attrs *ca,
 	git_buf *to,
@@ -186,7 +195,9 @@ static int crlf_apply_to_odb(
 	/* Actually drop the carriage returns */
 	return git_buf_text_crlf_to_lf(to, from);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static const char *line_ending(struct crlf_attrs *ca)
 {
 	switch (ca->crlf_action) {
@@ -227,7 +238,9 @@ line_ending_error:
 	giterr_set(GITERR_INVALID, "invalid input to line ending filter");
 	return NULL;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int crlf_apply_to_workdir(
 	struct crlf_attrs *ca, git_buf *to, const git_buf *from)
 {
@@ -272,7 +285,9 @@ static int crlf_apply_to_workdir(
 
 	return git_buf_text_lf_to_crlf(to, from);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int crlf_check(
 	git_filter        *self,
 	void              **payload, /* points to NULL ptr on entry, may be set */
@@ -343,7 +358,9 @@ static int crlf_check(
 
 	return 0;
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static int crlf_apply(
 	git_filter    *self,
 	void         **payload, /* may be read and/or set */
@@ -363,7 +380,9 @@ static int crlf_apply(
 	else
 		return crlf_apply_to_odb(*payload, to, from, src);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 static void crlf_cleanup(
 	git_filter *self,
 	void       *payload)
@@ -371,7 +390,9 @@ static void crlf_cleanup(
 	GIT_UNUSED(self);
 	git__free(payload);
 }
+#endif // DISABLED_FUNCTION
 
+#ifdef DISABLED_FUNCTION
 git_filter *git_crlf_filter_new(void)
 {
 	struct crlf_filter *f = git__calloc(1, sizeof(struct crlf_filter));
@@ -388,3 +409,4 @@ git_filter *git_crlf_filter_new(void)
 
 	return (git_filter *)f;
 }
+#endif // DISABLED_FUNCTION
